@@ -20,71 +20,74 @@
     <link rel="stylesheet" href="{{ get_url(path='site.css') }}" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    <header class="site-header">
-      <nav class="nav" aria-label="Primary">
-        <a href="{{ get_url(path='/') }}" class="brand">
+    <a href="#main-content" class="fixed top-4 left-4 z-[100] -translate-y-[200%] border-[3px] border-ink bg-card px-5 py-3 font-bold no-underline shadow-s focus:translate-y-0">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 border-b-[3px] border-ink bg-bg">
+      <nav class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-3.5 md:px-12" aria-label="Primary">
+        <a href="{{ get_url(path='/') }}" class="flex items-center gap-2.5 font-space text-2xl font-extrabold tracking-[0.08em] uppercase no-underline text-ink">
           <img src="{{ get_url(path='logo.png') }}" alt="Cassis logo" width="34" height="34" />
-          <span>Cassis</span>
+          <span class="hover:underline">Cassis</span>
         </a>
-        <ul class="nav-links">
-          <li><a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
-          <li><a href="{{ get_url(path='@/docs/layers.md') }}">Layers</a></li>
-          <li><a href="{{ get_url(path='@/docs/_index.md') }}">Docs</a></li>
+        <ul class="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="{{ get_url(path='@/docs/layers.md') }}">Layers</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="{{ get_url(path='@/docs/_index.md') }}">Docs</a></li>
         </ul>
-        <div class="nav-actions">
-          <a class="btn btn-primary" href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <div class="hidden gap-3.5 md:flex">
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-cassis px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow,background-color] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-cassisdeep hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
-        <div class="nav-toggle-box">
-          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" />
-          <label class="nav-burger" for="nav-toggle" aria-label="Open menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <div class="relative flex items-center md:hidden">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" class="peer sr-only" />
+          <label class="block cursor-pointer border-[3px] border-ink bg-card p-1.5 shadow-s" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="block">
               <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
             </svg>
           </label>
-          <div class="nav-mobile">
-            <a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
-            <a href="{{ get_url(path='@/docs/layers.md') }}">Layers</a>
-            <a href="{{ get_url(path='@/docs/_index.md') }}">Docs</a>
-            <a href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <div class="absolute top-[calc(100%+0.9rem)] right-0 z-[60] hidden w-[min(320px,calc(100vw-3rem))] flex-col border-[3px] border-ink bg-card shadow-m peer-checked:flex">
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="{{ get_url(path='@/docs/layers.md') }}">Layers</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="{{ get_url(path='@/docs/_index.md') }}">Docs</a>
+            <a class="px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </nav>
     </header>
+
     <main id="main-content">
       {% block content %}{% endblock content %}
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <div class="footer-top">
+
+    <footer class="bg-dark pt-12 pb-8 text-white">
+      <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+        <div class="flex flex-col justify-between gap-10 md:flex-row">
           <div class="footer-brand">
-            <span class="name">
+            <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
               <img src="{{ get_url(path='logo.png') }}" alt="" width="30" height="30" />
               Cassis
             </span>
-            <span class="tag">{{ config.extra.tagline }}</span>
+            <span class="mt-2.5 block text-sm text-white/65">{{ config.extra.tagline }}</span>
           </div>
-          <nav class="footer-cols" aria-label="Footer">
-            <ul class="footer-col">
-              <li class="head">Protocol</li>
-              <li><a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
-              <li><a href="{{ get_url(path='@/docs/layers.md') }}">Supported layers</a></li>
+          <nav class="flex flex-wrap gap-14" aria-label="Footer">
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Protocol</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ get_url(path='@/docs/layers.md') }}">Supported layers</a></li>
             </ul>
-            <ul class="footer-col">
-              <li class="head">Docs</li>
-              <li><a href="{{ get_url(path='@/docs/quickstart.md') }}">Quickstart</a></li>
-              <li><a href="{{ get_url(path='@/docs/faq.md') }}">FAQ</a></li>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Docs</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ get_url(path='@/docs/quickstart.md') }}">Quickstart</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ get_url(path='@/docs/faq.md') }}">FAQ</a></li>
             </ul>
-            <ul class="footer-col">
-              <li class="head">Community</li>
-              <li><a href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href="{{ config.extra.github_url }}/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Community</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="{{ config.extra.github_url }}/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
             </ul>
           </nav>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-10 flex flex-col gap-2 border-t border-white/20 pt-6 text-[0.8rem] text-white/60 md:flex-row md:items-center md:justify-between">
           <span>2026 Cassis. Open protocol, open source.</span>
-          <span class="btc-badge">Bitcoin-only. No wrapped tokens. No shitcoins.</span>
+          <span class="inline-flex items-center gap-2 font-fira text-[0.65rem] tracking-[0.1em] uppercase">Bitcoin-only. No wrapped tokens. No shitcoins.</span>
         </div>
       </div>
     </footer>

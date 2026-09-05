@@ -1,11 +1,11 @@
 {% set docs = get_section(path="docs/_index.md") %}
-<aside class="docs-sidebar">
+<aside class="hidden lg:block">
   <nav aria-label="Documentation">
-    <ul class="docs-toc">
-      <li class="toc-head">Documentation</li>
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
+      <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
       {% for page in docs.pages %}
       <li>
-        <a href="{{ page.permalink | safe }}" {% if current_path == page.path %}class="active"{% endif %}>
+        <a href="{{ page.permalink | safe }}" class="block border-l-[3px] border-ink px-3.5 py-2 text-[0.85rem] font-medium no-underline text-ink2 hover:bg-cream hover:text-ink {% if current_path == page.path %}border-cassis bg-cream font-bold text-ink{% else %}border-ink{% endif %}">
           {{ page.title }}
         </a>
       </li>

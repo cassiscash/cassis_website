@@ -2,12 +2,18 @@ set shell := ["bash", "-uc"]
 
 output := "public"
 
-# run local dev server (autoreload + sass watch)
+css:
+    npx @tailwindcss/cli -i input.css -o static/site.css --minify
+
+css-watch:
+    npx @tailwindcss/cli -i input.css -o static/site.css --watch
+
+# run local dev server (autoreload + css watch)
 dev:
     zola serve
 
 # build production site
-build:
+build: css
     zola build
 
 # clean build output

@@ -3,30 +3,30 @@
 {% block title %}{{ section.title }} | {{ config.title }}{% endblock title %}
 
 {% block content %}
-<section class="docs-page" style="background: var(--bg);">
-  <div class="wrap">
-    <div class="docs-layout">
+<section class="bg-bg">
+  <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+    <div class="grid gap-12 py-12 pb-20 lg:grid-cols-[260px_1fr] lg:gap-16">
       {% include "docs-sidebar.html" %}
-      <div class="docs-page">
-        <div class="docs-page-head">
-          <h1>{{ section.title }}</h1>
-          {% if section.description %}<p>{{ section.description }}</p>{% endif %}
+      <div class="min-w-0">
+        <div class="mb-10 border-[3px] border-ink bg-cream px-7 py-6 shadow-m">
+          <h1 class="m-0 font-outfit text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none font-black tracking-[-0.03em] uppercase">{{ section.title }}</h1>
+          {% if section.description %}<p class="mt-3 text-[0.95rem] leading-[1.6] text-ink2">{{ section.description }}</p>{% endif %}
         </div>
         <div class="prose">
           {{ section.content | safe }}
         </div>
-        <div class="docs-cards">
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {% for page in section.pages %}
-          <a class="docs-card" href="{{ page.permalink | safe }}">
-            {% if loop.index0 == 0 %}{% set bg = "var(--cassis)" %}{% set fg = "#fff" %}
-            {% elif loop.index0 == 1 %}{% set bg = "var(--btc)" %}{% set fg = "#fff" %}
-            {% elif loop.index0 == 2 %}{% set bg = "var(--cyan)" %}{% set fg = "#fff" %}
-            {% elif loop.index0 == 3 %}{% set bg = "var(--amber)" %}{% set fg = "var(--text)" %}
-            {% else %}{% set bg = "var(--lime)" %}{% set fg = "var(--text)" %}
+          <a class="flex flex-col border-[3px] border-ink bg-card p-6 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ page.permalink | safe }}">
+            {% if loop.index0 == 0 %}{% set bg = "#7c3aed" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 1 %}{% set bg = "#f7931a" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 2 %}{% set bg = "#5ab7ec" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 3 %}{% set bg = "#efcc34" %}{% set fg = "#2b2b2b" %}
+            {% else %}{% set bg = "#add46c" %}{% set fg = "#2b2b2b" %}
             {% endif %}
-            <span class="no" style="background: {{ bg }}; color: {{ fg }};">{{ loop.index }}</span>
-            <h2>{{ page.title }}</h2>
-            <p>{{ page.description }}</p>
+            <span class="inline-flex h-9 w-9 items-center justify-center border-2 border-ink font-fira text-[0.8rem] font-bold" style="background: {{ bg }}; color: {{ fg }};">{{ loop.index }}</span>
+            <h2 class="mt-4 font-space text-base font-extrabold tracking-[0.04em] uppercase text-ink">{{ page.title }}</h2>
+            <p class="mt-2 text-[0.83rem] leading-[1.6] text-ink2">{{ page.description }}</p>
           </a>
           {% endfor %}
         </div>
