@@ -3,15 +3,17 @@
 {% block title %}{{ config.title }} | {{ config.extra.tagline }}{% endblock title %}
 
 {% block content %}
+{# ===================== HERO + FEATURE STRIP (one viewport) ===================== #}
+<div class="flex min-h-[calc(100svh-65px)] flex-col">
 {# ============================== HERO ============================== #}
-<section class="relative isolate overflow-hidden border-b-[3px] border-ink">
+<section class="relative isolate flex flex-1 flex-col justify-center overflow-hidden border-b-[3px] border-ink">
   <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(43,43,43,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(43,43,43,0.07)_1px,transparent_1px)] bg-[length:44px_44px]"></div>
   <div aria-hidden="true" class="absolute -top-[60px] -right-[70px] -z-10 h-[230px] w-[230px] rotate-[9deg] border-[3px] border-ink bg-amber"></div>
   <div aria-hidden="true" class="absolute -bottom-[80px] -left-[60px] -z-10 h-[190px] w-[190px] -rotate-[7deg] border-[3px] border-ink bg-cyan"></div>
 
   <div class="mx-auto grid max-w-[1400px] gap-12 px-6 py-16 md:px-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16 lg:py-24 lg:py-28">
     <div class="flex min-w-0 flex-col items-start">
-      <h1 class="m-0 max-w-[760px] font-outfit text-[clamp(3rem,7.5vw,6.8rem)] leading-[0.85] font-black tracking-[-0.05em] uppercase">Seamless payments <span class="text-cassis underline decoration-[0.09em] underline-offset-[0.12em]">across layers</span></h1>
+      <h1 class="m-0 max-w-[760px] font-outfit text-[clamp(3rem,7.5vw,6.8rem)] leading-[0.85] font-black tracking-[-0.05em] uppercase">Seamless payments <span class="text-ink underline decoration-[0.09em] underline-offset-[0.12em]">across layers</span></h1>
       <p class="mt-7 max-w-[640px] text-lg leading-[1.7] text-ink2 md:text-xl">
         Bitcoin is no longer one network. Scaling needs have split the satoshis through multiple layers that remain disconnected.
       </p>
@@ -19,7 +21,7 @@
         Cassis is an open protocol that uses HTLCs and multi-hop routing to ensure every Bitcoin user is always within reach of any other.
       </p>
       <div class="mt-9 flex flex-wrap gap-4">
-        <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-cassis px-8 py-3.5 font-space text-sm font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow,background-color] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-cassisdeep hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ get_url(path='@/docs/quickstart.md') }}">
+        <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-8 py-3.5 font-space text-sm font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ get_url(path='@/docs/quickstart.md') }}">
           Get started
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
         </a>
@@ -30,19 +32,19 @@
     <div class="border-[3px] border-ink bg-card shadow-l" role="img" aria-label="Example Cassis payment routed from Arkade through Liquid into Fedimint">
       <div class="flex items-center justify-between gap-4 border-b-[3px] border-ink bg-ink px-4 py-3 text-white">
         <span class="flex items-center gap-2.5 font-space text-xs font-extrabold tracking-[0.14em] uppercase">
-          <img src="{{ get_url(path='logo.png') }}" alt="" width="24" height="24" />
+          <img src="{{ get_url(path='logo_white.png') }}" alt="" width="24" height="24" />
           Cassis
         </span>
         <span class="font-fira text-[0.6rem] tracking-[0.08em] uppercase text-white/70">21,300 sats &middot; routed in 0.8s</span>
       </div>
       <div class="p-4 sm:p-6">
-        <div class="flex items-center gap-3 border-[3px] border-ink bg-white px-4 py-3 shadow-cassis">
+        <div class="flex items-center gap-3 border-[3px] border-ink bg-white px-4 py-3 shadow-s">
           <span class="min-w-0 flex-1 truncate font-fira text-sm font-semibold">send 21,300 sats to geppetto@fedimint</span>
           <span class="h-5 w-[5px] animate-blink bg-cassis" aria-hidden="true"></span>
         </div>
         <div class="mt-5 flex flex-col">
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-btc);">ark</span>
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-arkade);">ark</span>
             <div class="min-w-0">
               <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Arkade</div>
               <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">source &middot; htlc locked</div>
@@ -56,7 +58,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
           </div>
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-cyan);">lq</span>
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-liquid);">lq</span>
             <div class="min-w-0">
               <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Liquid</div>
               <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">intermediary &middot; swap node</div>
@@ -70,7 +72,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
           </div>
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-cassis);">fm</span>
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-fedimint);">fm</span>
             <div class="min-w-0">
               <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Fedimint</div>
               <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">destination &middot; federation ecash</div>
@@ -128,25 +130,7 @@
     </div>
   </article>
 </section>
-
-{# ============================ CTA BAND ============================= #}
-<section class="relative isolate overflow-hidden border-b-[3px] border-ink bg-cassis">
-  <div aria-hidden="true" class="absolute -top-[140px] -left-[120px] -z-10 h-[340px] w-[340px] rounded-full border-[3px] border-white/35"></div>
-  <div aria-hidden="true" class="absolute -right-[80px] -bottom-[120px] -z-10 h-[260px] w-[260px] rounded-full border-[3px] border-white/35"></div>
-  <div class="relative z-10 mx-auto flex max-w-[900px] flex-col items-center px-6 py-16 text-center md:py-24">
-    <h2 class="m-0 max-w-[880px] font-outfit text-[clamp(2.4rem,6vw,5rem)] leading-[0.9] font-black tracking-[-0.045em] uppercase text-white [text-shadow:4px_4px_0_#2b2b2b]">Extensible. <br />Flexible.</h2>
-    <p class="mt-6 max-w-[640px] text-[1.05rem] leading-[1.75] text-white/90">
-      Currently Cassis has implementations for Arkade, Liquid, Fedimint, Rootstock, Cashu and Lightning, but new layers can be easily added, as long as they support creating HTLCs.
-    </p>
-    <p class="mt-6 max-w-[640px] text-[1.05rem] leading-[1.75] text-white/90">
-      Users are free to use only the layers they are comfortable with, with the trust model they choose.
-    </p>
-    <div class="mt-9 flex flex-wrap justify-center gap-4">
-      <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-8 py-3.5 font-space text-sm font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
-      <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-card px-8 py-3.5 font-space text-sm font-bold tracking-[0.08em] uppercase text-ink no-underline shadow-s transition-[transform,box-shadow,background-color] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-ink hover:text-white hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ get_url(path='@/docs/quickstart.md') }}">Get started</a>
-    </div>
-  </div>
-</section>
+</div>
 
 {# ======================== HTLC EXPLANATION ========================= #}
 <section class="border-b-[3px] border-ink bg-bg py-16 md:py-24">
@@ -260,23 +244,24 @@
       <span class="inline-block h-3 w-3 bg-cassis"></span>
       <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">The payment lifecycle</p>
     </div>
-    <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Lock. Route. Settle.</h2>
+    <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Prepare, hashlock, commit.</h2>
     <div class="mt-12 grid items-stretch gap-0 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
       <article class="flex min-h-[380px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
         <div class="flex items-center gap-4">
           <span class="flex h-13 w-13 shrink-0 items-center justify-center border-[3px] border-ink text-white shadow-s" style="background: var(--color-coral); width: 3.4rem; height: 3.4rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" /></svg>
           </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Lock</p>
+          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Prepare</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          The sender commits funds on the source layer in an HTLC: the receiver
-          can claim with the secret, the sender refunds after timeout. No
-          custodian, no deposit address.
+          The receiver generates a fresh secret <strong class="text-ink">R</strong> and
+          shares only its hash <strong class="text-ink">H = sha256(R)</strong> with the
+          sender. The sender then asks the router mesh for a path from source to
+          destination.
         </p>
         <div class="mt-auto grid grid-cols-2 gap-2 pt-6">
-          <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">hash H published</span>
-          <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">refund path set</span>
+          <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">secret R generated</span>
+          <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">hash H shared</span>
         </div>
       </article>
       <div class="flex items-center justify-center py-5 lg:w-14 lg:py-0" aria-hidden="true">
@@ -285,14 +270,15 @@
       <article class="flex min-h-[380px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
         <div class="flex items-center gap-4">
           <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-amber); width: 3.4rem; height: 3.4rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
           </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Route</p>
+          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Hashlock</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          Routers &mdash; swap nodes, mints, federations &mdash; extend the chain,
-          each locking funds with the same hash and a shorter timeout, taking a
-          small fee for the hop.
+          The sender locks the payment on the source layer, then every router
+          &mdash; swap nodes, mints, federations &mdash; extends the chain against
+          the same <strong class="text-ink">H</strong>, each with a shorter timeout. One hash now binds
+          the whole route.
         </p>
         <div class="mt-auto grid grid-cols-2 gap-2 pt-6">
           <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">same hash per hop</span>
@@ -307,12 +293,12 @@
           <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-lime); width: 3.4rem; height: 3.4rem;">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Settle</p>
+          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Commit</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          The receiver reveals the preimage and the route unwinds atomically:
-          every hop claims downstream and settles upstream, or everything
-          refunds. All or nothing, every time.
+          The receiver reveals <strong class="text-ink">R</strong> against the final hop and the
+          preimage cascades upstream: every hop claims and settles atomically.
+          If any leg stalls, its timeout expires and everything refunds.
         </p>
         <div class="mt-auto grid grid-cols-2 gap-2 pt-6">
           <span class="flex items-center justify-center border-2 border-ink bg-white px-2 py-3 text-center font-fira text-[0.6rem] font-bold tracking-[0.06em] leading-[1.4] uppercase text-ink2">preimage cascades</span>
@@ -331,15 +317,28 @@
       <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">Routes across the bitcoin stack</p>
     </div>
     <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Any source, any destination</h2>
+    <p class="mt-6 max-w-[640px] text-base leading-[1.75] text-ink2">
+      Currently Cassis has implementations for
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-arkade no-underline underline-offset-[3px] decoration-2">Arkade</a>,
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-liquid no-underline underline-offset-[3px] decoration-2">Liquid</a>,
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-fedimint no-underline underline-offset-[3px] decoration-2">Fedimint</a>,
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-rootstock no-underline underline-offset-[3px] decoration-2">Rootstock</a>,
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-cashu no-underline underline-offset-[3px] decoration-2">Cashu</a> and
+      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-lightning no-underline underline-offset-[3px] decoration-2">Lightning</a>,
+      but new layers can be easily added, as long as they support creating HTLCs.
+    </p>
+    <p class="mt-4 max-w-[640px] text-base leading-[1.75] text-ink2">
+      Users are free to use only the layers they are comfortable with, with the trust model they choose. See the <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-ink underline decoration-2 underline-offset-[3px]">full layer guide</a>.
+    </p>
     <div class="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
       <article class="border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
         <h3 class="m-0 font-outfit text-[1.4rem] leading-[0.95] font-black tracking-[-0.04em] uppercase">Arkade to Fedimint</h3>
         <div class="mt-6 flex flex-wrap items-center gap-2.5">
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-btc);">Arkade</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-arkade);">Arkade</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cyan);">Liquid</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-liquid);">Liquid</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cassis);">Fedimint</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-fedimint);">Fedimint</span>
         </div>
         <p class="mt-5 text-[0.85rem] leading-[1.7] text-ink2">
           An ark sender pays a fedimint user without either touching the
@@ -351,11 +350,11 @@
       <article class="border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
         <h3 class="m-0 font-outfit text-[1.4rem] leading-[0.95] font-black tracking-[-0.04em] uppercase">Rootstock to Lightning</h3>
         <div class="mt-6 flex flex-wrap items-center gap-2.5">
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-coral);">Rootstock</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-rootstock);">Rootstock</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-ink shadow-s" style="background: var(--color-amber);">Cashu</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cashu);">Cashu</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-ink shadow-s" style="background: var(--color-lime);">Lightning</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-ink shadow-s" style="background: var(--color-lightning);">Lightning</span>
         </div>
         <p class="mt-5 text-[0.85rem] leading-[1.7] text-ink2">
           BTC locked on rootstock exits through a cashu mint that issues
@@ -376,11 +375,10 @@
         <span class="inline-block h-3 w-3 bg-amber"></span>
         <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-white/60">Why Cassis</p>
       </div>
-      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase text-white">Layers are the future.<br /><span class="text-amber">Routing is missing.</span></h2>
+      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase text-white">A decentralized and open <span class="text-amber">routing ecosystem</span>.</h2>
       <p class="mt-6 max-w-[600px] text-base leading-[1.8] text-white/65">
-        The bitcoin ecosystem is exploding into layer-specific silos. Cassis
-        is the missing fabric that lets value flow between them while keeping
-        every guarantee on-chain.
+        No permission, no registry, no coordinator. Anyone can run a router
+        for whatever networks they want, and the mesh forms itself.
       </p>
     </div>
     <div class="flex flex-col gap-6">
@@ -389,8 +387,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Contracts, not reputation</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Intermediaries are bound by HTLCs with hard timeouts, not by trust or identity. Cheaters only ever lock up their own funds.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Anyone can route</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">No gatekeeping. Run a router on any networks you hold liquidity on, and collect a fee for every hop you carry.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -398,8 +396,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Layer-agnostic by design</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Anything that can express a hash lock and a time lock can join a route: channels, sidechains, rollups, mints, federations.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Announced on Nostr</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Routers publish their node announcements as Nostr events. Senders discover and filter them by network support, fee and reliability.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -407,8 +405,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Cheap enough for payments</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Routes never touch the base layer individually. Fees are per-hop and competitive, making small and frequent transfers practical.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Consent at every hop</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">During preparation, a router inspects the sender&rsquo;s pseudonymous identity and accepts or rejects the proposal before any funds move.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -416,8 +414,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Bitcoin-only, forever</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">No new token, no governance, no bridge multisig to pwn. Cassis routes satoshis, and that is all it will ever do.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Permissionless mesh</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">No coordinator, no global view, no single point of failure. The route is whatever the routers you trust agree to carry.</p>
         </div>
       </div>
     </div>
