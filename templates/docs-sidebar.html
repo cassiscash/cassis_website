@@ -1,0 +1,15 @@
+{% set docs = get_section(path="docs/_index.md") %}
+<aside class="docs-sidebar">
+  <nav aria-label="Documentation">
+    <ul class="docs-toc">
+      <li class="toc-head">Documentation</li>
+      {% for page in docs.pages %}
+      <li>
+        <a href="{{ page.permalink | safe }}" {% if current_path == page.path %}class="active"{% endif %}>
+          {{ page.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</aside>

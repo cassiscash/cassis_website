@@ -1,0 +1,425 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.title }} | {{ config.extra.tagline }}{% endblock title %}
+
+{% block content %}
+{# ============================== HERO ============================== #}
+<section class="hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-shape hero-shape-one" aria-hidden="true"></div>
+  <div class="hero-shape hero-shape-two" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <h1 class="hero-title">Seamless payments <span class="hero-title-accent">across layers</span></h1>
+      <p class="hero-lead">
+        Bitcoin is no longer one network. Scaling needs have split the satoshis through multiple layers that remain disconnected.
+      </p>
+      <p class="hero-lead">
+        Cassis is an open protocol that uses HTLCs and multi-hop routing to ensure every Bitcoin user is always within reach of any other.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="{{ get_url(path='@/docs/quickstart.md') }}">
+          Get started
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+        </a>
+        <a class="btn btn-card" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
+      </div>
+    </div>
+
+    <div class="route-card" role="img" aria-label="Example Cassis payment routed from Arkade through Liquid into Fedimint">
+      <div class="route-card-head">
+        <span class="brandline">
+          <img src="{{ get_url(path='logo.png') }}" alt="" width="24" height="24" />
+          Cassis
+        </span>
+        <span class="meta">21,300 sats &middot; routed in 0.8s</span>
+      </div>
+      <div class="route-card-body">
+        <div class="route-invoice">
+          <span class="desc font-fira">send 21,300 sats to geppetto@fedimint</span>
+          <span class="caret" aria-hidden="true"></span>
+        </div>
+        <div class="hops">
+          <div class="hop state-lock">
+            <span class="hop-badge" style="background: var(--btc);">ark</span>
+            <div class="hop-info">
+              <div class="layer">Arkade</div>
+              <div class="via">source &middot; htlc locked</div>
+            </div>
+            <div class="hop-amt">
+              <span class="sats">21,300</span>
+              <span class="state">hash locked</span>
+            </div>
+          </div>
+          <div class="hop-arrow" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+          </div>
+          <div class="hop state-lock">
+            <span class="hop-badge" style="background: var(--cyan);">lq</span>
+            <div class="hop-info">
+              <div class="layer">Liquid</div>
+              <div class="via">intermediary &middot; swap node</div>
+            </div>
+            <div class="hop-amt">
+              <span class="sats">21,288</span>
+              <span class="state">hash locked</span>
+            </div>
+          </div>
+          <div class="hop-arrow" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+          </div>
+          <div class="hop state-settled">
+            <span class="hop-badge" style="background: var(--cassis);">fm</span>
+            <div class="hop-info">
+              <div class="layer">Fedimint</div>
+              <div class="via">destination &middot; federation ecash</div>
+            </div>
+            <div class="hop-amt">
+              <span class="sats">21,276</span>
+              <span class="state">settled</span>
+            </div>
+          </div>
+        </div>
+        <div class="route-settle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+          preimage revealed &mdash; all hops settled atomically
+        </div>
+        <div class="route-alt">
+          <span>also:</span>
+          <span class="mini">rootstock</span>
+          <span>&rarr;</span>
+          <span class="mini">cashu</span>
+          <span>&rarr;</span>
+          <span class="mini">lightning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ========================== FEATURE STRIP ========================== #}
+<section class="strip">
+  <article class="strip-item">
+    <span class="strip-icon" style="background: var(--cyan);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
+    </span>
+    <div>
+      <h2>HTLC-atomic</h2>
+      <p>Every hop is a hash time-locked contract. All legs settle or none do.</p>
+    </div>
+  </article>
+  <article class="strip-item">
+    <span class="strip-icon" style="background: var(--amber); color: var(--text);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
+    </span>
+    <div>
+      <h2>No wrapped tokens</h2>
+      <p>Bitcoin stays bitcoin. Native assets on every layer, no bridge custody.</p>
+    </div>
+  </article>
+  <article class="strip-item">
+    <span class="strip-icon" style="background: var(--lime); color: var(--text);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /></svg>
+    </span>
+    <div>
+      <h2>Open protocol</h2>
+      <p>A free, documented spec. Any wallet, mint or federation can implement it.</p>
+    </div>
+  </article>
+</section>
+
+{# ============================ CTA BAND ============================= #}
+<section class="band">
+  <div class="band-rings ring-1" aria-hidden="true"></div>
+  <div class="band-rings ring-2" aria-hidden="true"></div>
+  <div class="band-inner">
+    <h2>Extensible. <br />Flexible.</h2>
+    <p>
+      Currently Cassis has implementations for Arkade, Liquid, Fedimint, Rootstock, Cashu and Lightning, but new layers can be easily added, as long as they support creating HTLCs.
+    </p>
+    <p>
+      Users are free to use only the layers they are comfortable with, with the trust model they choose.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-dark" href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
+      <a class="btn btn-card" href="{{ get_url(path='@/docs/quickstart.md') }}">Get started</a>
+    </div>
+  </div>
+</section>
+
+{# ======================== HTLC EXPLANATION ========================= #}
+<section class="explain">
+  <div class="wrap explain-grid">
+    <div class="explain-copy">
+      <div class="section-kicker">
+        <span class="sq"></span>
+        <p>How Cassis works</p>
+      </div>
+      <h2 class="h2-display">Routed with hash time-locked contracts</h2>
+      <p>
+        A Cassis payment is a chain of HTLCs sharing one hash. The receiver
+        generates a random secret <strong>R</strong> and hands the sender its hash
+        <strong>H</strong>. Every intermediary along the path locks funds against
+        the same <strong>H</strong>, each with a strictly shorter timeout than the
+        hop before it.
+      </p>
+      <p>
+        When the receiver claims the final hop by revealing <strong>R</strong>,
+        the secret propagates upstream hop by hop and every contract settles.
+        If any leg stalls, its timeout expires and funds simply refund. Nobody
+        can take the money and run.
+      </p>
+      <div class="point-list">
+        <article class="point">
+          <span class="point-icon" style="background: var(--cassis);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+          </span>
+          <div>
+            <h3>One hash binds the whole route</h3>
+            <p>Every hop references the same H, so claims are cryptographically tied to a single secret.</p>
+          </div>
+        </article>
+        <article class="point">
+          <span class="point-icon" style="background: var(--amber); color: var(--text);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+          </span>
+          <div>
+            <h3>Timeouts decrease upstream</h3>
+            <p>Each earlier hop has more time than the next, guaranteeing a refund path if the route fails.</p>
+          </div>
+        </article>
+        <article class="point">
+          <span class="point-icon" style="background: var(--lime); color: var(--text);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6-6 6 6 6" /><path d="m16 6 6 6-6 6" /></svg>
+          </span>
+          <div>
+            <h3>Settlement cascades backwards</h3>
+            <p>The preimage reveal lets each hop claim downstream before settling upstream. Atomic by construction.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="htlc-window" role="img" aria-label="Walkthrough of a Cassis HTLC payment">
+      <div class="htlc-window-bar">
+        <span class="dot" style="background: #ff5f56;"></span>
+        <span class="dot" style="background: #ffbd2e;"></span>
+        <span class="dot" style="background: #27c93f;"></span>
+        <span class="title">cassis &mdash; route walkthrough</span>
+      </div>
+      <div class="htlc-flow">
+        <div class="htlc-step">
+          <span class="no">1</span>
+          <div class="txt">
+            receiver picks secret <b>R</b>, sends sender the hash
+            <i>H = sha256(R)</i>
+          </div>
+        </div>
+        <div class="htlc-connector"></div>
+        <div class="htlc-step">
+          <span class="no">2</span>
+          <div class="txt">
+            sender locks <i>21,300 sats</i> on <b>arkade</b>:<br />
+            claim with preimage of <i>H</i>, refund after <em>144</em> blocks
+          </div>
+        </div>
+        <div class="htlc-connector"></div>
+        <div class="htlc-step">
+          <span class="no">3</span>
+          <div class="txt">
+            liquid swap node locks <i>21,288 sats</i> for fedimint payout,
+            same <i>H</i>, refund after <em>96</em> blocks
+          </div>
+        </div>
+        <div class="htlc-connector"></div>
+        <div class="htlc-step">
+          <span class="no">4</span>
+          <div class="txt">
+            fedimint federation holds <i>21,276 sats</i> for the receiver
+            against <i>H</i>
+          </div>
+        </div>
+        <div class="htlc-connector"></div>
+        <div class="htlc-step">
+          <span class="no">5</span>
+          <div class="txt">
+            receiver reveals <b>R</b> &rarr; claims fedimint, liquid and arkade
+            settle upstream. <em>done in 0.8s</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ============================== STEPS ============================== #}
+<section class="steps-section">
+  <div class="wrap">
+    <div class="section-kicker">
+      <span class="sq"></span>
+      <p>The payment lifecycle</p>
+    </div>
+    <h2 class="h2-display">Lock. Route. Settle.</h2>
+    <div class="steps-grid">
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-icon" style="background: var(--coral);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+          </span>
+          <p class="step-label">Lock</p>
+        </div>
+        <p>
+          The sender commits funds on the source layer in an HTLC: the receiver
+          can claim with the secret, the sender refunds after timeout. No
+          custodian, no deposit address.
+        </p>
+        <div class="step-tags">
+          <span class="step-tag">hash H published</span>
+          <span class="step-tag">refund path set</span>
+        </div>
+      </article>
+      <div class="step-arrow" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+      </div>
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-icon" style="background: var(--amber); color: var(--text);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg>
+          </span>
+          <p class="step-label">Route</p>
+        </div>
+        <p>
+          Routers &mdash; swap nodes, mints, federations &mdash; extend the chain,
+          each locking funds with the same hash and a shorter timeout, taking a
+          small fee for the hop.
+        </p>
+        <div class="step-tags">
+          <span class="step-tag">same hash per hop</span>
+          <span class="step-tag">decreasing timeouts</span>
+        </div>
+      </article>
+      <div class="step-arrow" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+      </div>
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-icon" style="background: var(--lime); color: var(--text);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <p class="step-label">Settle</p>
+        </div>
+        <p>
+          The receiver reveals the preimage and the route unwinds atomically:
+          every hop claims downstream and settles upstream, or everything
+          refunds. All or nothing, every time.
+        </p>
+        <div class="step-tags">
+          <span class="step-tag">preimage cascades</span>
+          <span class="step-tag">atomic guarantee</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ============================ EXAMPLES ============================= #}
+<section class="examples">
+  <div class="wrap">
+    <div class="section-kicker">
+      <span class="sq"></span>
+      <p>Routes across the bitcoin stack</p>
+    </div>
+    <h2 class="h2-display">Any source, any destination</h2>
+    <div class="examples-grid">
+      <article class="example-card">
+        <h3 class="h2-display" style="font-size: 1.4rem;">Arkade to Fedimint</h3>
+        <div class="path">
+          <span class="layer-pill" style="background: var(--btc);">Arkade</span>
+          <span class="path-sep">&rarr;</span>
+          <span class="layer-pill" style="background: var(--cyan);">Liquid</span>
+          <span class="path-sep">&rarr;</span>
+          <span class="layer-pill" style="background: var(--cassis);">Fedimint</span>
+        </div>
+        <p>
+          An ark sender pays a fedimint user without either touching the
+          mainchain. A liquid swap node bridges the two: it claims the ark
+          HTLC with the preimage and funds a fedimint payout locked to the
+          same hash.
+        </p>
+      </article>
+      <article class="example-card">
+        <h3 class="h2-display" style="font-size: 1.4rem;">Rootstock to Lightning</h3>
+        <div class="path">
+          <span class="layer-pill" style="background: var(--coral);">Rootstock</span>
+          <span class="path-sep">&rarr;</span>
+          <span class="layer-pill" style="background: var(--amber); color: var(--text);">Cashu</span>
+          <span class="path-sep">&rarr;</span>
+          <span class="layer-pill" style="background: var(--lime); color: var(--text);">Lightning</span>
+        </div>
+        <p>
+          BTC locked on rootstock exits through a cashu mint that issues
+          ecash against the shared hash, then a lightning router settles the
+          final invoice. One secret, three layers, zero trust assumptions
+          beyond the contracts.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ============================ WHY CASSIS =========================== #}
+<section class="why">
+  <div class="wrap why-grid">
+    <div>
+      <div class="section-kicker">
+        <span class="sq"></span>
+        <p>Why Cassis</p>
+      </div>
+      <h2 class="h2-display">Layers are the future.<br /><span class="accent">Routing is missing.</span></h2>
+      <p class="why-lead">
+        The bitcoin ecosystem is exploding into layer-specific silos. Cassis
+        is the missing fabric that lets value flow between them while keeping
+        every guarantee on-chain.
+      </p>
+    </div>
+    <div class="why-list">
+      <div class="why-item">
+        <span class="why-check">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        </span>
+        <div>
+          <h3>Contracts, not reputation</h3>
+          <p>Intermediaries are bound by HTLCs with hard timeouts, not by trust or identity. Cheaters only ever lock up their own funds.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-check">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        </span>
+        <div>
+          <h3>Layer-agnostic by design</h3>
+          <p>Anything that can express a hash lock and a time lock can join a route: channels, sidechains, rollups, mints, federations.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-check">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        </span>
+        <div>
+          <h3>Cheap enough for payments</h3>
+          <p>Routes never touch the base layer individually. Fees are per-hop and competitive, making small and frequent transfers practical.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-check">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        </span>
+        <div>
+          <h3>Bitcoin-only, forever</h3>
+          <p>No new token, no governance, no bridge multisig to pwn. Cassis routes satoshis, and that is all it will ever do.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

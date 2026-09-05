@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="{{ get_url(path='logo.png') }}" />
+    {%- if page %}{% set desc = page.description | default(value=config.description) %}{% else %}{% set desc = config.description %}{% endif -%}
+    <meta name="description" content="{{ desc }}" />
+    <meta property="og:site_name" content="Cassis" />
+    <meta property="og:title" content="{% block og_title %}{{ config.title }} | {{ config.extra.tagline }}{% endblock og_title %}" />
+    <meta property="og:description" content="{{ desc }}" />
+    <meta property="og:url" content="{{ current_url }}" />
+    <meta property="og:image" content="{{ get_url(path='logo.png') }}" />
+    <meta property="og:type" content="website" />
+    <title>{% block title %}{{ config.title }} | {{ config.extra.tagline }}{% endblock title %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ get_url(path='site.css') }}" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a href="{{ get_url(path='/') }}" class="brand">
+          <img src="{{ get_url(path='logo.png') }}" alt="Cassis logo" width="34" height="34" />
+          <span>Cassis</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
+          <li><a href="{{ get_url(path='@/docs/layers.md') }}">Layers</a></li>
+          <li><a href="{{ get_url(path='@/docs/_index.md') }}">Docs</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-primary" href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="nav-toggle-box">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" />
+          <label class="nav-burger" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+            </svg>
+          </label>
+          <div class="nav-mobile">
+            <a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a>
+            <a href="{{ get_url(path='@/docs/layers.md') }}">Layers</a>
+            <a href="{{ get_url(path='@/docs/_index.md') }}">Docs</a>
+            <a href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="main-content">
+      {% block content %}{% endblock content %}
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="name">
+              <img src="{{ get_url(path='logo.png') }}" alt="" width="30" height="30" />
+              Cassis
+            </span>
+            <span class="tag">{{ config.extra.tagline }}</span>
+          </div>
+          <nav class="footer-cols" aria-label="Footer">
+            <ul class="footer-col">
+              <li class="head">Protocol</li>
+              <li><a href="{{ get_url(path='@/docs/how-it-works.md') }}">How it works</a></li>
+              <li><a href="{{ get_url(path='@/docs/layers.md') }}">Supported layers</a></li>
+            </ul>
+            <ul class="footer-col">
+              <li class="head">Docs</li>
+              <li><a href="{{ get_url(path='@/docs/quickstart.md') }}">Quickstart</a></li>
+              <li><a href="{{ get_url(path='@/docs/faq.md') }}">FAQ</a></li>
+            </ul>
+            <ul class="footer-col">
+              <li class="head">Community</li>
+              <li><a href="{{ config.extra.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="{{ config.extra.github_url }}/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>2026 Cassis. Open protocol, open source.</span>
+          <span class="btc-badge">Bitcoin-only. No wrapped tokens. No shitcoins.</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

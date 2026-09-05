@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock title %}
+
+{% block content %}
+<section class="docs-page" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="docs-layout">
+      {% include "docs-sidebar.html" %}
+      <div class="docs-page">
+        <div class="docs-page-head">
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+        </div>
+        <div class="prose">
+          {{ page.content | safe }}
+        </div>
+        {% set docs = get_section(path="docs/_index.md") %}
+        {% set_global last = false %}
+        {% set_global prev = false %}
+        {% set_global next = false %}
+        {% for p in docs.pages %}
+          {% if prev == false and next == false and last != false and last.path == page.path %}{% set_global next = p %}{% endif %}
+          {% set_global last = p %}
+        {% endfor %}
+        {% for p in docs.pages %}
+          {% if p.path == page.path and last != false %}{% set_global prev = last %}{% endif %}
+          {% set_global last = p %}
+        {% endfor %}
+        {% if prev != false or next != false %}
+        <div class="docs-pager">
+          {% if prev != false %}
+          <a href="{{ prev.permalink | safe }}">
+            <span class="dir">&larr; Previous</span>
+            <span class="name">{{ prev.title }}</span>
+          </a>
+          {% else %}
+          <span></span>
+          {% endif %}
+          {% if next != false %}
+          <a class="next" href="{{ next.permalink | safe }}">
+            <span class="dir">Next &rarr;</span>
+            <span class="name">{{ next.title }}</span>
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

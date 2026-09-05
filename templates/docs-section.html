@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} | {{ config.title }}{% endblock title %}
+
+{% block content %}
+<section class="docs-page" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="docs-layout">
+      {% include "docs-sidebar.html" %}
+      <div class="docs-page">
+        <div class="docs-page-head">
+          <h1>{{ section.title }}</h1>
+          {% if section.description %}<p>{{ section.description }}</p>{% endif %}
+        </div>
+        <div class="prose">
+          {{ section.content | safe }}
+        </div>
+        <div class="docs-cards">
+          {% for page in section.pages %}
+          <a class="docs-card" href="{{ page.permalink | safe }}">
+            {% if loop.index0 == 0 %}{% set bg = "var(--cassis)" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 1 %}{% set bg = "var(--btc)" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 2 %}{% set bg = "var(--cyan)" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 3 %}{% set bg = "var(--amber)" %}{% set fg = "var(--text)" %}
+            {% else %}{% set bg = "var(--lime)" %}{% set fg = "var(--text)" %}
+            {% endif %}
+            <span class="no" style="background: {{ bg }}; color: {{ fg }};">{{ loop.index }}</span>
+            <h2>{{ page.title }}</h2>
+            <p>{{ page.description }}</p>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

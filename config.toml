@@ -1,0 +1,17 @@
+base_url = "https://cassis.cash"
+title = "Cassis"
+description = "Cassis is an open protocol for interlayer bitcoin payments. Route satoshis trustlessly across Lightning, Liquid, Cashu, Fedimint, Arkade and Rootstock using HTLCs."
+default_language = "en"
+compile_sass = true
+build_search_index = false
+generate_feeds = false
+
+[markdown]
+render_emoji = true
+
+[markdown.highlighting]
+theme = "github-dark"
+
+[extra]
+github_url = "https://github.com/cassiscash/cassis"
+tagline = "Bitcoin payments across every layer"
