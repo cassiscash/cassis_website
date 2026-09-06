@@ -4,63 +4,68 @@ description = "Send your first interlayer payment with Cassis in a few steps."
 weight = 1
 +++
 
-## What you need
+> **Experimental software.** Cassis is early-stage and under active
+> development. Only deposit money you are comfortable losing, for now.
 
-- A wallet on any [supported layer](@/docs/layers.md) (source)
-- A receiver willing to generate a secret `R` (destination)
-- One Cassis router serving both layers (or a chain of them)
+## Get a supported wallet
 
-## 1. Request a payment
-
-The receiver creates a payment request containing the hash of a fresh secret:
+The only supported wallet today is **cassis-cli**:
 
 ```text
-  cassis:?amount=21300&h=a3f9c1...&dst=fedimint:gepperto@federation.example
+$ cargo install --path cassis-cli
 ```
 
-The receiver **never publishes** `R` until it is time to claim.
+You will need **two instances**, each on a different network &mdash; one to pay
+and one to receive. They can run on the same machine with different config
+directories (`--home`).
 
-## 2. Find a route
+## Check the router mesh
 
-Ask the router mesh for a path from your layer to the destination layer:
+Before choosing your networks, visit
+[explorer.cassis.cash](https://explorer.cassis.cash) to see which routers are
+active and which networks they bridge. Pick a source and destination that are
+actually connected.
+
+## 1. Deposit into the sender wallet
+
+Fund the wallet on the network you will pay from:
 
 ```text
-$ cassis route --from arkade --to fedimint --hash a3f9c1... --amount 21300
-
-  hop 0  arkade      21,300 msat  cltv 144
-  hop 1  liquid      21,288 msat  cltv 96    fee 12 msat
-  hop 2  fedimint    21,276 msat  cltv 0     fee 12 msat
+$ cassis-cli --home ~/.cassis-sender arkade deposit
+$ cassis-cli --home ~/.cassis-sender liquid deposit
+$ cassis-cli --home ~/.cassis-sender rootstock info
 ```
 
-## 3. Lock the source hop
+## 2. Create an invoice on the receiver wallet
 
-Your wallet creates the first HTLC &mdash; on ark, a VTXO with a hash-lock
-branch:
+On the receiving instance, ask for a payment:
 
 ```text
-  claim:   sha256(preimage) == a3f9c1... before cltv 144
-  refund:  back to sender after cltv 144
+$ cassis-cli --home ~/.cassis-receiver invoice \
+    --amount 21300 \
+    --network fedimint \
+    --payee geppetto@fedimint \
+    --description "lunch"
 ```
 
-The router sees the lock and extends the chain downstream, hop by hop, until
-the destination is covered.
+This generates a fresh secret `R`, keeps it local, and prints an invoice
+carrying only the hash `H = sha256(R)`.
 
-## 4. Claim and settle
+## 3. Pay the invoice on the sender wallet
 
-The receiver reveals `R` against the final hop. The preimage cascades
-backwards and every leg settles. Your wallet watches it happen:
+Hand the invoice to the sender and pay:
 
 ```text
-$ cassis watch --hash a3f9c1...
-
-  [ok] fedimint   settled   21,276 msat
-  [ok] liquid     settled   21,288 msat
-  [ok] arkade     consumed  21,300 msat
+$ cassis-cli --home ~/.cassis-sender pay \
+    --invoice '{"...": "..."}' \
+    --from arkade
 ```
 
-Total cost: two hop fees (24 msat above). Trust added: zero.
+The wallet finds a route through the router mesh, locks the source hop, and the
+preimage cascades back as every leg settles. That's it.
 
 ## Next steps
 
 - Read [how it works](@/docs/how-it-works.md) for the full mental model.
 - Browse the source on [GitHub](https://github.com/cassiscash/cassis).
+- Want to carry payments for others? [Run a router](@/docs/router.md).
