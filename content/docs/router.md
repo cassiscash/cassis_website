@@ -41,6 +41,52 @@ The router announces itself on Nostr and starts accepting route proposals. Its
 announcement carries the networks it bridges and its fees, so senders and the
 explorer can discover it.
 
+## The announcement event
+
+A router publishes one **kind `35515`** event per direction it offers. The
+event is a signed Nostr note whose `pubkey` is the router's identity, with the
+route spelled out in its tags:
+
+```json
+{
+  "kind": 35515,
+  "pubkey": "<router nostr pubkey>",
+  "tags": [
+    ["d", "liquid->arkade"],
+    ["iroh", "<iroh peer id>", "<iroh relay url>"],
+    ["fee_base_msat", "1000"],
+    ["fee_ppm", "500"],
+    ["incoming_delta_secs", "300"],
+    ["transit_slack_secs", "60"],
+    ["relay", "wss://relay.example.com"]
+  ]
+}
+```
+
+Each event announces a **single directed edge** `from -> to`, carried in the
+`d` tag as `<network_from>-><network_to>`. A router bridging both directions
+publishes two events, one per direction. Tags:
+
+- `d` &mdash; the directed route `<from>-><to>`, e.g. `liquid->arkade`. The
+  `NetworkId` strings follow the scheme documented in [Layers](@/docs/layers.md).
+- `iroh` &mdash; the router's Iroh peer id (value 1) and optional relay URL
+  (value 2), used to reach the router over Iroh.
+- `fee_base_msat` &mdash; flat fee in millisatoshis added to every payment the
+  hop carries.
+- `fee_ppm` &mdash; proportional fee, parts-per-million of the forwarded amount.
+- `incoming_delta_secs` &mdash; per-hop timelock budget in seconds: the time
+  this hop needs between receiving the incoming HTLC and forwarding the outgoing
+  one. `0` or absent means senders fall back to a per-network default.
+- `transit_slack_secs` &mdash; extra buffer (seconds) the sender adds to
+  deadlines to absorb in-flight latency and clock skew. `0` or absent means
+  senders fall back to a global default.
+- `relay` &mdash; a Nostr relay (repeatable) where the announcement is
+  published and where the router can be reached.
+
+Senders filter for kind `35515` events, keep only those fresher than 24 hours,
+parse the tags into a `RouteAnnouncement`, and run a shortest-path search over
+the resulting directed graph.
+
 ## Lightning is special
 
 For Lightning there is no embedded wallet. Run **LND** to manage the channel

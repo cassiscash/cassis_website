@@ -15,7 +15,7 @@
     <div class="flex min-w-0 flex-col items-start">
       <h1 class="m-0 max-w-[760px] font-outfit text-[clamp(3rem,7.5vw,6.8rem)] leading-[0.85] font-black tracking-[-0.05em] uppercase">Seamless payments <span class="text-ink underline decoration-[0.09em] underline-offset-[0.12em]">across layers</span></h1>
       <p class="mt-7 max-w-[640px] text-lg leading-[1.7] text-ink2 md:text-xl">
-        Bitcoin is no longer one network. Scaling needs have split the satoshis through multiple layers that remain disconnected.
+        Bitcoin is no longer one network. It now lives in multiple layers.
       </p>
       <p class="mt-7 max-w-[640px] text-lg leading-[1.7] text-ink2 md:text-xl">
         Cassis is an open protocol that uses HTLCs and multi-hop routing to ensure every Bitcoin user is always within reach of any other.
@@ -29,56 +29,70 @@
       </div>
     </div>
 
-    <div class="border-[3px] border-ink bg-card shadow-l" role="img" aria-label="Example Cassis payment routed from Arkade through Liquid into Fedimint">
+    <div class="border-[3px] border-ink bg-card shadow-l max-w-[calc(100vw-42px)]" role="img" aria-label="Illustrated example of a Cassis payment">
       <div class="flex items-center justify-between gap-4 border-b-[3px] border-ink bg-ink px-4 py-3 text-white">
         <span class="flex items-center gap-2.5 font-space text-xs font-extrabold tracking-[0.14em] uppercase">
           <img src="{{ get_url(path='logo_white.png') }}" alt="" width="24" height="24" />
           Cassis
         </span>
-        <span class="font-fira text-[0.6rem] tracking-[0.08em] uppercase text-white/70">21,300 sats &middot; routed in 0.8s</span>
+        <span class="font-fira text-[0.6rem] tracking-[0.08em] uppercase text-white/70">21,300 sats &middot; multi-hop inter-layer payment</span>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center gap-3 border-[3px] border-ink bg-white px-4 py-3 shadow-s">
-          <span class="min-w-0 flex-1 truncate font-fira text-sm font-semibold">send 21,300 sats to geppetto@fedimint</span>
+          <span class="min-w-0 flex-1 truncate font-fira text-sm font-semibold">[david@rootstock ~]$ pay 21,300 sats invoice from amina@arkade</span>
           <span class="h-5 w-[5px] animate-blink bg-cassis" aria-hidden="true"></span>
         </div>
         <div class="mt-5 flex flex-col">
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-arkade);">ark</span>
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink" style="background: var(--color-rootstock);"><img src="{{ get_url(path='rootstock_icon.png') }}" alt="" width="20" height="20" /></span>
+            <div class="min-w-0">
+              <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Rootstock</div>
+              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">source &middot; david</div>
+            </div>
+            <div class="text-right font-fira">
+              <span class="text-[0.85rem] font-bold">21,318</span>
+              <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#b45309]">hash locked</span>
+            </div>
+          </div>
+          <div class="grid place-items-center py-1.5 text-ink" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+          </div>
+          <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink" style="background: var(--color-fedimint);"><img src="{{ get_url(path='fedimint_icon.png') }}" alt="" width="20" height="20" /></span>
+            <div class="min-w-0">
+              <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Orange Club Africa</div>
+              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">fedimint &middot; intermediary</div>
+            </div>
+            <div class="text-right font-fira">
+              <span class="text-[0.85rem] font-bold">21,305</span>
+              <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#b45309]">hash locked</span>
+            </div>
+          </div>
+          <div class="grid place-items-center py-1.5 text-ink" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+          </div>
+          <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink" style="background: var(--color-cashu);"><img src="{{ get_url(path='cashu_icon.png') }}" alt="" width="20" height="20" /></span>
+            <div class="min-w-0">
+              <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Minibits</div>
+              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">cashu &middot; intermediary</div>
+            </div>
+            <div class="text-right font-fira">
+              <span class="text-[0.85rem] font-bold">21,302</span>
+              <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#b45309]">hash locked</span>
+            </div>
+          </div>
+          <div class="grid place-items-center py-1.5 text-ink" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+          </div>
+          <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
+            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink" style="background: var(--color-arkade);"><img src="{{ get_url(path='arkade_logo.png') }}" alt="" width="20" height="20" /></span>
             <div class="min-w-0">
               <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Arkade</div>
-              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">source &middot; htlc locked</div>
+              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">destination &middot; amina</div>
             </div>
             <div class="text-right font-fira">
               <span class="text-[0.85rem] font-bold">21,300</span>
-              <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#b45309]">hash locked</span>
-            </div>
-          </div>
-          <div class="grid place-items-center py-1.5 text-ink" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
-          </div>
-          <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-liquid);">lq</span>
-            <div class="min-w-0">
-              <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Liquid</div>
-              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">intermediary &middot; swap node</div>
-            </div>
-            <div class="text-right font-fira">
-              <span class="text-[0.85rem] font-bold">21,288</span>
-              <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#b45309]">hash locked</span>
-            </div>
-          </div>
-          <div class="grid place-items-center py-1.5 text-ink" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
-          </div>
-          <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-2 border-ink bg-white px-3.5 py-3">
-            <span class="flex h-10 w-10 items-center justify-center border-2 border-ink font-space text-[0.72rem] font-extrabold tracking-[0.05em] uppercase text-white" style="background: var(--color-fedimint);">fm</span>
-            <div class="min-w-0">
-              <div class="font-space text-sm font-extrabold leading-[1.2] uppercase">Fedimint</div>
-              <div class="font-fira text-[0.62rem] tracking-[0.06em] uppercase text-ink2">destination &middot; </div>
-            </div>
-            <div class="text-right font-fira">
-              <span class="text-[0.85rem] font-bold">21,276</span>
               <span class="mt-0.5 block text-[0.58rem] tracking-[0.08em] uppercase text-[#3f6212]">settled</span>
             </div>
           </div>
@@ -87,13 +101,15 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
           preimage revealed &mdash; all hops settled atomically
         </div>
-        <div class="mt-4 flex flex-wrap items-center gap-2 font-fira text-[0.62rem] tracking-[0.08em] uppercase text-ink2">
-          <span>also:</span>
-          <span class="border-2 border-ink bg-white px-2 py-1 font-bold text-ink">rootstock</span>
-          <span>&rarr;</span>
-          <span class="border-2 border-ink bg-white px-2 py-1 font-bold text-ink">cashu</span>
-          <span>&rarr;</span>
-          <span class="border-2 border-ink bg-white px-2 py-1 font-bold text-ink">lightning</span>
+        <div class="mt-8 flex flex-wrap items-center gap-2 font-fira text-[0.62rem] tracking-[0.08em] uppercase text-ink2">
+          Also:
+
+          <div class="border-2 border-ink px-4 py-1.5 font-bold text-white" style="background: var(--color-lightning);">lightning</div>
+          <div class="border-2 border-ink px-4 py-1.5 font-bold text-white" style="background: var(--color-liquid);">liquid</div>
+          <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">spark</div>
+          <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">second</div>
+          <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">stacks</div>
+          <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">next invention</div>
         </div>
       </div>
     </div>
@@ -116,8 +132,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
     </span>
     <div>
-      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">No wrapped tokens</h2>
-      <p class="mt-1 text-[0.8rem] text-ink2">Bitcoin stays bitcoin. Native assets on every layer, no bridge custody.</p>
+      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Choose your layer</h2>
+      <p class="mt-1 text-[0.8rem] text-ink2">Every layer keeps its own security and privacy tradeoffs. Route through whatever fits.</p>
     </div>
   </article>
   <article class="flex items-center gap-4 px-6 py-5 md:px-9 md:py-5">
@@ -125,8 +141,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /></svg>
     </span>
     <div>
-      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Open protocol</h2>
-      <p class="mt-1 text-[0.8rem] text-ink2">A free, documented spec. Any wallet, mint or federation can implement it.</p>
+      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Reference implementation</h2>
+      <p class="mt-1 text-[0.8rem] text-ink2">Open-source in Rust. Run it, audit it, build against real code.</p>
     </div>
   </article>
 </section>
