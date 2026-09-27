@@ -4,42 +4,34 @@ description = "Questions you might have about the Cassis protocol."
 weight = 5
 +++
 
-## Is Cassis a token?
+## What problem does Cassis solve?
 
-No. Cassis moves **satoshis** that already exist on each layer. No new asset
-is minted, no bridge custody is created, nothing is wrapped.
+Bitcoin is scaling through layers: Lightning, Liquid, Arkade, Cashu, Fedimint and others being invented every day. A user of one of these networks can't pay someone on the other. Currently, the developers of such solutions have hacked a bridge solution using a centralized swap provider or Lightning gateway.
 
-## Is a Cassis payment custodial?
+Cassis abstracts the swap part into the pure **HTLC** level, makes it into an open and interoperable protocol that any of these networks can participate in and enables multi-hop routing. One can use _Lightning_ where it makes sense, pay directly between _Liquid_ and _Cashu_, or hop through two different _Fedimint_ bridges before reaching the receiver at _Arkade_.
 
-Per hop, as custodial as the layer itself. On-chain and channel hops are
-non-custodial by script; mint and federation hops inherit exactly the trust of
-the mint or federation. Intermediaries are bound by HTLCs &mdash; they cannot
-run away with funds, only lock them until timeout.
+## Can a router steal my payment?
 
-## What happens if a router disappears mid-payment?
+No. A router cannot redeem an HTLC without the `preimage` such that `sha256(R) == payment_hash`, and it cannot produce that preimage without the receiver revealing it. Once the receiver reveals it that is equivalent to the receiver issuing a receipt for the payment.
 
-Their hop times out and refunds upstream. Because timeouts decrease along the
-route, downstream legs settle or refund *before* upstream money is at risk.
-Worst case: a delayed refund, never a loss to a contract holder.
+Every hop is enforced by the network it sits on, using that layer's own HTLC construction, so the guarantee does not depend on the router's honesty. Each individual network can have bugs in its logic or be controlled by some malicious actor that may steal the HTLC, but that loss is part of the risk each router accepts when they decide to bridge that specific network.
 
-## Why SHA-256 for the route hash?
+## Does this system need its own wallet?
 
-Every candidate layer can evaluate it: Lightning mandates it, Liquid and
-Rootstock expose it as an opcode/precompile, ark scripts and ecash mints can
-check it cheaply. One hash function everywhere keeps routes uniform.
+Cassis is expected to be integrated into existing wallets for each layer.
 
-## Does this compete with Lightning?
+## Why not just use Lightning?
 
-No &mdash; Lightning is a first-class citizen. Cassis uses Lightning's own
-HTLCs for any hop touching the network and is designed to make Lightning the
-cheapest router inside multi-layer paths.
+Lightning currently serves the purpose of being the glue between some of the existing layers, and because of its prevalence it's expected to play an important role in Cassis too. But we need a system that is generic and doesn't *require* Lightning and can evolve without it, if that's necessary.
 
-## Can I run a router?
+For networks like Bark and Spark, for example, the Lightning gateway is centralized and can't be opted out. For Fedimint it is in theory open, but most federations end up using the same gateway. Arkade has had problems in the past with their Lightning gateway going out of business, and the barrier of entry for running a Cashu mint is severely higher today because it requires every mint operator to run its own Lightning node. In all these cases, Cassis can be simpler and better solution.
 
-Yes. A router is any service that (1) watches locks for hashes it knows,
-(2) extends matching locks downstream, (3) claims with revealed preimages.
+## Does Cassis need a new invoice format?
 
-## Is there a testnet?
+Yes, in a way, but it can also be hacked into the BOLT11 Lightning invoice so both methods of payment are supported at first.
 
-Router implementations run against the layers' own testnets/signets. The
-quickstart examples work unchanged with testnet endpoints.
+At the same time we are working on a related invoicing method called _Cassis Order Protocol (COP)_ that will allow much more flexible and rich payment flows using a common simple interface. This is very early stages, but more information will be published at https://cop.cassis.cash/.
+
+## Is Cassis safe to use yet?
+
+It is experimental software under active development. The protocol logic is small and auditable, but the implementation is young. Only put in money you are comfortable losing, see the [quickstart](@/docs/quickstart.md).

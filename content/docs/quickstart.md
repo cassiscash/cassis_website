@@ -67,5 +67,5 @@ preimage cascades back as every leg settles. That's it.
 ## Next steps
 
 - Read [how it works](@/docs/how-it-works.md) for the full mental model.
+- See how routers announce themselves in [path finding](@/docs/path-finding.md).
 - Browse the source on [GitHub](https://github.com/cassiscash/cassis).
-- Want to carry payments for others? [Run a router](@/docs/router.md).

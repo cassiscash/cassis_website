@@ -12,3 +12,5 @@ instead of trusted bridges or wrapped tokens.
 
 Start with [how it works](@/docs/how-it-works.md) for the mental model, then
 follow the [quickstart](@/docs/quickstart.md) to build your first route.
+[Path finding](@/docs/path-finding.md) covers how routers announce themselves
+and how payers choose which ones to trust.

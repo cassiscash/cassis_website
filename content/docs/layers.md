@@ -1,7 +1,7 @@
 +++
 title = "Layers"
 description = "The bitcoin layers Cassis routes across, and how each one expresses an HTLC."
-weight = 3
+weight = 4
 +++
 
 ## Overview
