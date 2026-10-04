@@ -13,4 +13,5 @@ theme = "github-dark"
 
 [extra]
 github_url = "https://github.com/cassiscash/cassis"
+community_url = "https://cassis.zulipchat.com/"
 tagline = "Bitcoin payments across every layer"
