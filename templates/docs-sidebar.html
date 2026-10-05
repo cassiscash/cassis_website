@@ -1,11 +1,25 @@
 {% set docs = get_section(path="docs/_index.md") %}
+<details class="border-[3px] border-ink bg-card shadow-s lg:hidden">
+  <summary class="cursor-pointer px-4 py-3 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink">Documentation</summary>
+  <nav aria-label="Documentation">
+    <ul class="m-0 list-none border-t-2 border-ink p-0">
+      {% for page in docs.pages %}
+      <li>
+        <a href="{{ page.permalink | safe }}" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink {% if current_path == page.path %}border-cassis bg-cream font-bold text-ink{% else %}border-transparent font-medium text-ink2{% endif %}"{% if current_path == page.path %} aria-current="page"{% endif %}>
+          {{ page.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</details>
 <aside class="hidden lg:block">
   <nav aria-label="Documentation">
     <ul class="m-0 flex list-none flex-col gap-1 p-0">
       <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
       {% for page in docs.pages %}
       <li>
-        <a href="{{ page.permalink | safe }}" class="block border-l-[3px] border-ink px-3.5 py-2 text-[0.85rem] font-medium no-underline text-ink2 hover:bg-cream hover:text-ink {% if current_path == page.path %}border-cassis bg-cream font-bold text-ink{% else %}border-ink{% endif %}">
+        <a href="{{ page.permalink | safe }}" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink {% if current_path == page.path %}border-cassis bg-cream font-bold text-ink{% else %}border-ink font-medium text-ink2{% endif %}"{% if current_path == page.path %} aria-current="page"{% endif %}>
           {{ page.title }}
         </a>
       </li>

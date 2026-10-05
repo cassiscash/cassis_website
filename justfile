@@ -15,7 +15,11 @@ css: tailwind
 
 # run local dev server (autoreload + css watch)
 dev: tailwind
-    npx @tailwindcss/cli -i input.css -o static/site.css --watch & zola serve
+    #!/usr/bin/env bash
+    set -euo pipefail
+    npx @tailwindcss/cli -i input.css -o static/site.css --watch=always &
+    trap 'kill $! 2>/dev/null' EXIT
+    zola serve
 
 # build production site
 build: tailwind

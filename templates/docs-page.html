@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}{{ page.title }} | {{ config.title }}{% endblock title %}
+{% block og_title %}{{ page.title }} | {{ config.title }}{% endblock og_title %}
 
 {% block content %}
 <section class="bg-bg">
@@ -15,21 +16,11 @@
         <div class="prose">
           {{ page.content | safe }}
         </div>
-        {% set docs = get_section(path="docs/_index.md") %}
-        {% set_global last = false %}
-        {% set_global prev = false %}
-        {% set_global next = false %}
-        {% for p in docs.pages %}
-          {% if prev == false and next == false and last != false and last.path == page.path %}{% set_global next = p %}{% endif %}
-          {% set_global last = p %}
-        {% endfor %}
-        {% for p in docs.pages %}
-          {% if p.path == page.path and last != false %}{% set_global prev = last %}{% endif %}
-          {% set_global last = p %}
-        {% endfor %}
-        {% if prev != false or next != false %}
+        {% set prev = page.lower %}
+        {% set next = page.higher %}
+        {% if prev or next %}
         <div class="mt-14 grid grid-cols-2 gap-4">
-          {% if prev != false %}
+          {% if prev %}
           <a class="border-[3px] border-ink bg-card px-5 py-3.5 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ prev.permalink | safe }}">
             <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">&larr; Previous</span>
             <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">{{ prev.title }}</span>
@@ -37,7 +28,7 @@
           {% else %}
           <span></span>
           {% endif %}
-          {% if next != false %}
+          {% if next %}
           <a class="border-[3px] border-ink bg-card px-5 py-3.5 text-right no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ next.permalink | safe }}">
             <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">Next &rarr;</span>
             <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">{{ next.title }}</span>

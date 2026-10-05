@@ -98,14 +98,13 @@
           </div>
         </div>
         <div class="mt-5 flex flex-wrap items-center gap-2 font-fira text-[0.62rem] tracking-[0.08em] uppercase text-ink2">
-          Also:
-
+          Also supported:
           <div class="border-2 border-ink px-4 py-1.5 font-bold text-white" style="background: var(--color-lightning);">lightning</div>
           <div class="border-2 border-ink px-4 py-1.5 font-bold text-white" style="background: var(--color-liquid);">liquid</div>
+          <span class="ml-2">Planned:</span>
           <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">spark</div>
           <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">bark</div>
           <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">stacks</div>
-          <div class="border-2 border-dashed border-ink bg-gray-200 px-4 py-1.5 font-bold text-ink2/70">wBTC?</div>
         </div>
       </div>
     </div>
@@ -150,21 +149,20 @@
     <div>
       <div class="mb-5 flex items-center gap-3">
         <span class="inline-block h-3 w-3 bg-cassis"></span>
-        <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">How Cassis works</p>
+        <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">Why Cassis</p>
       </div>
-      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Routed with hash time-locked contracts</h2>
+      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Bitcoin is not one network anymore</h2>
       <p class="mt-6 max-w-[580px] text-base leading-[1.75] text-ink2">
-        A Cassis payment is a chain of HTLCs sharing one hash. The receiver
-        generates a random secret <strong>R</strong> and hands the sender its hash
-        <strong>H</strong>. Every intermediary along the path locks funds against
-        the same <strong>H</strong>, each with a strictly shorter timeout than the
-        hop before it.
+        Lightning, Liquid, Cashu, Fedimint, Arkade, Rootstock: bitcoin now lives on
+        many layers, and many more are coming. Each one makes its own tradeoffs
+        between speed, cost, privacy and trust. There is no single best layer,
+        only the right one for you.
       </p>
       <p class="mt-6 max-w-[580px] text-base leading-[1.75] text-ink2">
-        When the receiver claims the final hop by revealing <strong>R</strong>,
-        the secret propagates upstream hop by hop and every contract settles.
-        If any leg stalls, its timeout expires and funds simply refund. Nobody
-        can take the money and run.
+        Cassis is a generic protocol that connects them all. Pick the layer that
+        suits you, and pay anyone on any other layer. Payments hop across layers
+        atomically: they either complete end to end or refund, so nobody can take
+        the money and run.
       </p>
       <div class="mt-8 flex flex-col gap-3">
         <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
@@ -172,8 +170,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
           </span>
           <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">One hash binds the whole route</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Every hop references the same H, so claims are cryptographically tied to a single secret.</p>
+            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">One protocol for every layer</h3>
+            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Any layer that supports hash time-locked contracts can join the network. No bespoke bridges.</p>
           </div>
         </article>
         <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
@@ -181,8 +179,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
           </span>
           <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Timeouts decrease upstream</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Each earlier hop has more time than the next, guaranteeing a refund path if the route fails.</p>
+            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Keep your tradeoffs</h3>
+            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Stay on the layer you trust. Cassis never forces you onto someone else&rsquo;s.</p>
           </div>
         </article>
         <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
@@ -190,8 +188,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6-6 6 6 6" /><path d="m16 6 6 6-6 6" /></svg>
           </span>
           <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Settlement cascades backwards</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">The preimage reveal lets each hop claim downstream before settling upstream. Atomic by construction.</p>
+            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Atomic across layers</h3>
+            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">A payment settles on every layer it touches, or on none of them. Never stuck halfway.</p>
           </div>
         </article>
       </div>
@@ -209,7 +207,7 @@
         <div class="grid grid-cols-[auto_1fr] gap-4">
           <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">1</span>
           <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            receiver picks secret <b class="text-amber">R</b>, sends sender the hash
+            amina picks secret <b class="text-amber">R</b>, sends david the hash
             <i class="text-cyan not-italic">H = sha256(R)</i>
           </div>
         </div>
@@ -217,32 +215,33 @@
         <div class="grid grid-cols-[auto_1fr] gap-4">
           <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">2</span>
           <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            sender locks <i class="text-cyan not-italic">21,300 sats</i> on <b class="text-amber">arkade</b>:<br />
-            claim with preimage of <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">144</em> blocks
+            david locks <i class="text-cyan not-italic">21,318 sats</i> on <b class="text-amber">rootstock</b>:<br />
+            claim with preimage of <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">20 min</em>
           </div>
         </div>
         <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
         <div class="grid grid-cols-[auto_1fr] gap-4">
           <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">3</span>
           <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            liquid swap node locks <i class="text-cyan not-italic">21,288 sats</i> for fedimint payout,
-            same <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">96</em> blocks
+            routers lock <i class="text-cyan not-italic">21,305 sats</i> on <b class="text-amber">fedimint</b> and
+            <i class="text-cyan not-italic">21,302 sats</i> on <b class="text-amber">cashu</b>, same <i class="text-cyan not-italic">H</i>,
+            refund after <em class="text-lime not-italic">12</em> and <em class="text-lime not-italic">8 min</em>
           </div>
         </div>
         <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
         <div class="grid grid-cols-[auto_1fr] gap-4">
           <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">4</span>
           <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            fedimint federation holds <i class="text-cyan not-italic">21,276 sats</i> for the receiver
-            against <i class="text-cyan not-italic">H</i>
+            last router locks <i class="text-cyan not-italic">21,300 sats</i> on <b class="text-amber">arkade</b> for amina,
+            same <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">4 min</em>
           </div>
         </div>
         <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
         <div class="grid grid-cols-[auto_1fr] gap-4">
           <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">5</span>
           <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            receiver reveals <b class="text-amber">R</b> &rarr; claims fedimint, liquid and arkade
-            settle upstream. <em class="text-lime not-italic">done in 0.8s</em>
+            amina reveals <b class="text-amber">R</b> to claim on arkade &rarr; cashu, fedimint and
+            rootstock settle upstream. <em class="text-lime not-italic">done in 0.8s</em>
           </div>
         </div>
       </div>
@@ -267,17 +266,17 @@
       <span class="inline-block h-3 w-3 bg-cassis"></span>
       <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">The payment lifecycle</p>
     </div>
-    <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Prepare, hashlock, commit.</h2>
+    <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Prepare, execute, commit.</h2>
     <div class="mt-12 grid items-stretch gap-0 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
       <article class="flex min-h-[340px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
         <div class="flex items-center gap-4">
-          <span class="flex h-13 w-13 shrink-0 items-center justify-center border-[3px] border-ink text-white shadow-s" style="background: var(--color-coral); width: 3.4rem; height: 3.4rem;">
+          <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-white shadow-s" style="background: var(--color-coral); width: 3.4rem; height: 3.4rem;">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" /></svg>
           </span>
           <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Prepare</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          Upon receiving an invoice from the payee, the sender computes the route and contacts the routing nodes involved in the route directly, <strong class="text-ink">via Iroh</strong>, confirming that they're apt to route.
+          Upon receiving an invoice from the payee, the sender computes the route and sends a <strong class="text-ink">PREPARE</strong> message directly to each routing node on it, <strong class="text-ink">via Iroh</strong>, to confirm they're willing to route the payment.
         </p>
       </article>
       <div class="flex items-center justify-center py-5 lg:w-14 lg:py-0" aria-hidden="true">
@@ -288,10 +287,10 @@
           <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-amber); width: 3.4rem; height: 3.4rem;">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
           </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Hashlock</p>
+          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Execute</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          The sender creates the first HTLC in the route and contacts the first hop node. That node creates the second HTLC (for the second hop) and replies back to the sender, which then contacts the second hop &mdash; and so on.
+          The sender creates the first HTLC and sends an <strong class="text-ink">EXECUTE</strong> message to the first hop node. That node creates the next HTLC and replies to the sender, which then contacts the second hop &mdash; and so on.
         </p>
       </article>
       <div class="flex items-center justify-center py-5 lg:w-14 lg:py-0" aria-hidden="true">
@@ -305,7 +304,7 @@
           <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Commit</p>
         </div>
         <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          When the HTLC chain gets to the receiver it responds with the <strong class="text-ink">preimage</strong> at the same time as it uses that preimage to claim his HTLC. In the fast path the sender contacts every hop to tell them the preimage, otherwise they figure out by themselves.
+          When the HTLC chain reaches the receiver, it replies with a <strong class="text-ink">COMMIT</strong> carrying the <strong class="text-ink">preimage</strong> while using it to claim its own HTLC. The sender relays the preimage to every hop so they settle immediately; otherwise each hop learns it when the next hop claims its HTLC.
         </p>
       </article>
     </div>
@@ -322,12 +321,12 @@
     <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Any source, any destination</h2>
     <p class="mt-6 max-w-[640px] text-base leading-[1.75] text-ink2">
       Currently Cassis has implementations for
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-arkade no-underline underline-offset-[3px] decoration-2">Arkade</a>,
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-liquid no-underline underline-offset-[3px] decoration-2">Liquid</a>,
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-fedimint no-underline underline-offset-[3px] decoration-2">Fedimint</a>,
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-rootstock no-underline underline-offset-[3px] decoration-2">Rootstock</a>,
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-cashu no-underline underline-offset-[3px] decoration-2">Cashu</a> and
-      <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-lightning no-underline underline-offset-[3px] decoration-2">Lightning</a>,
+      <a href="{{ get_url(path='@/docs/layers.md#arkade') }}" class="font-semibold text-arkade no-underline underline-offset-[3px] decoration-2">Arkade</a>,
+      <a href="{{ get_url(path='@/docs/layers.md#liquid') }}" class="font-semibold text-liquid no-underline underline-offset-[3px] decoration-2">Liquid</a>,
+      <a href="{{ get_url(path='@/docs/layers.md#fedimint') }}" class="font-semibold text-fedimint no-underline underline-offset-[3px] decoration-2">Fedimint</a>,
+      <a href="{{ get_url(path='@/docs/layers.md#rootstock') }}" class="font-semibold text-rootstock no-underline underline-offset-[3px] decoration-2">Rootstock</a>,
+      <a href="{{ get_url(path='@/docs/layers.md#cashu') }}" class="font-semibold text-cashu no-underline underline-offset-[3px] decoration-2">Cashu</a> and
+      <a href="{{ get_url(path='@/docs/layers.md#lightning') }}" class="font-semibold text-lightning no-underline underline-offset-[3px] decoration-2">Lightning</a>,
       but new layers can be easily added, as long as they support creating HTLCs.
     </p>
     <div class="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
@@ -338,7 +337,7 @@
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
           <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-liquid);">Liquid</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-fedimint);">Cashu</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cashu);">Cashu</span>
         </div>
         <p class="mt-5 text-[0.85rem] leading-[1.7] text-ink2">
           An Arkade user pays a Cashu user. That specific Cashu mint doesn't have a bridge to Arkade directly (it could!) so the payment is routed through its Liquid bridge.
@@ -349,7 +348,7 @@
         <div class="mt-6 flex flex-wrap items-center gap-2.5">
           <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-rootstock);">Rootstock</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
-          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cashu);">Fedimint</span>
+          <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-fedimint);">Fedimint</span>
           <span class="font-fira text-sm font-bold text-ink2">&rarr;</span>
           <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-ink shadow-s" style="background: var(--color-lightning);">Lightning</span>
         </div>

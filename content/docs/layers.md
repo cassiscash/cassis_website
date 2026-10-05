@@ -6,7 +6,7 @@ weight = 4
 
 ## Overview
 
-A Cassis payment is a route with any number of hops, each of which is a HTLCs,
+A Cassis payment is a route with any number of hops, each of which is an HTLC,
 all bound to the same hash `H` and honoring strictly decreasing timeouts.
 Each network expresses that HTLC in its own idiom, the preimage `R` (with
 `H = sha256(R)`) is the only key that settles a hop, and a timeout always

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/png" href="{{ get_url(path='logo.png') }}" />
-    {%- if page %}{% set desc = page.description | default(value=config.description) %}{% else %}{% set desc = config.description %}{% endif -%}
+    {%- if page %}{% set desc = page.description | default(value=config.description) %}{% elif section and not section.path == "/" %}{% set desc = section.description | default(value=config.description) %}{% else %}{% set desc = config.description %}{% endif -%}
     <meta name="description" content="{{ desc }}" />
     <meta property="og:site_name" content="Cassis" />
     <meta property="og:title" content="{% block og_title %}{{ config.title }} | {{ config.extra.tagline }}{% endblock og_title %}" />
@@ -62,7 +62,7 @@
     <footer class="bg-dark pt-12 pb-8 text-white">
       <div class="mx-auto max-w-[1400px] px-6 md:px-12">
         <div class="flex flex-col justify-between gap-10 md:flex-row">
-          <div class="footer-brand">
+          <div>
             <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
               <img src="{{ get_url(path='logo_white.png') }}" alt="" width="30" height="30" />
               Cassis

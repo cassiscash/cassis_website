@@ -24,13 +24,13 @@ Cassis is expected to be integrated into existing wallets for each layer.
 
 Lightning currently serves the purpose of being the glue between some of the existing layers, and because of its prevalence it's expected to play an important role in Cassis too. But we need a system that is generic and doesn't *require* Lightning and can evolve without it, if that's necessary.
 
-For networks like Bark and Spark, for example, the Lightning gateway is centralized and can't be opted out. For Fedimint it is in theory open, but most federations end up using the same gateway. Arkade has had problems in the past with their Lightning gateway going out of business, and the barrier of entry for running a Cashu mint is severely higher today because it requires every mint operator to run its own Lightning node. In all these cases, Cassis can be simpler and better solution.
+For networks like Bark and Spark, for example, the Lightning gateway is centralized and can't be opted out of. For Fedimint it is in theory open, but most federations end up using the same gateway. Arkade has had problems in the past with their Lightning gateway going out of business, and the barrier to entry for running a Cashu mint is much higher today because it requires every mint operator to run its own Lightning node. In all these cases, Cassis can be a simpler and better solution.
 
 ## Does Cassis need a new invoice format?
 
 Yes, in a way, but it can also be hacked into the BOLT11 Lightning invoice so both methods of payment are supported at first.
 
-At the same time we are working on a related invoicing method called _Cassis Order Protocol (COP)_ that will allow much more flexible and rich payment flows using a common simple interface. This is very early stages, but more information will be published at https://cop.cassis.cash/.
+At the same time we are working on a related invoicing method called _Cassis Order Protocol (COP)_ that will allow much more flexible and rich payment flows using a common simple interface. This is very early stages, but more information will be published at <https://cop.cassis.cash/>.
 
 ## Is Cassis safe to use yet?
 
