@@ -35,3 +35,7 @@ At the same time we are working on a related invoicing method called _Cassis Ord
 ## Is Cassis safe to use yet?
 
 It is experimental software under active development. The protocol logic is small and auditable, but the implementation is young. Only put in money you are comfortable losing, see the [quickstart](@/docs/quickstart.md).
+
+## What happens if a payment gets stuck?
+
+If something fails midway (a router goes offline, the payee never claims), the payment can't complete, but nobody can take your funds: claiming any HTLC needs the preimage, which only the payee has. What can happen is that your funds stay locked until your HTLC expires, which for a long route can be an hour or two ([timeouts](@/docs/how-it-works.md#timeouts) explains why). After that your wallet refunds them on its own, as long as it is running, and so does every router on the way. A payment that fails before your HTLC is locked, e.g. because a router refused it, costs nothing and you can retry right away.

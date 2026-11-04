@@ -7,6 +7,11 @@ weight = 1
 > **Experimental software.** Cassis is early-stage and under active
 > development. Only deposit money you are comfortable losing, for now.
 
+This guide uses **mutinynet**, a bitcoin test network with 30-second
+blocks and a [faucet](https://faucet.mutinynet.com), so nothing here
+costs real money. Swap the network ids for their mainnet ones (see
+[layers](@/docs/layers.md)) once you are comfortable.
+
 ## 1. Install cassis-cli
 
 The only supported wallet today is **cassis-cli**:
@@ -23,24 +28,29 @@ directories (`--home`).
 
 ## 2. Enable a network on each instance
 
-This example pays from _Arkade_ to a _Fedimint_ federation (see
-[layers](@/docs/layers.md) for every network id):
+This example pays from the public mutinynet _Arkade_ operator to the
+mutinynet _Cashu_ mint (see [layers](@/docs/layers.md) for every network
+id):
 
 ```text
-$ cassis-cli --home ~/.cassis-sender enable arkade
-$ cassis-cli --home ~/.cassis-receiver enable fedimint::<invite_code>
+$ cassis-cli --home ~/.cassis-sender enable arkade::mutinynet
+$ cassis-cli --home ~/.cassis-receiver enable cashu::cashu.mutinynet.com
 ```
 
 ## 3. Deposit into the sender wallet
 
-Get a boarding address, send bitcoin to it and, once it confirms, onboard it
+Get a boarding address, send it some sats from the
+[faucet](https://faucet.mutinynet.com) and, once it confirms, onboard it
 into spendable funds:
 
 ```text
-$ cassis-cli --home ~/.cassis-sender arkade address
-$ cassis-cli --home ~/.cassis-sender arkade onboard
-$ cassis-cli --home ~/.cassis-sender arkade balance
+$ cassis-cli --home ~/.cassis-sender arkade --network arkade::mutinynet address
+$ cassis-cli --home ~/.cassis-sender arkade --network arkade::mutinynet onboard
+$ cassis-cli --home ~/.cassis-sender arkade --network arkade::mutinynet balance
 ```
+
+Arkade coins expire with their batch: if the balance reads 0 some hours
+later, run `onboard` again to move them into a new one.
 
 ## 4. Check there is a route
 
@@ -49,10 +59,16 @@ Make sure at least one route connects your two networks:
 
 ```text
 $ cassis-cli --home ~/.cassis-sender route \
-    --from arkade \
-    --to fedimint::<invite_code> \
+    --from arkade::mutinynet \
+    --to cashu::cashu.mutinynet.com \
     --amount-msat 21300000
 ```
+
+A payment only works if some router bridges your networks, directly or
+through other routers. If there is none, the command says so, or says
+why the cheapest one can't be used (e.g. a leg would run longer than its
+router accepts). You can then [run a router](#run-a-router)
+yourself, or pick networks that are connected.
 
 ## 5. Create an invoice on the receiver wallet
 
@@ -61,7 +77,7 @@ On the receiving instance, ask for a payment:
 ```text
 $ cassis-cli --home ~/.cassis-receiver invoice \
     --amount-msat 21300000 \
-    --network fedimint::<invite_code> \
+    --network cashu::cashu.mutinynet.com \
     --description "lunch" \
     --wait
 ```
@@ -77,11 +93,45 @@ Hand the invoice to the sender and pay:
 ```text
 $ cassis-cli --home ~/.cassis-sender pay \
     --invoice '{"...": "..."}' \
-    --from arkade
+    --from arkade::mutinynet
 ```
 
 The wallet finds a route through the router mesh, locks the source hop, and the
 preimage cascades back as every leg settles. That's it.
+
+If the payment fails midway, your funds stay locked until your HTLC
+expires (up to an hour or two, depending on the route; see
+[failures and refunds](@/docs/how-it-works.md#failures-and-refunds)).
+Your wallet refunds them once it is running after that:
+
+```text
+$ cassis-cli --home ~/.cassis-sender run
+$ cassis-cli --home ~/.cassis-sender payments
+```
+
+## Run a router
+
+A router is a node with funds on two or more networks, routing between
+them for a fee. Enable the networks, fund each wallet (the funds it sends
+on each side are what it can forward), and run it with `--route`:
+
+```text
+$ cassis-cli --home ~/.cassis-router enable arkade::mutinynet cashu::cashu.mutinynet.com
+$ cassis-cli --home ~/.cassis-router run --route --fee-base-msat 1000 --fee-ppm 500
+```
+
+It announces both directions on Nostr every 6h and serves payers over
+Iroh while it runs. Keep it running: it claims, and refunds after
+failures, on its own. See each network's notes in
+[layers](@/docs/layers.md) before funding it: Rootstock wallets need gas
+for claims, and Arkade wallets must keep their coins inside a live batch.
+`cassis-cli <network kind> --help` lists each wallet's commands.
+
+For a whole test network on one machine (local cashu mints, a fedimint
+federation and an arkade operator on mutinynet, Rootstock testnet, and
+scripts for payments of up to five hops and failure tests), see
+[`scripts/live`](https://github.com/cassiscash/cassis/tree/master/scripts/live)
+in the repository.
 
 ## Next steps
 
