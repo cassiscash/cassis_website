@@ -1,7 +1,7 @@
 +++
 title = "FAQ"
 description = "Questions you might have about the Cassis protocol."
-weight = 5
+weight = 8
 +++
 
 ## What problem does Cassis solve?
@@ -18,7 +18,11 @@ Every hop is enforced by the network it sits on, using that layer's own HTLC con
 
 ## Does this system need its own wallet?
 
-Cassis is expected to be integrated into existing wallets for each layer.
+No. Existing wallets do not have to implement multiple layer protocols &mdash; they can remain focused on their single layer and add Cassis as a thin layer on top of their normal operation.
+
+## Can a merchant receive payments while offline?
+
+Yes, on layers that support asynchronous HTLC creation (such as Cashu, Arkade, Fedimint, Rootstock and Liquid). A gateway can accept any number of incoming Cassis payments on the payee's behalf noncustodially while the payee's wallet is completely offline. See [offline payments](@/docs/offline-payments.md).
 
 ## Why not just use Lightning?
 
@@ -30,7 +34,7 @@ For networks like Bark and Spark, for example, the Lightning gateway is centrali
 
 Yes, in a way, but it can also be hacked into the BOLT11 Lightning invoice so both methods of payment are supported at first.
 
-At the same time we are working on a related invoicing method called _Cassis Order Protocol (COP)_ that will allow much more flexible and rich payment flows using a common simple interface. This is very early stages, but more information will be published at <https://cop.cassis.cash/>.
+At the same time we are working on a related invoicing and commerce method called the [Cassis Order Protocol (COP)](@/docs/cop.md) that allows much more flexible and rich payment flows &mdash; buying items, ordering from menus, subscribing, calculating fiat prices &mdash; directly inside a wallet without relying on web technologies.
 
 ## Is Cassis safe to use yet?
 

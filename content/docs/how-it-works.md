@@ -26,7 +26,9 @@ The protocol logic lives in the `cassis-core` crate, which wallets embed togethe
 
 Upon receiving that, the payer can consult the routing nodes it knows exist and trace a route between them. For example, if the receiver accepts payments on _Arkade_ and the payer can pay on the "Minibits" _Cashu_, it might find a router that bridges from that to _Liquid_, and another that bridges from _Liquid_ to _Arkade_.
 
-Once the payer has the route, it sends a `PREPARE` message to each node in the route, then starts the process by creating its own HTLC to the first hop node and sending an `EXECUTE` message to it, then relaying the information from its response to the second hop and so on. Until it gets to the receiver, who then replies with a `COMMIT` message containing the `preimage`, which is then relayed to each hop so they can immediately settle their HTLCs.
+Once the payer has the route, it connects directly to each node on the route over **Iroh** &mdash; including directly to the receiver node. Because the payer speaks directly to every hop rather than passing messages blindly down a chain, payments are fast and simple with far less room for mysterious routing errors (total payment speed is only constrained by how long it takes to issue an HTLC on each layer, which in most cases is instant). Because Iroh handles NAT traversal out of the box, routing nodes and merchants can operate from home behind NAT without issue, and because Iroh supports **Tor**, peers can also choose to remain completely private (though neither home routing nor direct home receiving requires Tor; see [privacy](@/docs/privacy.md)).
+
+The payer sends a `PREPARE` message to each node in the route, then starts the process by creating its own HTLC to the first hop node and sending an `EXECUTE` message to it, then relaying the information from its response to the second hop and so on. Until it gets to the receiver, who then replies with a `COMMIT` message containing the `preimage`, which is then relayed to each hop so they can immediately settle their HTLCs.
 
 ## Timeouts
 

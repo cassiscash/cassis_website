@@ -15,10 +15,10 @@
     <div class="flex min-w-0 flex-col items-start">
       <h1 class="m-0 max-w-[760px] font-outfit text-[clamp(3rem,7.5vw,6.8rem)] leading-[0.85] font-black tracking-[-0.05em] uppercase">Seamless payments across layers</h1>
       <p class="mt-5 max-w-[640px] text-lg leading-[1.6] text-ink2 md:text-xl">
-        Bitcoin is no longer one network. It now lives in multiple layers.
+        Bitcoin now has many layers, and new ones keep arriving &mdash; each with its own tradeoffs, benefits and advantages.
       </p>
       <p class="mt-5 max-w-[640px] text-lg leading-[1.6] text-ink2 md:text-xl">
-        Cassis is an open protocol that uses HTLCs and multi-hop routing to ensure every Bitcoin user is always within reach of any other.
+        Cassis lets everyone pick the layer they prefer and still pay anyone else. Wallets stay focused on a single layer, and new layers don&rsquo;t have to bootstrap their own payment ecosystem from scratch.
       </p>
       <div class="mt-7 flex flex-wrap gap-4">
         <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-8 py-3.5 font-space text-sm font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="{{ get_url(path='@/docs/quickstart.md') }}">
@@ -114,64 +114,58 @@
 {# ========================== FEATURE STRIP ========================== #}
 <section class="grid border-b-[3px] border-ink bg-card md:grid-cols-3">
   <article class="flex items-center gap-4 border-b-[3px] border-ink px-6 py-5 md:border-r-[3px] md:border-b-0 md:px-9 md:py-5 md:last:border-r-0">
-    <span class="flex h-10 w-10 shrink-0 items-center justify-center border-2 border-ink text-white" style="background: var(--color-cyan);">
-      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
-    </span>
-    <div>
-      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">HTLC-atomic</h2>
-      <p class="mt-1 text-[0.8rem] text-ink2">Every hop is a hash time-locked contract. All legs settle or none do.</p>
-    </div>
-  </article>
-  <article class="flex items-center gap-4 border-b-[3px] border-ink px-6 py-5 md:border-r-[3px] md:border-b-0 md:px-9 md:py-5 md:last:border-r-0">
     <span class="flex h-10 w-10 shrink-0 items-center justify-center border-2 border-ink text-ink" style="background: var(--color-amber);">
       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
     </span>
     <div>
-      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Choose your layer, route seamlessly</h2>
-      <p class="mt-1 text-[0.8rem] text-ink2">Every layer keeps its own security and privacy tradeoffs.</p>
+      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Pick the layer you prefer</h2>
+      <p class="mt-1 text-[0.8rem] text-ink2">Every layer has its own tradeoffs and strengths. Use what fits you and still pay anyone.</p>
+    </div>
+  </article>
+  <article class="flex items-center gap-4 border-b-[3px] border-ink px-6 py-5 md:border-r-[3px] md:border-b-0 md:px-9 md:py-5 md:last:border-r-0">
+    <span class="flex h-10 w-10 shrink-0 items-center justify-center border-2 border-ink text-white" style="background: var(--color-cyan);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="14" x="3" y="5" rx="2" /><path d="M3 10h18" /></svg>
+    </span>
+    <div>
+      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Thin layer for wallets</h2>
+      <p class="mt-1 text-[0.8rem] text-ink2">Wallets stay focused on their single layer and add Cassis on top &mdash; no multi-protocol bloat.</p>
     </div>
   </article>
   <article class="flex items-center gap-4 px-6 py-5 md:px-9 md:py-5">
     <span class="flex h-10 w-10 shrink-0 items-center justify-center border-2 border-ink text-ink" style="background: var(--color-lime);">
-      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>
     </span>
     <div>
-      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Reference implementation</h2>
-      <p class="mt-1 text-[0.8rem] text-ink2">Open-source in Rust. Run it, audit it, build against real code.</p>
+      <h2 class="m-0 font-space text-[0.85rem] font-extrabold tracking-[0.06em] uppercase">Direct, atomic hops</h2>
+      <p class="mt-1 text-[0.8rem] text-ink2">Payers talk directly to every node over Iroh, while HTLCs keep every hop atomic.</p>
     </div>
   </article>
 </section>
 </div>
 
-{# ======================== HTLC EXPLANATION ========================= #}
+{# ======================== WHY CASSIS / LAYERS ========================= #}
 <section class="border-b-[3px] border-ink bg-bg py-16 md:py-24">
-  <div class="mx-auto grid max-w-[1400px] items-center gap-12 px-6 md:px-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+  <div class="mx-auto grid max-w-[1400px] items-center gap-12 px-6 md:px-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
     <div>
       <div class="mb-5 flex items-center gap-3">
         <span class="inline-block h-3 w-3 bg-cassis"></span>
         <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">Why Cassis</p>
       </div>
-      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Bitcoin is not one network anymore</h2>
-      <p class="mt-6 max-w-[580px] text-base leading-[1.75] text-ink2">
-        Lightning, Liquid, Cashu, Fedimint, Arkade, Rootstock: bitcoin now lives on
-        many layers, and many more are coming. Each one makes its own tradeoffs
-        between speed, cost, privacy and trust. There is no single best layer,
-        only the right one for you.
+      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Let a hundred Bitcoin layers bloom</h2>
+      <p class="mt-6 max-w-[600px] text-base leading-[1.75] text-ink2">
+        Bitcoin has many layers today &mdash; Lightning, Liquid, Cashu, Fedimint, Arkade, Rootstock &mdash; and new ones keep arriving. Each layer has its own tradeoffs, benefits and advantages, and it is of immense benefit to Bitcoin when people can simply pick the layer they prefer.
       </p>
-      <p class="mt-6 max-w-[580px] text-base leading-[1.75] text-ink2">
-        Cassis is a generic protocol that connects them all. Pick the layer that
-        suits you, and pay anyone on any other layer. Payments hop across layers
-        atomically: they either complete end to end or refund, so nobody can take
-        the money and run.
+      <p class="mt-5 max-w-[600px] text-base leading-[1.75] text-ink2">
+        Until now, every new layer faced the tall order of bootstrapping its own intra-layer payment ecosystem from scratch. By making inter-layer payments seamless, Cassis encourages the creation of new layers with novel tradeoffs that wouldn&rsquo;t have been worth investing in before &mdash; such as new Cashu mint designs, protocols that aren&rsquo;t fully trustless but beat costly trustless setups or fragile custodial wallets, or new experiments in privacy that rethink custodianship.
       </p>
       <div class="mt-8 flex flex-col gap-3">
         <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
           <span class="flex h-9 w-9 items-center justify-center self-start border-2 border-ink text-white" style="background: var(--color-cassis);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="14" x="3" y="5" rx="2" /><path d="M3 10h18" /></svg>
           </span>
           <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">One protocol for every layer</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Any layer that supports hash time-locked contracts can join the network. No bespoke bridges.</p>
+            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Wallets stay single-layer</h3>
+            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Wallets don&rsquo;t have to implement multiple layer protocols. They can stay focused on their single layer and support Cassis payments as a thin layer on top of their normal operation.</p>
           </div>
         </article>
         <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
@@ -179,133 +173,85 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
           </span>
           <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Keep your tradeoffs</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Stay on the layer you trust. Cassis never forces you onto someone else&rsquo;s.</p>
-          </div>
-        </article>
-        <article class="grid grid-cols-[auto_1fr] gap-4 border-2 border-ink bg-card p-4">
-          <span class="flex h-9 w-9 items-center justify-center self-start border-2 border-ink text-ink" style="background: var(--color-lime);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6-6 6 6 6" /><path d="m16 6 6 6-6 6" /></svg>
-          </span>
-          <div>
-            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">Atomic across layers</h3>
-            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">A payment settles on every layer it touches, or on none of them. Never stuck halfway.</p>
+            <h3 class="m-0 font-space text-[0.82rem] font-extrabold tracking-[0.04em] uppercase">No ecosystem bootstrapping tax</h3>
+            <p class="mt-1 text-[0.8rem] leading-[1.6] text-ink2">Any layer that can lock a payment to a hash and timeout immediately plugs into every user and merchant on every other layer.</p>
           </div>
         </article>
       </div>
     </div>
 
     <div class="flex flex-col gap-6">
-    <div class="border-[3px] border-ink bg-dark shadow-m" role="img" aria-label="Walkthrough of a Cassis HTLC payment">
-      <div class="flex items-center gap-2 border-b-2 border-ink bg-darkcard px-4 py-2.5">
-        <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #ff5f56;"></span>
-        <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #ffbd2e;"></span>
-        <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #27c93f;"></span>
-        <span class="ml-2 font-fira text-[0.65rem] tracking-[0.1em] uppercase text-white/65">cassis &mdash; route walkthrough</span>
+      <div class="flex flex-1 flex-col border-[3px] border-ink bg-dark shadow-m" role="img" aria-label="Cassis payment flow overview">
+        <div class="flex items-center gap-2 border-b-2 border-ink bg-darkcard px-4 py-2.5">
+          <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #ff5f56;"></span>
+          <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #ffbd2e;"></span>
+          <span class="h-3 w-3 rounded-full border-[1.5px] border-ink" style="background: #27c93f;"></span>
+          <span class="ml-2 font-fira text-[0.65rem] tracking-[0.1em] uppercase text-white/65">cassis &mdash; payment flow overview</span>
+        </div>
+        <video class="block h-full w-full flex-1 object-cover" autoplay loop muted playsinline>
+          <source src="{{ get_url(path='overview.mp4') }}" type="video/mp4" />
+        </video>
       </div>
-      <div class="px-4 pt-5 pb-6 sm:px-6 sm:pt-6 sm:pb-7">
-        <div class="grid grid-cols-[auto_1fr] gap-4">
-          <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">1</span>
-          <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            amina picks secret <b class="text-amber">R</b>, sends david the hash
-            <i class="text-cyan not-italic">H = sha256(R)</i>
-          </div>
-        </div>
-        <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
-        <div class="grid grid-cols-[auto_1fr] gap-4">
-          <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">2</span>
-          <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            david locks <i class="text-cyan not-italic">21,318 sats</i> on <b class="text-amber">rootstock</b>:<br />
-            claim with preimage of <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">20 min</em>
-          </div>
-        </div>
-        <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
-        <div class="grid grid-cols-[auto_1fr] gap-4">
-          <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">3</span>
-          <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            routers lock <i class="text-cyan not-italic">21,305 sats</i> on <b class="text-amber">fedimint</b> and
-            <i class="text-cyan not-italic">21,302 sats</i> on <b class="text-amber">cashu</b>, same <i class="text-cyan not-italic">H</i>,
-            refund after <em class="text-lime not-italic">12</em> and <em class="text-lime not-italic">8 min</em>
-          </div>
-        </div>
-        <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
-        <div class="grid grid-cols-[auto_1fr] gap-4">
-          <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">4</span>
-          <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            last router locks <i class="text-cyan not-italic">21,300 sats</i> on <b class="text-amber">arkade</b> for amina,
-            same <i class="text-cyan not-italic">H</i>, refund after <em class="text-lime not-italic">4 min</em>
-          </div>
-        </div>
-        <div class="my-1 ml-[1.55rem] h-4 w-[2px] bg-ink"></div>
-        <div class="grid grid-cols-[auto_1fr] gap-4">
-          <span class="flex h-8 w-8 items-center justify-center border-2 border-ink bg-amber font-fira text-xs font-bold text-ink">5</span>
-          <div class="font-fira text-[0.72rem] leading-[1.65] text-white/80">
-            amina reveals <b class="text-amber">R</b> to claim on arkade &rarr; cashu, fedimint and
-            rootstock settle upstream. <em class="text-lime not-italic">done in 0.8s</em>
-          </div>
-        </div>
+      <div class="border-[3px] border-ink bg-card p-5 shadow-s">
+        <p class="m-0 text-[0.85rem] leading-[1.65] text-ink2">
+          <strong class="font-space uppercase text-ink">Atomic by default:</strong> every hop along a route is a simple hash time-locked contract (HTLC) locked to the receiver&rsquo;s payment hash. When the receiver reveals the secret to claim the final hop, every upstream hop settles &mdash; or if anything stalls, expires and refunds.
+        </p>
       </div>
-    </div>
-
-    <div class="flex flex-1 flex-col border-[3px] border-ink bg-dark shadow-m" role="img" aria-label="Cassis payment flow overview">
-      <div class="flex items-center gap-2 border-b-2 border-ink bg-darkcard px-4 py-2.5">
-        <span class="ml-2 font-fira text-[0.65rem] tracking-[0.1em] uppercase text-white/65">cassis &mdash; payment flow overview</span>
-      </div>
-      <video class="block h-full w-full flex-1 object-cover" autoplay loop muted playsinline>
-        <source src="{{ get_url(path='overview.mp4') }}" type="video/mp4" />
-      </video>
-    </div>
     </div>
   </div>
 </section>
 
-{# ============================== STEPS ============================== #}
+{# ===================== MERCHANTS, OFFLINE & COP ===================== #}
 <section class="border-b-[3px] border-ink bg-alt py-16 md:py-24">
   <div class="mx-auto max-w-[1400px] px-6 md:px-12">
     <div class="mb-5 flex items-center gap-3">
       <span class="inline-block h-3 w-3 bg-cassis"></span>
-      <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">The payment lifecycle</p>
+      <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-ink2">Beyond simple transfers</p>
     </div>
-    <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Prepare, execute, commit.</h2>
-    <div class="mt-12 grid items-stretch gap-0 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
-      <article class="flex min-h-[340px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
-        <div class="flex items-center gap-4">
-          <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-white shadow-s" style="background: var(--color-coral); width: 3.4rem; height: 3.4rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" /></svg>
-          </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Prepare</p>
+    <h2 class="m-0 max-w-[760px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase">Built for merchants, creators and real commerce</h2>
+    <div class="mt-12 grid gap-8 lg:grid-cols-2">
+      <article class="flex flex-col justify-between border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
+        <div>
+          <div class="flex items-center gap-4">
+            <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-white shadow-s" style="background: var(--color-cassis); width: 3.2rem; height: 3.2rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" /></svg>
+            </span>
+            <h3 class="m-0 font-outfit text-[1.45rem] leading-[1.05] font-black tracking-[-0.03em] uppercase">Noncustodial offline receiving</h3>
+          </div>
+          <p class="mt-5 text-[0.92rem] leading-[1.7] text-ink2">
+            Layers like <strong class="text-ink">Cashu, Arkade, Fedimint, Rootstock and Liquid</strong> support asynchronous HTLC creation &mdash; locking funds to a recipient without requiring them to be online at that moment.
+          </p>
+          <p class="mt-4 text-[0.92rem] leading-[1.7] text-ink2">
+            With a few adjustments, a payee can stay <strong class="text-ink">completely offline</strong> while a gateway receives any number of payments on their behalf <strong class="text-ink">noncustodially</strong>. Merchants and online creators can accept payments 24/7 without keeping a hot signing wallet exposed on a server.
+          </p>
         </div>
-        <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          Upon receiving an invoice from the payee, the sender computes the route and sends a <strong class="text-ink">PREPARE</strong> message directly to each routing node on it, <strong class="text-ink">via Iroh</strong>, to confirm they're willing to route the payment.
-        </p>
+        <div class="mt-6 pt-2">
+          <a href="{{ get_url(path='@/docs/offline-payments.md') }}" class="inline-flex items-center gap-2 font-space text-xs font-extrabold tracking-[0.08em] uppercase text-ink underline decoration-2 underline-offset-[4px] hover:text-cassis">
+            More on offline payments &rarr;
+          </a>
+        </div>
       </article>
-      <div class="flex items-center justify-center py-5 lg:w-14 lg:py-0" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-      </div>
-      <article class="flex min-h-[340px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
-        <div class="flex items-center gap-4">
-          <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-amber); width: 3.4rem; height: 3.4rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-          </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Execute</p>
+
+      <article class="flex flex-col justify-between border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
+        <div>
+          <div class="flex items-center gap-4">
+            <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-amber); width: 3.2rem; height: 3.2rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+            </span>
+            <h3 class="m-0 font-outfit text-[1.45rem] leading-[1.05] font-black tracking-[-0.03em] uppercase">Cassis Order Protocol (COP)</h3>
+          </div>
+          <p class="mt-5 text-[0.92rem] leading-[1.7] text-ink2">
+            The <strong class="text-ink">Cassis Order Protocol</strong> provides a totally new way to buy things, subscribe to services, calculate fiat prices, place orders from a menu, and handle any other commercial interaction <strong class="text-ink">without leaving your wallet</strong>.
+          </p>
+          <p class="mt-4 text-[0.92rem] leading-[1.7] text-ink2">
+            COP is almost infinitely flexible without compromising interoperability, security or privacy &mdash; and <strong class="text-ink">without making use of web technologies</strong>, browsers or third-party checkout pages.
+          </p>
         </div>
-        <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          The sender creates the first HTLC and sends an <strong class="text-ink">EXECUTE</strong> message to the first hop node. That node creates the next HTLC and replies to the sender, which then contacts the second hop &mdash; and so on.
-        </p>
-      </article>
-      <div class="flex items-center justify-center py-5 lg:w-14 lg:py-0" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-      </div>
-      <article class="flex min-h-[340px] flex-col border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
-        <div class="flex items-center gap-4">
-          <span class="flex shrink-0 items-center justify-center border-[3px] border-ink text-ink shadow-s" style="background: var(--color-lime); width: 3.4rem; height: 3.4rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          </span>
-          <p class="m-0 font-fira text-[0.95rem] font-bold tracking-[0.18em] uppercase text-ink2">Commit</p>
+        <div class="mt-6 pt-2">
+          <a href="{{ get_url(path='@/docs/cop.md') }}" class="inline-flex items-center gap-2 font-space text-xs font-extrabold tracking-[0.08em] uppercase text-ink underline decoration-2 underline-offset-[4px] hover:text-cassis">
+            Explore the Cassis Order Protocol &rarr;
+          </a>
         </div>
-        <p class="mt-6 text-[0.9rem] leading-[1.7] text-ink2 md:text-[0.95rem]">
-          When the HTLC chain reaches the receiver, it replies with a <strong class="text-ink">COMMIT</strong> carrying the <strong class="text-ink">preimage</strong> while using it to claim its own HTLC. The sender relays the preimage to every hop so they settle immediately; otherwise each hop learns it when the next hop claims its HTLC.
-        </p>
       </article>
     </div>
   </div>
@@ -327,7 +273,7 @@
       <a href="{{ get_url(path='@/docs/layers.md#rootstock') }}" class="font-semibold text-rootstock no-underline underline-offset-[3px] decoration-2">Rootstock</a>,
       <a href="{{ get_url(path='@/docs/layers.md#cashu') }}" class="font-semibold text-cashu no-underline underline-offset-[3px] decoration-2">Cashu</a> and
       <a href="{{ get_url(path='@/docs/layers.md#lightning') }}" class="font-semibold text-lightning no-underline underline-offset-[3px] decoration-2">Lightning</a>,
-      but new layers can be easily added, as long as they support creating HTLCs.
+      and new layers can be added easily as long as they support HTLCs.
     </p>
     <div class="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
       <article class="border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
@@ -340,7 +286,7 @@
           <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-white shadow-s" style="background: var(--color-cashu);">Cashu</span>
         </div>
         <p class="mt-5 text-[0.85rem] leading-[1.7] text-ink2">
-          An Arkade user pays a Cashu user. That specific Cashu mint doesn't have a bridge to Arkade directly (it could!) so the payment is routed through its Liquid bridge.
+          An Arkade user pays a Cashu user. Even if no router bridges that specific Cashu mint to Arkade directly, the payment routes seamlessly through a Liquid intermediary.
         </p>
       </article>
       <article class="border-[3px] border-ink bg-card p-6 shadow-m md:p-8">
@@ -353,27 +299,30 @@
           <span class="inline-flex items-center border-2 border-ink px-3.5 py-1.5 font-space text-[0.78rem] font-extrabold tracking-[0.05em] uppercase text-ink shadow-s" style="background: var(--color-lightning);">Lightning</span>
         </div>
         <p class="mt-5 text-[0.85rem] leading-[1.7] text-ink2">
-          A specific Fedimint has a bridge to Rootstock, so a Rootstock user is able to hop through that and send a payment to any Lightning payee.
+          A router bridges Rootstock and a Fedimint federation, letting a Rootstock user hop through that federation to pay any Lightning payee.
         </p>
       </article>
     </div>
     <p class="mt-8 max-w-[640px] text-base leading-[1.75] text-ink2">
-      Users are free to use only the layers they are comfortable with, with the trust model they choose. See the <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-ink underline decoration-2 underline-offset-[3px]">full layer list</a>.
+      Users only ever touch the layer they are comfortable with. See the <a href="{{ get_url(path='@/docs/layers.md') }}" class="font-semibold text-ink underline decoration-2 underline-offset-[3px]">full layer list</a>.
     </p>
   </div>
 </section>
 
-{# ============================ WHY CASSIS =========================== #}
+{# ====================== DIRECT P2P & ROUTING ======================= #}
 <section class="border-b-[3px] border-ink bg-dark py-16 text-white md:py-24">
   <div class="mx-auto grid max-w-[1400px] gap-12 px-6 md:px-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
     <div>
       <div class="mb-5 flex items-center gap-3">
         <span class="inline-block h-3 w-3 bg-amber"></span>
-        <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-white/60">Why Cassis</p>
+        <p class="m-0 font-fira text-[0.7rem] font-bold tracking-[0.18em] uppercase text-white/60">Direct peer-to-peer communication</p>
       </div>
-      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase text-white">A decentralized and open <span class="text-amber">routing ecosystem</span>.</h2>
+      <h2 class="m-0 max-w-[680px] font-outfit text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[0.95] font-black tracking-[-0.04em] uppercase text-white">Fast, direct <span class="text-amber">connections</span> with every hop.</h2>
       <p class="mt-6 max-w-[600px] text-base leading-[1.8] text-white/65">
-        Anyone can operate a routing node and connect any networks they want. Routes are published to Nostr and payers fetch those and use the information to build the route locally at the time of the payment.
+        Instead of relaying messages blindly down a chain of nodes, Cassis uses <strong class="text-white">Iroh</strong> so the payer communicates directly with every node in the route &mdash; including the receiver. Payments are fast and simple, with far less room for mysterious routing failures.
+      </p>
+      <p class="mt-4 max-w-[600px] text-base leading-[1.8] text-white/65">
+        Payment speed is only constrained by how long it takes to issue an HTLC on each layer &mdash; and on most layers, that is instant.
       </p>
     </div>
     <div class="flex flex-col gap-6">
@@ -382,8 +331,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Anyone can route</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Run a router on any networks you hold satoshis on and collect a fee from successful payments.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Direct to every hop via Iroh</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">The payer coordinates directly with each router and the receiver over encrypted peer-to-peer connections, getting immediate feedback if a hop is unavailable.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -391,8 +340,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Announced on Nostr</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Routers publish their node announcements as Nostr events.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Run from home behind NAT</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Because Iroh handles NAT traversal out of the box, home router nodes and merchants can operate from home behind NAT with no port forwarding or static IPs.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -400,8 +349,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Source-routing</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Payers collect the node announcements and compute the route locally.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Optional Tor privacy</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Iroh supports Tor, so any peer can remain completely private if they want to &mdash; though home routing and direct home receiving work without needing Tor.</p>
         </div>
       </div>
       <div class="grid grid-cols-[auto_1fr] items-start gap-4">
@@ -409,17 +358,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </span>
         <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Pseudonymous actors</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Identities are anonymous but stable, so routing reliability can be inferred. Payer identity can be ephemeral or stable.</p>
-        </div>
-      </div>
-      <div class="grid grid-cols-[auto_1fr] items-start gap-4">
-        <span class="flex h-6 w-6 shrink-0 items-center justify-center border-2 border-ink bg-lime text-ink">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-        </span>
-        <div>
-          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Iroh Transport</h3>
-          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Communication between payer and routing nodes is done via Iroh, fully encrypted, with optional Tor support.</p>
+          <h3 class="m-0 font-space text-[0.95rem] font-extrabold tracking-[0.04em] uppercase">Open routing &amp; local pathfinding</h3>
+          <p class="mt-1 text-[0.85rem] leading-[1.7] text-white/60">Anyone holding funds on two or more networks can run a router and earn fees. Routers announce their pairs on Nostr and payers compute routes locally.</p>
         </div>
       </div>
     </div>
