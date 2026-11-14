@@ -13,13 +13,13 @@ On networks that support asynchronous HTLC creation &mdash; where a sender can l
 - **A gateway** (inspired by a Fedimint design), which acts as the destination of the Cassis route and shares a network with the final payee.
 - **A preimage server**, which holds the payment preimage and only releases it to the gateway once the gateway proves it has locked a new HTLC to the final payee.
 
-Cassis supports two ways of running this flow: pre-created invoices and full delegation.
+Cassis supports two ways of running this flow: pre-created invoices and full delegation. In both, the payee signs a **receive authorization** naming both the gateway and the preimage server, with limits on validity, amount, networks, description and the minimum final timeout. A *single* authorization covers one invoice; a *standing* one lets the gateway issue invoices alone.
 
 ## 1. Pre-created invoices
 
 In the first mode, the final payee creates the invoice ahead of time.
 
-The invoice points to the **gateway** as the destination node for the Cassis route, so the payer knows to route the payment there. However, the invoice also carries two signatures: one from the **final payee** authorizing the gateway to receive the payment on their behalf, and one from the **gateway** itself. When the payer reads the invoice, they can see they are actually paying the final payee and verify that the gateway was authorized to take the payment.
+The invoice points to the **gateway** as the destination node for the Cassis route, so the payer knows to route the payment there. However, the invoice also carries two signatures: one from the **final payee** authorizing the gateway to receive the payment on their behalf, and one from the **gateway** itself. When the payer reads the invoice, they can see they are actually paying the final payee and verify that the gateway was authorized to take the payment. The payee's signed authorization was also handed to the preimage server, under which it issued the payment hash.
 
 The gateway never holds the payment custodially. When the Cassis payment arrives, the funds are locked to a `payment_hash` whose preimage the gateway does not have. Instead, the preimage is held by the **preimage server**.
 
@@ -35,11 +35,11 @@ Because the gateway already recovered its money from the incoming Cassis payment
 
 ## 2. Delegated mode
 
-In the fully delegated mode, the final payee does not need to create each invoice in advance. Instead, before going offline, the payee issues two signed authorization tokens &mdash; one to the **preimage server** and a separate one to the **gateway** &mdash; authorizing them to issue invoices in the payee's name.
+In the fully delegated mode, the final payee does not need to create each invoice in advance. Instead, before going offline, the payee signs a single **standing authorization** that names both the **gateway** and the **preimage server**. It authorizes the gateway to issue invoices in the payee's name within limits: how long it is valid, the amount range, the networks and claim keys the gateway may pay to, an optional description every invoice must carry, and the minimum final timeout. The delegated invoice then carries that authorization (with the payee's signature) and the preimage server's issuance of its hash, in place of a per-invoice payee signature.
 
 While the payee is offline:
 
-1. The preimage server can generate any number of preimages on behalf of the final payee.
+1. The preimage server can generate any number of preimages on behalf of the final payee, within the authorization's limits.
 2. Whenever a payer wants to pay the payee, the gateway talks directly to the preimage server to get a fresh `payment_hash` and serves the invoice.
 3. When the Cassis payment arrives at the gateway, the gateway already knows it can talk to that same preimage server: it locks a long-lived HTLC to the final payee, presents it to the preimage server, gets the preimage back, and settles the incoming route.
 4. Just as in the first mode, the preimage server stores the HTLC descriptors and parameters for every payment that arrived. When the final payee comes back online, they connect to the preimage server and claim all their pending payments.

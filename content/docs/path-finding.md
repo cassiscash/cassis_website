@@ -6,7 +6,7 @@ weight = 3
 
 Nobody keeps a central directory of routers. Instead, every routing node announces itself publicly on **Nostr** and every participant builds its own local graph out of those announcements.
 
-A router publishes one **kind `35515`** event per direction it offers. The event is a signed Nostr note whose `pubkey` is the router's identity, with the hop parameters in its tags:
+A router publishes one **kind `35515`** event per direction it offers. The event is a signed Nostr note whose `pubkey` is the router's node key, with the hop parameters in its tags:
 
 ```json
 {
@@ -18,8 +18,7 @@ A router publishes one **kind `35515`** event per direction it offers. The event
     ["fee_base_msat", "1000"],
     ["fee_ppm", "500"],
     ["incoming_delta_secs", "600"],
-    ["transit_slack_secs", "60"],
-    ["max_incoming_lifetime_secs", "13200"]
+    ["transit_slack_secs", "60"]
   ]
 }
 ```
@@ -28,17 +27,17 @@ Each event announces a **single directed edge** `from -> to`, carried in the `d`
 
 - `d` &mdash; the directed route `<from>-><to>`, e.g. `liquid->arkade`. The `NetworkId` strings follow the scheme documented in [Layers](@/docs/layers.md).
 - `iroh` &mdash; the router's Iroh peer id (value 1) and optional relay URL (value 2), used to reach the router over Iroh.
-- `fee_base_msat` &mdash; flat fee in millisatoshis added to every payment the hop carries.
+- `fee_base_msat` &mdash; flat fee in millisatoshis added to every payment the hop carries. It already includes what claiming on the incoming network costs.
 - `fee_ppm` &mdash; proportional fee, parts-per-million of the forwarded amount.
-- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between the expiries of its outgoing and incoming HTLCs: how long, after learning the preimage at the last moment, it needs to get its claim through on the incoming network. Absent means the incoming network's default (see [layers](@/docs/layers.md)).
+- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between the expiries of its outgoing and incoming HTLCs: how long, after learning the preimage at the last moment, it needs to get its claim through on the incoming network, plus how late its outgoing HTLC's refund path can open on the outgoing network. Absent means only the incoming network's default margin (see [layers](@/docs/layers.md)).
 - `transit_slack_secs` &mdash; the time in seconds this hop needs to set up its outgoing HTLC once it receives `EXECUTE`; payers add it to the gap above, and give the payee's HTLC every hop's slack so it is still claimable once the route is set up. Absent means 60.
-- `max_incoming_lifetime_secs` &mdash; optional: the longest the incoming HTLC may run, from now to its expiry. Arkade routers announce it because their HTLCs must end before the batch of their coins expires; routers reject `PREPARE`s that exceed it. Absent means no limit.
+- `testmoney` &mdash; a valueless tag marking the hop as moving test money. Test routers announce on the test relays, separate from the default ones.
 
-Because the tags are self-describing, a payer can compute the total price and every HTLC's expiry of a route *before* contacting anyone (see [timeouts](@/docs/how-it-works.md#timeouts)), and skip routes in which some leg would run longer than its receiver accepts.
+Because the tags are self-describing, a payer can compute the total price and every HTLC's expiry of a route *before* contacting anyone (see [timeouts](@/docs/how-it-works.md#timeouts)).
 
 ## Building the graph
 
-A participant collects kind `35515` events from the relays it talks to, parses each set of tags into a `RouteAnnouncement`, and keeps the freshest announcement per `(pubkey, d)` pair. Each surviving announcement becomes one directed edge in a local graph whose nodes are **networks** and whose edges are **routers**. Path finding is then a Dijkstra shortest-path search over that graph, with the cost of an edge being that router's `fee_base_msat` plus its `fee_ppm` share of the amount being sent, subject to the per-hop `incoming_delta_secs` and `transit_slack_secs` budget and to each receiver's `max_incoming_lifetime_secs`.
+A participant collects kind `35515` events from the relays it talks to, parses each set of tags into a `RouteAnnouncement`, and keeps the freshest announcement per `(pubkey, d)` pair. Each surviving announcement becomes one directed edge in a local graph whose nodes are **networks** and whose edges are **routers**. Path finding is then a Dijkstra shortest-path search over that graph, with the cost of an edge being that router's `fee_base_msat` plus its `fee_ppm` share of the amount being sent. The payer then computes every leg's amount and expiry from the hops' `incoming_delta_secs` and `transit_slack_secs`; a router can still refuse the `PREPARE` if the HTLC would outlive its `max_htlc_secs`.
 
 ## Filtering out invalid nodes
 
@@ -46,7 +45,7 @@ An announcement is a *claim*, not a guarantee. Announcements can be stale, malfo
 
 To mitigate that, we can use some strategies:
 
-- **Freshness.** Routing nodes re-announce their routes every 6h, and payers looking at the graph discard announcements older than 24h.
+- **Freshness.** Routing nodes re-announce their routes every 3h, and payers looking at the graph discard announcements older than 24h.
 - **Proof of Bitcoin ownership.** If nodes can prove they control something on-chain that makes mass identity generation expensive.
 - **Attestations from trusted or known peers.** Participants that have a relationship with a node or have successfully routed payments through it before can publish attestations to their integrity, which would make them more accessible.
 
