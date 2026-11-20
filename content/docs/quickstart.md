@@ -132,10 +132,10 @@ $ cassis-routerd --data-dir ~/.cassis-router
 nostr_relays = ["wss://nos.lol", "wss://relay.primal.net", "wss://relay.damus.io"]
 
 [networks."arkade::mutinynet"]
-secret = "<64 hex characters>"
+mnemonic = "<12 or 24 words>"
 
 [networks."cashu::cashu.mutinynet.com"]
-secret = "<64 hex characters>"
+mnemonic = "<12 or 24 words>"
 
 [[routes]]
 from = "arkade::mutinynet"
@@ -152,9 +152,11 @@ fee_ppm = 500
 test_money = true
 ```
 
-Each `secret` is that network's wallet key: 32 random bytes as 64 hex
-characters, for example from `openssl rand -hex 32`. Back up the whole file:
-it holds the router's mnemonic and every key, and controls its funds. The
+Each network's `mnemonic` is its wallet's BIP39 seed phrase (12 or 24 words),
+and the network's keys derive from it the way that network's own wallets do.
+The admin page writes a fresh one whenever it adds a network; by hand, use a
+phrase you generated yourself. Back up the whole file: it holds the router's
+mnemonic and every network's, and controls its funds. The
 admin page (the console prints how to reach it; see `[admin]` in the
 generated file) can add networks and routes for you, and asks each wallet
 for its deposit addresses.
