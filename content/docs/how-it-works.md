@@ -32,7 +32,7 @@ The payer sends a `PREPARE` to every router concurrently and tells the receiver 
 
 ## Timeouts
 
-Every HTLC in a route has an expiry, and they decrease from the payer to the payee. A router must be able to claim its incoming HTLC after learning the preimage at the last possible moment, which is when its outgoing HTLC expires &mdash; or later, because a network opens its refund path by its own clock, which can lag behind wall time. So the payer gives each router a gap between its two HTLCs: the router's announced **incoming delta** (its incoming network's claim margin plus its outgoing network's **outgoing lag**, see the tables in [layers](@/docs/layers.md)) plus its **transit slack** (time to set up its outgoing HTLC). The payee's own margin (carried in its invoice, or the network's default) keeps its HTLC claimable while the route is being set up.
+Every HTLC in a route has an expiry, and they decrease from the payer to the payee. A router must be able to claim its incoming HTLC after learning the preimage at the last possible moment, which is when its outgoing HTLC expires &mdash; or later, because a network opens its refund path by its own clock, which can lag behind wall time. So the payer gives each router a gap between its two HTLCs: the router's announced **incoming delta** (its incoming network's claim margin plus its outgoing network's **outgoing lag**, see the tables in [layers](@/docs/layers.md), unless the router's operator sets it otherwise), which carries all the slack the router wants. The payee's HTLC gets the payee's own margin (carried in its invoice, or the network's default).
 
 The payer's lock therefore grows with every hop. For a payment from Arkade through Cashu and Rootstock to a Fedimint payee:
 

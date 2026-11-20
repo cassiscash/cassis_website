@@ -17,8 +17,7 @@ A router publishes one **kind `35515`** event per direction it offers. The event
     ["iroh", "<iroh peer id>", "<iroh relay url>"],
     ["fee_base_msat", "1000"],
     ["fee_ppm", "500"],
-    ["incoming_delta_secs", "600"],
-    ["transit_slack_secs", "60"]
+    ["incoming_delta_secs", "600"]
   ]
 }
 ```
@@ -29,15 +28,14 @@ Each event announces a **single directed edge** `from -> to`, carried in the `d`
 - `iroh` &mdash; the router's Iroh peer id (value 1) and optional relay URL (value 2), used to reach the router over Iroh.
 - `fee_base_msat` &mdash; flat fee in millisatoshis added to every payment the hop carries. It already includes what claiming on the incoming network costs.
 - `fee_ppm` &mdash; proportional fee, parts-per-million of the forwarded amount.
-- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between the expiries of its outgoing and incoming HTLCs: how long, after learning the preimage at the last moment, it needs to get its claim through on the incoming network, plus how late its outgoing HTLC's refund path can open on the outgoing network. Absent means only the incoming network's default margin (see [layers](@/docs/layers.md)).
-- `transit_slack_secs` &mdash; the time in seconds this hop needs to set up its outgoing HTLC once it receives `EXECUTE`; payers add it to the gap above, and give the payee's HTLC every hop's slack so it is still claimable once the route is set up. Absent means 60.
+- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between the expiries of its outgoing and incoming HTLCs: how long, after learning the preimage at the last moment, it needs to get its claim through on the incoming network, plus how late its outgoing HTLC's refund path can open on the outgoing network. It carries all the slack the hop wants: payers add nothing to it. The router's operator can set it; by default it is computed from the two networks. Absent means the incoming network's default margin (see [layers](@/docs/layers.md)).
 - `testmoney` &mdash; a valueless tag marking the hop as moving test money. Test routers announce on the test relays, separate from the default ones.
 
 Because the tags are self-describing, a payer can compute the total price and every HTLC's expiry of a route *before* contacting anyone (see [timeouts](@/docs/how-it-works.md#timeouts)).
 
 ## Building the graph
 
-A participant collects kind `35515` events from the relays it talks to, parses each set of tags into a `RouteAnnouncement`, and keeps the freshest announcement per `(pubkey, d)` pair. Each surviving announcement becomes one directed edge in a local graph whose nodes are **networks** and whose edges are **routers**. Path finding is then a Dijkstra shortest-path search over that graph, with the cost of an edge being that router's `fee_base_msat` plus its `fee_ppm` share of the amount being sent. The payer then computes every leg's amount and expiry from the hops' `incoming_delta_secs` and `transit_slack_secs`; a router can still refuse the `PREPARE` if the HTLC would outlive its `max_htlc_secs`.
+A participant collects kind `35515` events from the relays it talks to, parses each set of tags into a `RouteAnnouncement`, and keeps the freshest announcement per `(pubkey, d)` pair. Each surviving announcement becomes one directed edge in a local graph whose nodes are **networks** and whose edges are **routers**. Path finding is then a Dijkstra shortest-path search over that graph, with the cost of an edge being that router's `fee_base_msat` plus its `fee_ppm` share of the amount being sent. The payer then computes every leg's amount and expiry from the payee's delta and the hops' `incoming_delta_secs`, and nothing else; a router can still refuse the `PREPARE` if the HTLC would outlive its `max_htlc_secs`.
 
 ## Filtering out invalid nodes
 
