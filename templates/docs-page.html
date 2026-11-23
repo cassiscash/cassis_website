@@ -40,4 +40,7 @@
     </div>
   </div>
 </section>
+{% for script in page.extra.scripts | default(value=[]) %}
+<script src="{{ get_url(path=script) }}" defer></script>
+{% endfor %}
 {% endblock content %}

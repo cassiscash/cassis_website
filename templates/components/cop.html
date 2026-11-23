@@ -1,0 +1,21 @@
+{% component cop_demo() %}
+<div class="cop-demo" data-cop-order-demo>
+  <div class="cop-demo-head"><span>Interactive demo &middot; runs in your browser</span><button type="button" data-reset>Reset</button></div>
+  <div class="cop-demo-grid">
+    <div class="cop-phone"><div class="cop-screen"><div class="cop-empty">This demo needs JavaScript.</div></div></div>
+    <div class="cop-log"><div class="cop-log-head">cassis-order stream</div><div class="cop-log-lines" role="log"></div></div>
+  </div>
+</div>
+{% endcomponent cop_demo %}
+
+{% component cop_uri() %}
+<div class="cop-uri" data-cop-uri>
+  <div class="cop-uri-hint">Tap a part of the address</div>
+  <div class="cop-uri-line"><span data-part="scheme" style="--part: var(--color-amber)">cop://</span><span data-part="endpoint" style="--part: var(--color-cyan)">5f1c9d0a27e4b6c38d2f71a09e4b5c6d8a3f2e1b0c9d8e7f6a5b4c3d2e1f0a9b</span><span data-part="relay" style="--part: var(--color-lime)">?_relay=https://relay.luigis.example</span><span data-part="params" style="--part: var(--color-coral)">#table=12&amp;name=Luigi%27s%20Pizza</span></div>
+  <div class="cop-uri-info" data-info="scheme"><strong>Scheme.</strong> Marks this as a COP order endpoint for the wallet to dial.</div>
+  <div class="cop-uri-info" data-info="endpoint"><strong>Endpoint ID.</strong> The server's Iroh endpoint ID: its 64-character hex Ed25519 public key. This key is the merchant's whole address, with no domain or certificate, and Iroh authenticates the connection against it.</div>
+  <div class="cop-uri-info" data-info="relay"><strong>Relay</strong> <em>(optional)</em>. A custom Iroh relay to reach the server through instead of the default relays, such as the merchant's own or a <code>.onion</code> Tor hidden service. Only the wallet's transport uses it. It is never sent to the server.</div>
+  <div class="cop-uri-info" data-info="params"><strong>Parameters</strong> <em>(optional)</em>. <code>&amp;</code>-separated <code>key=value</code> pairs handed to the server in <code>hello</code>, such as a table or till number.</div>
+  <div class="cop-uri-hello"><span>wallet sends &rarr;</span> hello {"params":{"table":"12","name":"Luigi's Pizza","session":"f1K9xQ2v8Tn4LmZp7Rb3wq"}}</div>
+</div>
+{% endcomponent cop_uri %}

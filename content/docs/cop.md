@@ -2,6 +2,9 @@
 title = "Cassis Order Protocol (COP)"
 description = "A rich, wallet-native protocol for buying, subscribing, pricing in fiat, and ordering from menus without web technologies."
 weight = 6
+
+[extra]
+scripts = ["cop-demos.js"]
 +++
 
 > **Specification v1.0 (Draft).** The full specification is published at [cop.cassis.cash](https://cop.cassis.cash/). See [For wallet developers](@/docs/wallets.md) for how to integrate COP into a wallet.
@@ -30,144 +33,29 @@ There are two roles in every flow:
 - **Server (merchant's side):** a shop, restaurant, vending machine, online service, or person selling something. It describes the UI, reacts to the client's actions, prices the order, and sends invoices or invoice requests.
 - **Client (payer's side):** the customer's Bitcoin wallet. It always initiates the connection, draws the order page with its own native components, sends user actions back, and presents its own trusted payment screen when an invoice arrives.
 
-## Protocol overview
+## Try it
 
-Every message on the `cassis-order` stream is a single line: a tag, a space, and a JSON object (`<tag> <json>`). A typical flow has four phases, though the order is flexible and the UI phase is optional:
+The demo below runs a toy wallet against a toy restaurant server, entirely in your browser. On the left is what the payer sees. On the right is every line that crosses the `cassis-order` stream: a tag, a space, and a JSON object.
 
-1. **Connect:** The payer scans a `cop://` URI or opens a web address that publishes one. The wallet dials the server's Iroh endpoint (`cassis-order` ALPN) and sends a `hello` line carrying a random `session` string and any fragment parameters from the URI (such as a table or till number).
-2. **Order:** The server streams hypereffect `metadata`, `element`, `remove` and `signal` messages to build and update the page. As the user taps buttons or fills in inputs, the wallet sends `action` messages and the server updates the page.
-3. **Pay (`invoice`):** At any point, the server sends an `invoice` message containing a Cassis invoice. The wallet displays **its own payment screen** from the invoice fields and pays it over Cassis.
-4. **Refund or payout (`invoicerequest`):** At any point, the server can send an `invoicerequest` offering an amount in sats and listing the Cassis networks it can pay from. If the user accepts, the wallet generates a Cassis invoice with its own keys and sends it back in an `invoice` message for the server to pay.
+Scan the **Flyer** code to order a pizza, or the **Till 2** code to pay a bill that is already waiting.
 
-## Walkthrough: a pizza ordering flow
+{{<cop_demo />}}
 
-Here is a complete wire exchange between a wallet and a restaurant's COP server.
+Things to notice as you click through:
 
-### 1. Scan & connect
-
-The payer scans a QR code on a flyer containing:
-
-```text
-cop://5f1c9d0a27e4b6c38d2f71a09e4b5c6d8a3f2e1b0c9d8e7f6a5b4c3d2e1f0a9b#name=Luigi%27s%20Pizza
-```
-
-The wallet connects to that Iroh endpoint and sends `hello` with the URI's parameters and a freshly generated 128-bit `session` token:
-
-```text
-hello {"params":{"name":"Luigi's Pizza","session":"f1K9xQ2v8Tn4LmZp7Rb3wq"}}
-```
-
-### 2. Server streams the menu
-
-The server identifies itself with `metadata` and streams the menu elements:
-
-```text
-metadata {"name":"Luigi's Pizza","description":"Wood-fired pizza, Via Roma 12"}
-element {"id":"title","type":"text","variant":"h1","text":"Choose your pizza"}
-element {"id":"menu","type":"list"}
-element {"id":"margherita","type":"button","parent":"menu","label":"Margherita — $8.50","onPress":{"action":"selectPizza","payload":{"pizza":"margherita"}}}
-element {"id":"pepperoni","type":"button","parent":"menu","label":"Pepperoni — $10.00","onPress":{"action":"selectPizza","payload":{"pizza":"pepperoni"}}}
-element {"id":"funghi","type":"button","parent":"menu","label":"Funghi — $9.50","onPress":{"action":"selectPizza","payload":{"pizza":"funghi"}}}
-```
-
-Notice that action payloads carry only *what* was chosen (`"pizza": "pepperoni"`), never its price &mdash; the server looks up prices itself.
-
-### 3. Payer picks a pizza and a topping
-
-When the payer taps *Pepperoni*, the wallet sends:
-
-```text
-action {"name":"selectPizza","payload":{"pizza":"pepperoni"},"signals":{}}
-```
-
-The server replaces the menu with a topping selector:
-
-```text
-remove {"id":"menu"}
-element {"id":"title","type":"text","variant":"h1","text":"Your order"}
-element {"id":"selected","type":"text","text":"Pepperoni pizza — $10.00"}
-element {"id":"toppings","type":"card","title":"Add an extra topping?"}
-element {"id":"topping_row","type":"row","parent":"toppings"}
-element {"id":"olives","type":"button","parent":"topping_row","label":"Olives (+$1.00)","onPress":{"action":"selectTopping","payload":{"topping":"olives"}}}
-element {"id":"chili","type":"button","parent":"topping_row","label":"Chili (+$0.75)","onPress":{"action":"selectTopping","payload":{"topping":"chili"}}}
-element {"id":"skip","type":"button","parent":"topping_row","variant":"plain","label":"No extra topping","onPress":{"action":"selectTopping","payload":{"topping":null}}}
-```
-
-The payer taps *Chili*:
-
-```text
-action {"name":"selectTopping","payload":{"topping":"chili"},"signals":{}}
-```
-
-### 4. Delivery address and reactive signals
-
-The server updates the page with a delivery address input bound to a local reactive `signal` (`order.address`) and a pay button that stays disabled until the address is non-empty:
-
-```text
-remove {"id":"toppings"}
-signal {"order":{"address":""}}
-element {"id":"title","type":"text","variant":"h1","text":"Where should we deliver?"}
-element {"id":"selected","type":"text","text":"Pepperoni pizza + chili — $10.75"}
-element {"id":"address","type":"input","label":"Delivery address","bind":"order.address"}
-element {"id":"pay","type":"button","variant":"primary","label":"Pay $10.75","disabled":{"cel":"s.order.address == ''"},"onPress":{"action":"pay"}}
-```
-
-Typing into the address field updates the wallet's local signals without network round-trips. When the user taps *Pay $10.75*, the wallet sends the action along with the current signal state:
-
-```text
-action {"name":"pay","signals":{"order":{"address":"221B Baker St, London NW1 6XE"}}}
-```
-
-### 5. Server sends the Cassis invoice
-
-The server converts $10.75 to satoshis at the current exchange rate, generates a Cassis invoice, and sends an `invoice` message:
-
-```text
-invoice {"invoice":{"payment_hash":"3f9a…e21c","amount_msat":10750000,"expires_at":1793875200,…},"memo":"Pepperoni + chili, to 221B Baker St"}
-```
-
-On receiving `invoice`, the wallet pops up **its own native payment screen** displaying the amount, payee and expiry from the verified invoice. Once the Cassis payment settles, the server detects settlement on its node and can update the page into a receipt with an order number and estimated delivery time.
-
-## Flows with no UI at all & reverse payments
-
-Because a COP flow is just a message stream, the UI stage is completely optional:
-
-### Paying at a till
-
-A QR code on a point-of-sale terminal (`cop://...#till=2`) identifies the till. As soon as the wallet connects, the server &mdash; which already knows the bill for Till 2 &mdash; sends `metadata` followed immediately by an `invoice`, with zero UI elements:
-
-```text
-metadata {"name":"Luigi's Pizza","description":"Till 2"}
-invoice {"invoice":{"payment_hash":"b207…41d9","amount_msat":3500000,"expires_at":1793871900,…},"memo":"1 × flat white"}
-```
-
-### Refunds, cashbacks and withdrawals (`invoicerequest`)
-
-To send money *to* the customer, the server sends an `invoicerequest` naming the amount in sats and the Cassis networks it can pay from:
-
-```text
-invoicerequest {"amount":24000,"networks":["liquid","cashu::mint.example.com"],"memo":"Refund for unused days","expiresIn":900}
-```
-
-The wallet shows the offer to the user. If they accept, the wallet creates a Cassis invoice with its own keys on one of the listed networks (or a network reachable from them) and replies with an `invoice` line:
-
-```text
-invoice {"invoice":{"payment_hash":"5c04…9a7e","amount_msat":24000000,"expires_at":1793872800,…}}
-```
-
-The server then pays that invoice over Cassis.
+- **Connect.** The wallet opens with a `hello` carrying the URI's parameters and a fresh random `session` string. The server answers with `metadata` and the `element`s of its page.
+- **Order.** A tap sends an `action` naming only *what* was chosen, never a price. The server looks prices up itself and updates the page with `element` and `remove`.
+- **Local state.** Typing the address sends nothing. The field is bound to a local `signal`, and the pay button's enabled state is a CEL expression the wallet evaluates on its own. The signals ride along with the next `action`.
+- **Pay.** The server prices the order in sats and sends an `invoice`. The amount you confirm comes from the wallet's own payment screen, built from the invoice itself, not from anything the server drew on the page.
+- **Money back.** *Cancel order & refund* makes the server send an `invoicerequest`. If you accept, the wallet issues an invoice with its own keys, sends it back as an `invoice`, and the server pays it.
+- **No UI at all.** The till skips the page entirely and sends an `invoice` right after `metadata`.
+- **Come back later.** Close an order and reopen it from *Recent orders*. The wallet reconnects with the same `session` string, and the server picks up where you left off or shows the receipt.
 
 ## Connection URIs and web addresses
 
-A merchant publishes an order endpoint either as a direct `cop://` URI or via an HTTPS web address.
+A merchant publishes an order endpoint as a `cop://` URI, usually in a QR code:
 
-```text
-cop://<endpoint-id>[?_relay=<relay-url>][#<parameters>]
-```
-
-- **`<endpoint-id>`** &mdash; the server's Iroh endpoint ID (its 64-character hex Ed25519 public key). Iroh authenticates the connection against this key.
-- **`_relay`** *(optional query parameter)* &mdash; a custom Iroh relay URL to reach the server through instead of the default relays. A privacy-conscious merchant can specify their own relay, including a `.onion` Tor hidden service relay. `_relay` is consumed by the wallet's transport and never sent in `hello`.
-- **`#<parameters>`** *(optional fragment)* &mdash; `&`-separated `key=value` pairs passed to the server in `hello` (for example `#table=12&name=Luigi%27s%20Pizza`).
+{{<cop_uri />}}
 
 ### Web address discovery
 
