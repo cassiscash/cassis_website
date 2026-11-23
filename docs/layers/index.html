@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="https://cassis.cash/logo.png" /><meta name="description" content="The bitcoin layers Cassis routes across, and how each one expresses an HTLC." />
+    <meta property="og:site_name" content="Cassis" />
+    <meta property="og:title" content="Layers | Cassis" />
+    <meta property="og:description" content="The bitcoin layers Cassis routes across, and how each one expresses an HTLC." />
+    <meta property="og:url" content="https://cassis.cash/docs/layers/" />
+    <meta property="og:image" content="https://cassis.cash/logo.png" />
+    <meta property="og:type" content="website" />
+    <title>Layers | Cassis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cassis.cash/site.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="fixed top-4 left-4 z-[100] -translate-y-[200%] border-[3px] border-ink bg-card px-5 py-3 font-bold no-underline shadow-s focus:translate-y-0">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 border-b-[3px] border-ink bg-bg">
+      <nav class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-3.5 md:px-12" aria-label="Primary">
+        <a href="https://cassis.cash" class="flex items-center gap-2.5 font-space text-2xl font-extrabold tracking-[0.08em] uppercase no-underline text-ink">
+          <img src="https://cassis.cash/logo.png" alt="Cassis logo" width="34" height="34" />
+          <span class="hover:underline">Cassis</span>
+        </a>
+        <ul class="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/layers/">Layers</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/">Docs</a></li>
+        </ul>
+        <div class="hidden gap-3.5 md:flex">
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-card px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-ink no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="relative flex items-center md:hidden">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" class="peer sr-only" />
+          <label class="block cursor-pointer border-[3px] border-ink bg-card p-1.5 shadow-s" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="block">
+              <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+            </svg>
+          </label>
+          <div class="absolute top-[calc(100%+0.9rem)] right-0 z-[60] hidden w-[min(320px,calc(100vw-3rem))] flex-col border-[3px] border-ink bg-card shadow-m peer-checked:flex">
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/how-it-works/">How it works</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/layers/">Layers</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/">Docs</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+            <a class="px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      
+<section class="bg-bg">
+  <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+    <div class="grid gap-12 py-12 pb-20 lg:grid-cols-[260px_1fr] lg:gap-16">
+      
+<details class="border-[3px] border-ink bg-card shadow-s lg:hidden">
+  <summary class="cursor-pointer px-4 py-3 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink">Documentation</summary>
+  <nav aria-label="Documentation">
+    <ul class="m-0 list-none border-t-2 border-ink p-0">
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</details>
+<aside class="hidden lg:block">
+  <nav aria-label="Documentation">
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
+      <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</aside>
+
+      <div class="min-w-0">
+        <div class="mb-10 border-[3px] border-ink bg-cream px-7 py-6 shadow-m">
+          <h1 class="m-0 font-outfit text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none font-black tracking-[-0.03em] uppercase">Layers</h1>
+          <p class="mt-3 text-[0.95rem] leading-[1.6] text-ink2">The bitcoin layers Cassis routes across, and how each one expresses an HTLC.</p>
+        </div>
+        <div class="prose">
+          <h2 id="overview">Overview</h2>
+<p>A Cassis payment is a route with any number of hops, each of which is an HTLC,
+all bound to the same hash <code>H</code> and honoring strictly decreasing timeouts.
+Each network expresses that HTLC in its own idiom, the preimage <code>R</code> (with
+<code>H = sha256(R)</code>) is the only key that settles a hop, and a timeout always
+opens a refund path.</p>
+<p>For each layer below:</p>
+<ul>
+<li><strong>HTLC descriptor</strong> is what describes a locked HTLC on the wire: the
+sender returns it in reply to <code>EXECUTE</code>, and the receiver checks it
+against the ledger before going on. Every descriptor also carries the
+<strong>target</strong> it pays: the claim key (or hold invoice) that can settle it on
+that network.</li>
+<li><strong>Default incoming delta</strong> is how long a router needs, after learning the
+preimage at the last possible moment (when its outgoing HTLC expires), to
+get the claim of its incoming HTLC through on that network before the
+HTLC can be refunded.</li>
+<li><strong>Outgoing lag</strong> is how long after its expiry an HTLC sent on that network
+can still be claimed, because the refund path opens by the network's own
+clock and can lag behind wall time. A router adds this lag to the default
+incoming delta it announces, so each hop's gap depends on both the network
+it receives on and the one it sends on (see
+<a href="https://cassis.cash/docs/how-it-works/#timeouts">how it works</a>).</li>
+</ul>
+<h2 id="lightning"><span style="color:#eab308">●</span> Lightning</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://github.com/lightning/bolts">BOLT</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>lightning</code> (mainnet), <code>lightning::signet</code>, <code>lightning::mutinynet</code>, <code>lightning::regtest</code></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">native BOLT <code>update_add_htlc</code> with <code>payment_hash</code> and <code>cltv_expiry</code></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">BOLT11 hold invoice (<code>payment_request</code>), sent as the outgoing target the payer pays verbatim to preserve the payment secret</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+</dl>
+<p>The hold invoice must be settled before its CLTV runs out, and that is
+counted in bitcoin blocks, which can come early.</p>
+<h2 id="liquid"><span style="color:#5ab7ec">●</span> Liquid</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://liquid.net">Liquid</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>liquid</code> (mainnet), <code>liquid::testnet</code></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">P2WSH script, <code>OP_HASH160 &lt;RIPEMD160(payment_hash)&gt;</code> claim path with CLTV refund</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">lockup outpoint (<code>lockup_txid</code> + <code>lockup_vout</code>) pinning the broadcast lockup tx, <code>refund_pubkey</code>, <code>refund_locktime</code>, and the compressed-secp256k1 <code>target</code>; the claim side is rebuilt from the route hash</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">10 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">10 min</dd>
+</dl>
+<p>Liquid has regular one-minute blocks; the claim must confirm before the
+refund path opens.</p>
+<h2 id="arkade"><span style="color:#a855f7">●</span> Arkade</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://arkadeos.com/">Arkade</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>arkade</code> (arkade.computer, mainnet), <code>arkade::mutinynet</code> (the public mutinynet operator), <code>arkade::&lt;operator host&gt;</code> (each operator is a separate network)</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>VhtlcScript</code> taproot tree, <code>RIPEMD160(payment_hash)</code>, seconds-based timelocks</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">VHTLC options — <code>sender</code> x-only key, <code>refund_locktime</code>, three unilateral CSV delays (<code>unilateral_claim_delay</code>, <code>unilateral_refund_delay</code>, <code>unilateral_refund_without_receiver_delay</code>), and the x-only <code>target</code> (the receiver). The operator is the network's server, and <code>payment_hash160</code> follows from the route hash</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">20 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+</dl>
+<p><strong>Batch expiry.</strong> Arkade VTXOs live in <em>batches</em>, and every VTXO expires
+with the batch it descends from (VTXOs created offchain inherit their
+inputs' expiry). After that the operator may sweep it, and it can no
+longer be spent offchain: a VHTLC still running then could neither be
+claimed nor refunded. So:</p>
+<ul>
+<li>An HTLC must be over at least <strong>20 minutes before</strong> the batch of its
+VHTLC expires. Receivers reject VHTLCs that are not.</li>
+<li>Before locking an HTLC, a sender moves coins that would expire too
+early into a new batch.</li>
+<li>A router caps how long an incoming HTLC may run with <code>max_htlc_secs</code> in
+its config (three days by default) and refuses longer ones.</li>
+<li>Wallet coins older than a batch read as 0 until
+<code>cassis-wallet arkade --network &lt;id&gt; onboard</code> settles them into a new one.</li>
+</ul>
+<p><strong>Dust.</strong> Operators refuse outputs below their dust limit (330 sats by
+default), including change: a payment smaller than that, or one that
+would leave less change than that, is refused before anything is
+locked.</p>
+<h2 id="cashu"><span style="color:#1d4ed8">●</span> Cashu</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://cashu.space">Cashu</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>cashu::&lt;host[:port]&gt;</code> (each mint is a separate network)</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">NUT-14 spending conditions on a NUT-10 HTLC secret</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">NUT-14 locked ecash proofs, one base64-encoded NUT-00 <code>Proof</code> per element, plus the x-only <code>target</code> that can claim them</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">5 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">1 min</dd>
+</dl>
+<p>Claims are a single request to the mint, timed by the mint's clock. Real
+mints may charge input fees (e.g. 100 ppk), so a payee on such a mint
+nets slightly less than the invoiced amount.</p>
+<h2 id="fedimint"><span style="color:#ef4444">●</span> Fedimint</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://fedimint.org">Fedimint</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>fedimint::&lt;invite_code&gt;</code> (each fedimint is a separate network)</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">LNv2 direct HTLC: an <code>OutgoingContract</code> funded between two clients of the federation, with no Lightning gateway involved</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">where the contract was funded (<code>funding_txid</code> + <code>funding_out_idx</code>), the contract itself as consensus JSON, and the x-only <code>target</code> that can claim it</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">40 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+</dl>
+<p>Contracts expire after a number of bitcoin blocks, which can come early
+or late: refunds may only go through a few blocks after the time the
+HTLC was planned to expire.</p>
+<h2 id="rootstock"><span style="color:#22c55e">●</span> Rootstock</h2>
+<dl class="my-6 grid grid-cols-[12rem_1fr] border-[3px] border-ink bg-card shadow-m">
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase first:border-t-0">Protocol</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem] first:border-t-0"><a href="https://rootstock.io">Rootstock</a></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">NetworkId</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>rootstock</code> (mainnet), <code>rootstock::testnet</code></dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><a href="https://explorer.rootstock.io/address/0x3612e393cA2fbB8874854B88fFCf04307a518239?tab=contract">EtherSwap v3</a> contract, <code>sha256</code> precompile matches <code>H</code> byte-for-byte</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">HTLC descriptor</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]"><code>amount_wei</code>, <code>refund_address</code>, block-height <code>timelock</code>, and the compressed-secp256k1 <code>target</code> (the claim address)</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Default incoming delta</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">20 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+</dl>
+<p>Rootstock has ~30 s blocks with some variance, and its timelocks are
+block heights. Claiming is a contract call, so <strong>the receiver needs a
+little RBTC for gas</strong>, the payee included: without it the claim fails
+and the whole route stays locked until it expires.</p>
+
+        </div>
+        
+        
+        
+        <div class="mt-14 grid grid-cols-2 gap-4">
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/path-finding/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">&larr; Previous</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Path finding</span>
+          </a>
+          
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 text-right no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/wallets/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">Next &rarr;</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">For wallet developers</span>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+
+    <footer class="bg-dark pt-12 pb-8 text-white">
+      <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+        <div class="flex flex-col justify-between gap-10 md:flex-row">
+          <div>
+            <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
+              <img src="https://cassis.cash/logo_white.png" alt="" width="30" height="30" />
+              Cassis
+            </span>
+            <span class="mt-2.5 block text-sm text-white/65">Bitcoin payments across every layer</span>
+          </div>
+          <nav class="flex flex-wrap gap-14" aria-label="Footer">
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Protocol</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/layers/">Supported layers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/offline-payments/">Offline payments</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/cop/">Order Protocol (COP)</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/privacy/">Privacy</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Docs</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/quickstart/">Quickstart</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/wallets/">For wallet developers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/faq/">FAQ</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Community</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Zulip chat</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

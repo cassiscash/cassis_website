@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="https://cassis.cash/logo.png" /><meta name="description" content="How payees can receive payments while offline using a gateway and a preimage server." />
+    <meta property="og:site_name" content="Cassis" />
+    <meta property="og:title" content="Offline payments | Cassis" />
+    <meta property="og:description" content="How payees can receive payments while offline using a gateway and a preimage server." />
+    <meta property="og:url" content="https://cassis.cash/docs/offline-payments/" />
+    <meta property="og:image" content="https://cassis.cash/logo.png" />
+    <meta property="og:type" content="website" />
+    <title>Offline payments | Cassis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cassis.cash/site.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="fixed top-4 left-4 z-[100] -translate-y-[200%] border-[3px] border-ink bg-card px-5 py-3 font-bold no-underline shadow-s focus:translate-y-0">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 border-b-[3px] border-ink bg-bg">
+      <nav class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-3.5 md:px-12" aria-label="Primary">
+        <a href="https://cassis.cash" class="flex items-center gap-2.5 font-space text-2xl font-extrabold tracking-[0.08em] uppercase no-underline text-ink">
+          <img src="https://cassis.cash/logo.png" alt="Cassis logo" width="34" height="34" />
+          <span class="hover:underline">Cassis</span>
+        </a>
+        <ul class="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/layers/">Layers</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/">Docs</a></li>
+        </ul>
+        <div class="hidden gap-3.5 md:flex">
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-card px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-ink no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="relative flex items-center md:hidden">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" class="peer sr-only" />
+          <label class="block cursor-pointer border-[3px] border-ink bg-card p-1.5 shadow-s" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="block">
+              <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+            </svg>
+          </label>
+          <div class="absolute top-[calc(100%+0.9rem)] right-0 z-[60] hidden w-[min(320px,calc(100vw-3rem))] flex-col border-[3px] border-ink bg-card shadow-m peer-checked:flex">
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/how-it-works/">How it works</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/layers/">Layers</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/">Docs</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+            <a class="px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      
+<section class="bg-bg">
+  <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+    <div class="grid gap-12 py-12 pb-20 lg:grid-cols-[260px_1fr] lg:gap-16">
+      
+<details class="border-[3px] border-ink bg-card shadow-s lg:hidden">
+  <summary class="cursor-pointer px-4 py-3 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink">Documentation</summary>
+  <nav aria-label="Documentation">
+    <ul class="m-0 list-none border-t-2 border-ink p-0">
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</details>
+<aside class="hidden lg:block">
+  <nav aria-label="Documentation">
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
+      <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</aside>
+
+      <div class="min-w-0">
+        <div class="mb-10 border-[3px] border-ink bg-cream px-7 py-6 shadow-m">
+          <h1 class="m-0 font-outfit text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none font-black tracking-[-0.03em] uppercase">Offline payments</h1>
+          <p class="mt-3 text-[0.95rem] leading-[1.6] text-ink2">How payees can receive payments while offline using a gateway and a preimage server.</p>
+        </div>
+        <div class="prose">
+          <p>In a standard Cassis payment, the payer connects directly to the receiver to lock the final hop and obtain the preimage. That requires the receiver's wallet to be online when the payment happens.</p>
+<p>Requiring an always-on wallet is fine when two people are actively coordinating, but in practice many payments happen asynchronously. Merchants and online stores need to accept payments without keeping a hot wallet exposed on a server, creators want to receive tips or sales passively, and even everyday peer-to-peer payments between friends often happen when the recipient's phone is in their pocket with no connection.</p>
+<p>On networks that support asynchronous HTLC creation — where a sender can lock an HTLC to a recipient's public key without the recipient signing anything at that moment, such as <a href="https://cassis.cash/docs/layers/#cashu">Cashu</a>, <a href="https://cassis.cash/docs/layers/#arkade">Arkade</a>, <a href="https://cassis.cash/docs/layers/#liquid">Liquid</a> and <a href="https://cassis.cash/docs/layers/#rootstock">Rootstock</a> — Cassis handles offline receiving through two auxiliary parties:</p>
+<ul>
+<li><strong>A gateway</strong> (inspired by a Fedimint design), which acts as the destination of the Cassis route and shares a network with the final payee.</li>
+<li><strong>A preimage server</strong>, which holds the payment preimage and only releases it to the gateway once the gateway proves it has locked a new HTLC to the final payee.</li>
+</ul>
+<p>Cassis supports two ways of running this flow: pre-created invoices and full delegation. In both, the payee signs a <strong>receive authorization</strong> naming both the gateway and the preimage server, with limits on validity, amount, networks, description and the minimum final timeout. A <em>single</em> authorization covers one invoice; a <em>standing</em> one lets the gateway issue invoices alone.</p>
+<h2 id="1-pre-created-invoices">1. Pre-created invoices</h2>
+<p>In the first mode, the final payee creates the invoice ahead of time.</p>
+<p>The invoice points to the <strong>gateway</strong> as the destination node for the Cassis route, so the payer knows to route the payment there. However, the invoice also carries two signatures: one from the <strong>final payee</strong> authorizing the gateway to receive the payment on their behalf, and one from the <strong>gateway</strong> itself. When the payer reads the invoice, they can see they are actually paying the final payee and verify that the gateway was authorized to take the payment. The payee's signed authorization was also handed to the preimage server, under which it issued the payment hash.</p>
+<p>The gateway never holds the payment custodially. When the Cassis payment arrives, the funds are locked to a <code>payment_hash</code> whose preimage the gateway does not have. Instead, the preimage is held by the <strong>preimage server</strong>.</p>
+<p>Suppose both the gateway and the final payee are on the same Cashu mint. When the incoming Cassis payment reaches the gateway:</p>
+<ol>
+<li>The gateway creates a new HTLC on that Cashu mint locked to the <strong>final payee</strong>, using the same <code>payment_hash</code> and a long expiry — for example, two weeks.</li>
+<li>Although the HTLC is locked for two weeks, the gateway does not expect to wait that long to recover its liquidity. Beforehand, the preimage server assured the gateway that it knows the preimage and will release it as soon as the HTLC is created.</li>
+<li>The gateway presents the new HTLC to the preimage server. Once the preimage server verifies that the HTLC is validly locked to the final payee, it releases the preimage to the gateway and stores the HTLC descriptor for the payee.</li>
+<li>The gateway uses the preimage to settle the incoming Cassis payment, immediately getting back the liquidity it put into the payee's HTLC.</li>
+<li>The final payee can come back online anytime over the next two weeks, fetch the pending HTLC details from the preimage server, and claim the funds.</li>
+</ol>
+<p>Because the gateway already recovered its money from the incoming Cassis payment, a well-behaved gateway will never try to refund the two-week HTLC to itself. The refund timeout on that HTLC only exists as a safety net for the gateway in case the preimage server loses the preimage or disappears in the brief moment between the gateway creating the HTLC to the payee and redeeming the incoming Cassis payment.</p>
+<h2 id="2-delegated-mode">2. Delegated mode</h2>
+<p>In the fully delegated mode, the final payee does not need to create each invoice in advance. Instead, before going offline, the payee signs a single <strong>standing authorization</strong> that names both the <strong>gateway</strong> and the <strong>preimage server</strong>. It authorizes the gateway to issue invoices in the payee's name within limits: how long it is valid, the amount range, the networks and claim keys the gateway may pay to, an optional description every invoice must carry, and the minimum final timeout. The delegated invoice then carries that authorization (with the payee's signature) and the preimage server's issuance of its hash, in place of a per-invoice payee signature.</p>
+<p>While the payee is offline:</p>
+<ol>
+<li>The preimage server can generate any number of preimages on behalf of the final payee, within the authorization's limits.</li>
+<li>Whenever a payer wants to pay the payee, the gateway talks directly to the preimage server to get a fresh <code>payment_hash</code> and serves the invoice.</li>
+<li>When the Cassis payment arrives at the gateway, the gateway already knows it can talk to that same preimage server: it locks a long-lived HTLC to the final payee, presents it to the preimage server, gets the preimage back, and settles the incoming route.</li>
+<li>Just as in the first mode, the preimage server stores the HTLC descriptors and parameters for every payment that arrived. When the final payee comes back online, they connect to the preimage server and claim all their pending payments.</li>
+</ol>
+<h2 id="trust-model-and-future-improvements">Trust model and future improvements</h2>
+<p>This design splits responsibilities so that no single party has custody of the payee's funds:</p>
+<ul>
+<li><strong>Final payee and preimage server:</strong> The final payee trusts the preimage server to only release the preimage when presented with a valid HTLC locked to the payee, and to keep the HTLC parameters available until the payee returns online.</li>
+<li><strong>Gateway and preimage server:</strong> The gateway trusts the preimage server to actually have the preimage and hand it over as soon as the gateway locks the HTLC to the payee.</li>
+<li><strong>Final payee and gateway:</strong> There is <strong>no trust relationship</strong> between the final payee and the gateway.</li>
+</ul>
+<p>The preimage server is a trusted third party, but it is <strong>not custodial</strong>. Because the HTLC is locked to the final payee's public key, neither the preimage server nor the gateway can take the money on its own; stealing a payment would require the preimage server and the gateway to collude.</p>
+<p>In the future, the single preimage server can be replaced by a small federation — for example, three independent operators instead of one — using multiparty computation (MPC) or zero-knowledge proofs so that no single server is trusted on its own.</p>
+
+        </div>
+        
+        
+        
+        <div class="mt-14 grid grid-cols-2 gap-4">
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/cop/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">&larr; Previous</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Cassis Order Protocol (COP)</span>
+          </a>
+          
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 text-right no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/privacy/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">Next &rarr;</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Privacy</span>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+
+    <footer class="bg-dark pt-12 pb-8 text-white">
+      <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+        <div class="flex flex-col justify-between gap-10 md:flex-row">
+          <div>
+            <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
+              <img src="https://cassis.cash/logo_white.png" alt="" width="30" height="30" />
+              Cassis
+            </span>
+            <span class="mt-2.5 block text-sm text-white/65">Bitcoin payments across every layer</span>
+          </div>
+          <nav class="flex flex-wrap gap-14" aria-label="Footer">
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Protocol</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/layers/">Supported layers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/offline-payments/">Offline payments</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/cop/">Order Protocol (COP)</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/privacy/">Privacy</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Docs</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/quickstart/">Quickstart</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/wallets/">For wallet developers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/faq/">FAQ</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Community</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Zulip chat</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="https://cassis.cash/logo.png" /><meta name="description" content="A wallet-native protocol for buying, subscribing, pricing in fiat, and ordering from menus without web technologies." />
+    <meta property="og:site_name" content="Cassis" />
+    <meta property="og:title" content="Cassis Order Protocol (COP) | Cassis" />
+    <meta property="og:description" content="A wallet-native protocol for buying, subscribing, pricing in fiat, and ordering from menus without web technologies." />
+    <meta property="og:url" content="https://cassis.cash/docs/cop/" />
+    <meta property="og:image" content="https://cassis.cash/logo.png" />
+    <meta property="og:type" content="website" />
+    <title>Cassis Order Protocol (COP) | Cassis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cassis.cash/site.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="fixed top-4 left-4 z-[100] -translate-y-[200%] border-[3px] border-ink bg-card px-5 py-3 font-bold no-underline shadow-s focus:translate-y-0">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 border-b-[3px] border-ink bg-bg">
+      <nav class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-3.5 md:px-12" aria-label="Primary">
+        <a href="https://cassis.cash" class="flex items-center gap-2.5 font-space text-2xl font-extrabold tracking-[0.08em] uppercase no-underline text-ink">
+          <img src="https://cassis.cash/logo.png" alt="Cassis logo" width="34" height="34" />
+          <span class="hover:underline">Cassis</span>
+        </a>
+        <ul class="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/layers/">Layers</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/">Docs</a></li>
+        </ul>
+        <div class="hidden gap-3.5 md:flex">
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-card px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-ink no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="relative flex items-center md:hidden">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" class="peer sr-only" />
+          <label class="block cursor-pointer border-[3px] border-ink bg-card p-1.5 shadow-s" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="block">
+              <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+            </svg>
+          </label>
+          <div class="absolute top-[calc(100%+0.9rem)] right-0 z-[60] hidden w-[min(320px,calc(100vw-3rem))] flex-col border-[3px] border-ink bg-card shadow-m peer-checked:flex">
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/how-it-works/">How it works</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/layers/">Layers</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/">Docs</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+            <a class="px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      
+<section class="bg-bg">
+  <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+    <div class="grid gap-12 py-12 pb-20 lg:grid-cols-[260px_1fr] lg:gap-16">
+      
+<details class="border-[3px] border-ink bg-card shadow-s lg:hidden">
+  <summary class="cursor-pointer px-4 py-3 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink">Documentation</summary>
+  <nav aria-label="Documentation">
+    <ul class="m-0 list-none border-t-2 border-ink p-0">
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</details>
+<aside class="hidden lg:block">
+  <nav aria-label="Documentation">
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
+      <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</aside>
+
+      <div class="min-w-0">
+        <div class="mb-10 border-[3px] border-ink bg-cream px-7 py-6 shadow-m">
+          <h1 class="m-0 font-outfit text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none font-black tracking-[-0.03em] uppercase">Cassis Order Protocol (COP)</h1>
+          <p class="mt-3 text-[0.95rem] leading-[1.6] text-ink2">A wallet-native protocol for buying, subscribing, pricing in fiat, and ordering from menus without web technologies.</p>
+        </div>
+        <div class="prose">
+          <blockquote>
+<p><strong>Specification v1.0 (Draft).</strong> The full specification is at <a rel="external" href="https://cop.cassis.cash/">cop.cassis.cash</a>.</p>
+</blockquote>
+<p>The <strong>Cassis Order Protocol (COP)</strong> lets Bitcoin wallets handle real-world commerce directly inside the wallet.</p>
+<p>Scan a QR code (or paste an address) and the merchant's order page opens in the wallet, rendered with the wallet's own native buttons, lists and form inputs. Pick what you want, fill in any details, and pay on the wallet's own payment screen.</p>
+<ul>
+<li><strong>No browser in the wallet</strong> — the wallet renders a small set of native UI components instead of embedding a webview, JavaScript engine or cookies.</li>
+<li><strong>No website for the merchant</strong> — the merchant needs no web server, domain name or TLS certificate. An Iroh public key is the address, and a server can run on a VPS, a vending machine, or a phone.</li>
+<li><strong>Two-way payments</strong> — a merchant can also send money <em>back</em> to the customer (for refunds, cashback or withdrawals) in the same flow.</li>
+<li><strong>Persistent sessions</strong> — the wallet can reconnect to a past order later to view a receipt, check delivery status, ask for a refund, or pay the next month of a subscription.</li>
+</ul>
+<h2 id="architecture-roles">Architecture &amp; roles</h2>
+<p>COP is built on <strong><a rel="external" href="https://hypereffect.dev">hypereffect</a></strong>, a small JSON-line protocol for server-driven UI, carried over an encrypted <strong><a rel="external" href="https://iroh.computer">Iroh</a></strong> peer-to-peer stream (<code>cassis-order</code> ALPN).</p>
+<p>The page itself — framing, elements, reactive signals, CEL expressions and actions — is standard hypereffect. COP adds three things:</p>
+<ol>
+<li><strong>Transport &amp; discovery:</strong> an Iroh connection opened from a <code>cop://</code> <a href="https://cassis.cash/docs/cop/#connection-uris-and-web-addresses">connection URI</a> or an HTTPS URL that publishes one.</li>
+<li><strong>Session resumption:</strong> a client-generated <code>session</code> string in the <code>hello</code> handshake so a flow can be reopened later.</li>
+<li><strong>Two messages for money:</strong> <code>invoice</code> (asking the wallet to pay a Cassis invoice) and <code>invoicerequest</code> (offering the wallet money and asking it to issue an invoice).</li>
+</ol>
+<p>Each flow has two sides:</p>
+<ul>
+<li><strong>Server (merchant):</strong> a shop, restaurant, vending machine, online service, or person selling something. It sends the UI, handles user actions, prices the order, and issues invoices or invoice requests.</li>
+<li><strong>Client (wallet):</strong> the payer's Bitcoin wallet. It opens the connection, renders the page with native components, sends user actions back, and shows its own payment screen when an invoice arrives.</li>
+</ul>
+<h2 id="try-it">Try it</h2>
+<p>The demo below runs a toy wallet and restaurant server in your browser. The left side is what the payer sees; the right side logs every line on the <code>cassis-order</code> stream (a tag, a space, and a JSON object).</p>
+<p>Drag the camera view to scan one of the two QR codes on the table:</p>
+<ul>
+<li><strong>The menu flyer</strong> (<code>cop://…#name=Luigi%27s%20Pizza</code>) opens the full ordering flow: pick a pizza and topping, enter a delivery address, and pay.</li>
+<li><strong>The checkout terminal</strong> (<code>cop://…#register=2</code>) skips straight to payment for two slices already rung up on register 2.</li>
+</ul>
+<p>Both codes dial the same server; the fragment after <code>#</code> tells it what to show.</p>
+<div class="cop-demo" data-cop-order-demo>
+  <div class="cop-demo-head"><span>Interactive demo &middot; runs in your browser</span><button type="button" data-reset>Reset</button></div>
+  <div class="cop-demo-grid">
+    <div class="cop-phone"><div class="cop-screen"><div class="cop-empty">This demo needs JavaScript.</div></div></div>
+    <div class="cop-log"><div class="cop-log-head">cassis-order stream</div><div class="cop-log-lines" role="log"></div></div>
+  </div>
+</div>
+<p>As you click through:</p>
+<ul>
+<li><strong>Connect.</strong> The wallet sends <code>hello</code> with the URI parameters and a random <code>session</code> string. The server replies with <code>metadata</code> and the page's <code>element</code>s.</li>
+<li><strong>Order.</strong> Tapping an item sends an <code>action</code> with <em>what</em> was chosen, never a price. The server prices it and updates the page with <code>element</code> and <code>remove</code>.</li>
+<li><strong>Local state.</strong> Typing an address sends nothing yet. The input updates a local <code>signal</code>, and the wallet evaluates a CEL expression locally to enable the pay button. Signals are sent along with the next <code>action</code>.</li>
+<li><strong>Pay.</strong> The server prices the order in sats and sends an <code>invoice</code>. The amount you confirm comes from the cryptographic invoice on the wallet's own payment screen, not from text on the page.</li>
+<li><strong>Money back.</strong> <em>Cancel order &amp; refund</em> triggers an <code>invoicerequest</code> from the server. If you accept, the wallet signs a fresh <code>invoice</code> and sends it back for the server to pay.</li>
+<li><strong>No UI at all.</strong> The checkout terminal sends an <code>invoice</code> right away with no page or <code>metadata</code>, so the wallet shows only the endpoint ID it dialed.</li>
+<li><strong>Come back later.</strong> Close an order and reopen it under <em>Recent orders</em>. The wallet reconnects with the same <code>session</code> string, and the server resumes the order or shows the receipt.</li>
+</ul>
+<h2 id="connection-uris-and-web-addresses">Connection URIs and web addresses</h2>
+<p>A merchant publishes an order endpoint as a <code>cop://</code> URI, usually in a QR code:</p>
+<div class="cop-uri" data-cop-uri>
+  <div class="cop-uri-hint">Tap a part of the address</div>
+  <div class="cop-uri-line"><span data-part="scheme" style="--part: var(--color-amber)">cop://</span><span data-part="endpoint" style="--part: var(--color-cyan)">5f1c9d0a27e4b6c38d2f71a09e4b5c6d8a3f2e1b0c9d8e7f6a5b4c3d2e1f0a9b</span><span data-part="relay" style="--part: var(--color-lime)">?_relay=https://relay.luigis.example</span><span data-part="params" style="--part: var(--color-coral)">#table=12&amp;name=Luigi%27s%20Pizza</span></div>
+  <div class="cop-uri-info" data-info="scheme"><strong>Scheme.</strong> Marks this as a COP order endpoint for the wallet to dial.</div>
+  <div class="cop-uri-info" data-info="endpoint"><strong>Endpoint ID.</strong> The server's Iroh endpoint ID: its 64-character hex Ed25519 public key. This key is the merchant's whole address, with no domain or certificate, and Iroh authenticates the connection against it.</div>
+  <div class="cop-uri-info" data-info="relay"><strong>Relay</strong> <em>(optional)</em>. A custom Iroh relay to reach the server through instead of the default relays, such as the merchant's own or a <code>.onion</code> Tor hidden service. Only the wallet's transport uses it. It is never sent to the server.</div>
+  <div class="cop-uri-info" data-info="params"><strong>Parameters</strong> <em>(optional)</em>. <code>&amp;</code>-separated <code>key=value</code> pairs handed to the server in <code>hello</code>, such as a table or register number.</div>
+  <div class="cop-uri-hello"><span>wallet sends &rarr;</span> hello {"params":{"table":"12","name":"Luigi's Pizza","session":"f1K9xQ2v8Tn4LmZp7Rb3wq"}}</div>
+</div>
+<h3 id="web-address-discovery">Web address discovery</h3>
+<p>Wherever a wallet accepts a <code>cop://</code> URI, it can also take an HTTPS URL like <code>example.com/order/123</code>. The wallet fetches the URL (<code>GET</code>) and looks in the HTML <code>&lt;head&gt;</code> for:</p>
+<pre class="giallo" style="color: #E1E4E8; background-color: #24292E;" ><code data-lang="html"><span class="giallo-l"><span>&lt;</span><span style="color: #85E89D;">link</span><span style="color: #B392F0;"> rel</span><span>=</span><span style="color: #9ECBFF;">&quot;cassis-order&quot;</span><span style="color: #B392F0;"> href</span><span>=</span><span style="color: #9ECBFF;">&quot;cop://5f1c9d0a27e4b6c38d2f71a09e4b5c6d8a3f2e1b0c9d8e7f6a5b4c3d2e1f0a9b#table=12&quot;</span><span>&gt;</span></span></code></pre>
+<p>The HTML is only used to discover the <code>cop://</code> URI. The wallet never renders the page, runs scripts, or follows links, and the server is still authenticated by the Iroh endpoint ID in the URI.</p>
+<h2 id="sessions-and-identity">Sessions and identity</h2>
+<p>Every <code>hello</code> includes a <code>session</code> token generated by the wallet with <strong>at least 128 bits of randomness</strong>:</p>
+<ul>
+<li>The wallet saves each session locally (endpoint ID, relay, URI parameters, <code>session</code> string, and invoices paid or issued).</li>
+<li>Tapping a past order reconnects with the same <code>session</code> and parameters, so the server can resume checkout, show a receipt or delivery status, offer a refund, or renew a subscription.</li>
+</ul>
+<p>The server also sees the wallet's Iroh endpoint public key. A wallet can manage this key depending on the privacy tradeoff it wants:</p>
+<ul>
+<li><strong>A new key per order</strong> so orders cannot be linked by endpoint ID.</li>
+<li><strong>One key per merchant</strong> so a service recognises a returning customer without cross-merchant tracking.</li>
+<li><strong>A single key</strong> if the user wants a portable identity across servers.</li>
+</ul>
+<h2 id="security-model">Security model</h2>
+<ul>
+<li><strong>Only the wallet's payment screen is trusted.</strong> The server draws the entire order page, including any prices shown as text. When an <code>invoice</code> arrives, the wallet ignores page text and builds its payment sheet strictly from the signed invoice (<code>amount_msat</code>, <code>payee</code>, <code>expires_at</code>).</li>
+<li><strong>Money only moves through <code>invoice</code> and <code>invoicerequest</code>.</strong> Hypereffect has no payment component, and links opened from a page must never trigger <code>bitcoin:</code>, <code>lightning:</code> or <code>cassis:</code> URI handlers.</li>
+<li><strong>Actions are untrusted input.</strong> A client can put arbitrary values in <code>action</code> payloads and signals. Servers should only take item IDs and quantities from the client and compute all prices and totals themselves.</li>
+<li><strong>Remote media privacy.</strong> Remote <code>image</code> URLs leak the customer's IP address to the image host. Wallets should let users block remote images, and must never load them when connected through a <code>.onion</code> Tor relay.</li>
+</ul>
+
+        </div>
+        
+        
+        
+        <div class="mt-14 grid grid-cols-2 gap-4">
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/wallets/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">&larr; Previous</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">For wallet developers</span>
+          </a>
+          
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 text-right no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/offline-payments/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">Next &rarr;</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Offline payments</span>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cassis.cash/cop-demos.js" defer></script>
+
+
+    </main>
+
+    <footer class="bg-dark pt-12 pb-8 text-white">
+      <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+        <div class="flex flex-col justify-between gap-10 md:flex-row">
+          <div>
+            <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
+              <img src="https://cassis.cash/logo_white.png" alt="" width="30" height="30" />
+              Cassis
+            </span>
+            <span class="mt-2.5 block text-sm text-white/65">Bitcoin payments across every layer</span>
+          </div>
+          <nav class="flex flex-wrap gap-14" aria-label="Footer">
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Protocol</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/layers/">Supported layers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/offline-payments/">Offline payments</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/cop/">Order Protocol (COP)</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/privacy/">Privacy</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Docs</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/quickstart/">Quickstart</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/wallets/">For wallet developers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/faq/">FAQ</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Community</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Zulip chat</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

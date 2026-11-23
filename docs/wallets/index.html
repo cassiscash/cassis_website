@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" type="image/png" href="https://cassis.cash/logo.png" /><meta name="description" content="How to integrate Cassis payments and the Cassis Order Protocol into an existing Bitcoin wallet." />
+    <meta property="og:site_name" content="Cassis" />
+    <meta property="og:title" content="For wallet developers | Cassis" />
+    <meta property="og:description" content="How to integrate Cassis payments and the Cassis Order Protocol into an existing Bitcoin wallet." />
+    <meta property="og:url" content="https://cassis.cash/docs/wallets/" />
+    <meta property="og:image" content="https://cassis.cash/logo.png" />
+    <meta property="og:type" content="website" />
+    <title>For wallet developers | Cassis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cassis.cash/site.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="fixed top-4 left-4 z-[100] -translate-y-[200%] border-[3px] border-ink bg-card px-5 py-3 font-bold no-underline shadow-s focus:translate-y-0">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 border-b-[3px] border-ink bg-bg">
+      <nav class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-3.5 md:px-12" aria-label="Primary">
+        <a href="https://cassis.cash" class="flex items-center gap-2.5 font-space text-2xl font-extrabold tracking-[0.08em] uppercase no-underline text-ink">
+          <img src="https://cassis.cash/logo.png" alt="Cassis logo" width="34" height="34" />
+          <span class="hover:underline">Cassis</span>
+        </a>
+        <ul class="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/layers/">Layers</a></li>
+          <li><a class="font-space text-[0.82rem] font-semibold tracking-[0.1em] uppercase no-underline text-ink2 hover:text-ink hover:underline" href="https://cassis.cash/docs/">Docs</a></li>
+        </ul>
+        <div class="hidden gap-3.5 md:flex">
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-card px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-ink no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+          <a class="inline-flex items-center justify-center gap-2.5 border-[3px] border-ink bg-ink px-5 py-2.5 font-space text-xs font-bold tracking-[0.08em] uppercase text-white no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="relative flex items-center md:hidden">
+          <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation" class="peer sr-only" />
+          <label class="block cursor-pointer border-[3px] border-ink bg-card p-1.5 shadow-s" for="nav-toggle" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="block">
+              <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+            </svg>
+          </label>
+          <div class="absolute top-[calc(100%+0.9rem)] right-0 z-[60] hidden w-[min(320px,calc(100vw-3rem))] flex-col border-[3px] border-ink bg-card shadow-m peer-checked:flex">
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/how-it-works/">How it works</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/layers/">Layers</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.cash/docs/">Docs</a>
+            <a class="border-b-2 border-ink px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Community</a>
+            <a class="px-6 py-4 font-space text-sm font-bold tracking-[0.1em] uppercase no-underline text-ink" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      
+<section class="bg-bg">
+  <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+    <div class="grid gap-12 py-12 pb-20 lg:grid-cols-[260px_1fr] lg:gap-16">
+      
+<details class="border-[3px] border-ink bg-card shadow-s lg:hidden">
+  <summary class="cursor-pointer px-4 py-3 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink">Documentation</summary>
+  <nav aria-label="Documentation">
+    <ul class="m-0 list-none border-t-2 border-ink p-0">
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2.5 text-[0.9rem] no-underline hover:bg-cream hover:text-ink border-transparent font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</details>
+<aside class="hidden lg:block">
+  <nav aria-label="Documentation">
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
+      <li class="mb-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.16em] uppercase text-ink2">Documentation</li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/quickstart/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Quickstart
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/how-it-works/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          How it works
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/path-finding/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Path finding
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/layers/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Layers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/wallets/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-cassis bg-cream font-bold text-ink" aria-current="page">
+          For wallet developers
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/cop/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Cassis Order Protocol (COP)
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/offline-payments/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Offline payments
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/privacy/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          Privacy
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://cassis.cash/docs/faq/" class="block border-l-[3px] px-3.5 py-2 text-[0.85rem] no-underline hover:bg-cream hover:text-ink border-ink font-medium text-ink2">
+          FAQ
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</aside>
+
+      <div class="min-w-0">
+        <div class="mb-10 border-[3px] border-ink bg-cream px-7 py-6 shadow-m">
+          <h1 class="m-0 font-outfit text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none font-black tracking-[-0.03em] uppercase">For wallet developers</h1>
+          <p class="mt-3 text-[0.95rem] leading-[1.6] text-ink2">How to integrate Cassis payments and the Cassis Order Protocol into an existing Bitcoin wallet.</p>
+        </div>
+        <div class="prose">
+          <p>Cassis is designed to be embedded directly into existing single-layer Bitcoin wallets. Your wallet keeps full custody and control of its own keys, coins and layer SDK — the Cassis node holds no balance of its own.</p>
+<p>To integrate basic Cassis payments, a wallet only needs to:</p>
+<ol>
+<li>Start a <strong><code>cassis-wallet</code></strong> <a rel="external" href="https://github.com/cassiscash/cassis"><code>Node</code></a> (or bind an endpoint with <strong><code>cassis-wasm</code></strong> in browser/TypeScript wallets).</li>
+<li>Register two hooks for its network — <strong><code>set_funder</code></strong> ([<code>HtlcFunder</code>]) and <strong><code>set_receiver</code></strong> ([<code>HtlcReceiver</code>]) — so Cassis locks, checks, claims and refunds HTLCs through the wallet's own balance.</li>
+</ol>
+<p>Once those hooks are in place, the real value-added step (and slightly more work) is integrating the <strong><a href="https://cassis.cash/docs/cop/">Cassis Order Protocol (COP)</a></strong> so users can interact with merchants, menus, carts and refunds natively inside your wallet.</p>
+<h2 id="1-start-a-cassis-node">1. Start a Cassis node</h2>
+<p>In a Rust wallet, depend on <code>cassis-core</code> and <code>cassis-wallet</code> (plus the helper crate for your layer from <code>cassis-networks</code>, such as <code>cassis-arkade</code>, <code>cassis-cashu</code>, <code>cassis-fedimint</code>, <code>cassis-liquid</code> or <code>cassis-rootstock</code>).</p>
+<p>Derive the node's keys from your wallet's recovery phrase, open its database (where it journals in-flight HTLCs and invoices), start a [<code>Node</code>] with an empty list of built-in network wallets, and pass in your wallet's funder and receiver hooks:</p>
+<pre class="giallo" style="color: #E1E4E8; background-color: #24292E;" ><code data-lang="rust"><span class="giallo-l"><span style="color: #F97583;">use</span><span style="color: #B392F0;"> std</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">sync</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">Arc</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #F97583;">use</span><span style="color: #B392F0;"> cassis_core</span><span style="color: #F97583;">::</span><span>{</span><span style="color: #B392F0;">keys</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">NodeKeys</span><span>,</span><span style="color: #B392F0;"> NetworkId</span><span>};</span></span>
+<span class="giallo-l"><span style="color: #F97583;">use</span><span style="color: #B392F0;"> cassis_wallet</span><span style="color: #F97583;">::</span><span>{open_db,</span><span style="color: #B392F0;"> Node</span><span>,</span><span style="color: #B392F0;"> NodeConfig</span><span>};</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #F97583;">let</span><span> keys</span><span style="color: #F97583;"> =</span><span style="color: #B392F0;"> NodeKeys</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">from_mnemonic</span><span>(</span><span style="color: #F97583;">&amp;</span><span>mnemonic_words)</span><span style="color: #F97583;">?</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #F97583;">let</span><span> db</span><span style="color: #F97583;"> =</span><span style="color: #B392F0;"> open_db</span><span>(</span><span style="color: #F97583;">&amp;</span><span>data_dir</span><span style="color: #F97583;">.</span><span style="color: #B392F0;">join</span><span>(</span><span style="color: #9ECBFF;">&quot;cassis&quot;</span><span>))</span><span style="color: #F97583;">?</span><span>;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #F97583;">let</span><span> node</span><span style="color: #F97583;"> =</span><span style="color: #B392F0;"> Node</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">start</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #B392F0;">    NodeConfig</span><span> {</span></span>
+<span class="giallo-l"><span>        keys,</span></span>
+<span class="giallo-l"><span>        db,</span></span>
+<span class="giallo-l"><span>        span</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> tracing</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">info_span!</span><span>(</span><span style="color: #9ECBFF;">&quot;my-wallet&quot;</span><span>),</span></span>
+<span class="giallo-l"><span>        serve</span><span style="color: #F97583;">:</span><span style="color: #79B8FF;"> true</span><span>,</span><span style="color: #6A737D;"> // listen on Iroh to receive payments &amp; run the settlement loop</span></span>
+<span class="giallo-l"><span>    },</span></span>
+<span class="giallo-l"><span style="color: #B392F0;">    Vec</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">new</span><span>(),</span></span>
+<span class="giallo-l"><span>)</span></span>
+<span class="giallo-l"><span style="color: #F97583;">.await?</span><span>;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #F97583;">let</span><span> network</span><span style="color: #F97583;"> =</span><span style="color: #B392F0;"> NetworkId</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">parse</span><span>(</span><span style="color: #9ECBFF;">&quot;arkade&quot;</span><span>)</span><span style="color: #F97583;">?</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #F97583;">let</span><span> htlcs</span><span style="color: #F97583;"> =</span><span style="color: #B392F0;"> Arc</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">new</span><span>(</span><span style="color: #B392F0;">MyWalletHtlcs</span><span style="color: #F97583;">::</span><span style="color: #B392F0;">new</span><span>(my_wallet));</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>node</span><span style="color: #F97583;">.</span><span style="color: #B392F0;">set_funder</span><span>(network</span><span style="color: #F97583;">.</span><span style="color: #B392F0;">clone</span><span>(), htlcs</span><span style="color: #F97583;">.</span><span style="color: #B392F0;">clone</span><span>());</span></span>
+<span class="giallo-l"><span>node</span><span style="color: #F97583;">.</span><span style="color: #B392F0;">set_receiver</span><span>(network, htlcs);</span></span></code></pre>
+<p>Because <code>Vec::new()</code> is passed to <code>Node::start</code>, <code>cassis-wallet</code> does not open a separate layer wallet of its own. Every satoshi locked into an outgoing HTLC comes straight from your wallet, and every claimed or refunded HTLC lands straight back in your wallet.</p>
+<h2 id="2-implement-the-funder-and-receiver-hooks">2. Implement the funder and receiver hooks</h2>
+<p>The two hooks live in <code>cassis_core::network</code> and bridge Cassis's protocol state machine to your wallet's layer client. The per-layer crates in <code>cassis-networks</code> expose the HTLC script builders, proof checks and witness extractors so you don't have to re-implement each layer's HTLC construction by hand.</p>
+<h3 id="funding-outgoing-payments">Funding outgoing payments</h3>
+<p>When the user pays a Cassis invoice, the node finds a route, <code>PREPARE</code>s every hop over Iroh, and asks your <strong><code>HtlcFunder</code></strong> (registered via <code>set_funder</code>) to lock the first hop's HTLC. The node journals the payment before calling <code>fund</code> and drives it to completion in its background settlement loop — even across app restarts.</p>
+<pre class="giallo" style="color: #E1E4E8; background-color: #24292E;" ><code data-lang="rust"><span class="giallo-l"><span>#[async_trait]</span></span>
+<span class="giallo-l"><span style="color: #F97583;">pub trait</span><span style="color: #B392F0;"> OutgoingHtlcs</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> Send</span><span style="color: #F97583;"> +</span><span style="color: #B392F0;"> Sync</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    fn</span><span style="color: #B392F0;"> network_id</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> NetworkId</span><span>;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Report whether an outgoing HTLC is still `Pending`, was</span></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// `Claimed(preimage)`, or was `Refunded`.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> check_outgoing</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, htlc</span><span style="color: #F97583;">: &amp;</span><span style="color: #B392F0;">Htlc</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;</span><span style="color: #B392F0;">OutgoingState</span><span>,</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Sweep an expired outgoing HTLC back into the wallet.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> refund_outgoing</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, htlc</span><span style="color: #F97583;">: &amp;</span><span style="color: #B392F0;">Htlc</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;(),</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>#[async_trait]</span></span>
+<span class="giallo-l"><span style="color: #F97583;">pub trait</span><span style="color: #B392F0;"> HtlcFunder</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> OutgoingHtlcs</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Lock `request.amount_msat` to `request.target` with</span></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// `request.payment_hash` and `request.expiry`, and a refund path</span></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// only this wallet can take. Returns once the next hop can verify it.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> fund</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, request</span><span style="color: #F97583;">: &amp;</span><span style="color: #B392F0;">HtlcRequest</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;</span><span style="color: #B392F0;">HtlcDescriptor</span><span>,</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre><h3 id="receiving-incoming-payments">Receiving incoming payments</h3>
+<p>When your wallet issues an invoice or receives a payment, the node asks your <strong><code>HtlcReceiver</code></strong> (registered via <code>set_receiver</code>) where payers should lock funds, verifies the incoming HTLC when a payer sends <code>COMMIT</code>, and claims it with the preimage:</p>
+<pre class="giallo" style="color: #E1E4E8; background-color: #24292E;" ><code data-lang="rust"><span class="giallo-l"><span>#[async_trait]</span></span>
+<span class="giallo-l"><span style="color: #F97583;">pub trait</span><span style="color: #B392F0;"> HtlcReceiver</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> Send</span><span style="color: #F97583;"> +</span><span style="color: #B392F0;"> Sync</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    fn</span><span style="color: #B392F0;"> network_id</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> NetworkId</span><span>;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Seconds this wallet needs to get a claim through once the preimage is known.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    fn</span><span style="color: #B392F0;"> incoming_delta_secs</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> u64</span><span>;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Minimum HTLC amount this network can hold (e.g. dust floor).</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    fn</span><span style="color: #B392F0;"> min_htlc_msat</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> u64</span><span> {</span><span style="color: #79B8FF;"> 0</span><span> }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// The target (claim pubkey or hold invoice) a payer must lock the HTLC to.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> incoming_target</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #F97583;">        &amp;</span><span style="color: #79B8FF;">self</span><span>,</span></span>
+<span class="giallo-l"><span>        payment_hash</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> Bytes32</span><span>,</span></span>
+<span class="giallo-l"><span>        amount_msat</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> u64</span><span>,</span></span>
+<span class="giallo-l"><span>        expiry</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> u64</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;</span><span style="color: #B392F0;">InvoiceTarget</span><span>,</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> cancel_incoming</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, payment_hash</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> Bytes32</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;(),</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Check on the layer that `htlc` exists, pays this wallet&#39;s target,</span></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// and matches the agreed payment hash, amount and expiry.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> verify_incoming</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, htlc</span><span style="color: #F97583;">: &amp;</span><span style="color: #B392F0;">Htlc</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;(),</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6A737D;">    /// Reveal `preimage` to claim the HTLC into the wallet&#39;s balance.</span></span>
+<span class="giallo-l"><span style="color: #F97583;">    async fn</span><span style="color: #B392F0;"> claim_incoming</span><span>(</span><span style="color: #F97583;">&amp;</span><span style="color: #79B8FF;">self</span><span>, htlc</span><span style="color: #F97583;">: &amp;</span><span style="color: #B392F0;">Htlc</span><span>, preimage</span><span style="color: #F97583;">:</span><span style="color: #B392F0;"> Bytes32</span><span>)</span><span style="color: #F97583;"> -&gt;</span><span style="color: #B392F0;"> Result</span><span>&lt;(),</span><span style="color: #B392F0;"> NetworkError</span><span>&gt;;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>If your wallet also builds stateless invoices (such as on-the-fly invoices for refunds whose terms ride in the invoice <code>metadata</code> rather than the database), you can additionally register <strong><code>node.set_preimage_releaser(...)</code></strong> ([<code>PreimageReleaser</code>]) to vet <code>PREPARE</code> and release the preimage on <code>COMMIT</code>.</p>
+<h2 id="3-paying-and-creating-invoices">3. Paying and creating invoices</h2>
+<p>With <code>set_funder</code> and <code>set_receiver</code> registered, paying and receiving are single calls on <code>Node</code>:</p>
+<ul>
+<li><strong>Pay an invoice:</strong> <code>node.pay_retrying(&amp;invoice, &amp;network, &amp;nostr_relays, DEFAULT_MAX_ROUTES).await</code> discovers routers on Nostr, computes local routes, <code>PREPARE</code>s every hop, calls your <code>HtlcFunder::fund</code>, drives <code>EXECUTE</code> and <code>COMMIT</code>, and returns a <code>PayReport</code> with the route taken and the preimage (Automatically retrying around any router that refuses at <code>PREPARE</code>).</li>
+<li><strong>Issue an invoice:</strong> <code>cassis_wallet::node::create_invoice(node.db(), node.keys(), iroh_relay, &amp;[node.receiver(&amp;network)?], amount_msat, expires_at, description, metadata).await</code> queries your <code>HtlcReceiver::incoming_target</code>, signs the invoice with the node's Iroh key, and records it so the running node automatically claims it when paid.</li>
+</ul>
+<h2 id="browser-and-typescript-wallets">Browser and TypeScript wallets</h2>
+<p>For browser and WebAssembly wallets that manage their layer in TypeScript/JavaScript, the <strong><code>cassis-wasm</code></strong> crate compiles the transport and wire types to WebAssembly:</p>
+<ul>
+<li><strong><code>CassisEndpoint.bind(secret)</code></strong> opens an Iroh endpoint in the browser (using Iroh relays).
+<ul>
+<li><strong><code>endpoint.hopRequest(peer, relay, requestJson)</code></strong> sends <code>PreparePayee</code> and <code>Commit</code> requests as a payer.</li>
+<li><strong><code>endpoint.serveHop(handler)</code></strong> answers incoming <code>PreparePayee</code> and <code>Commit</code> requests as a payee while the wallet is open.</li>
+<li><strong><code>endpoint.openOrder(peer, relay, handshakeJson)</code></strong> opens a bidirectional <a href="https://cassis.cash/docs/cop/">Cassis Order Protocol</a> stream (<code>OrderStream</code>).</li>
+</ul>
+</li>
+<li><strong><code>parseInvoice</code></strong> and <strong><code>endpoint.signInvoice</code></strong> validate and sign invoices using <code>cassis-core</code>'s canonical signing and verification rules so the JS side never drifts from the Rust protocol.</li>
+</ul>
+<h2 id="the-real-value-add-integrating-the-cassis-order-protocol-cop">The real value-add: integrating the Cassis Order Protocol (COP)</h2>
+<p>Hooking up <code>set_funder</code> and <code>set_receiver</code> gives your wallet cross-layer invoice payments in very little code. <strong>The real value-added part of a Cassis integration — and slightly more work — is supporting the <a href="https://cassis.cash/docs/cop/">Cassis Order Protocol (COP)</a>.</strong></p>
+<p>Instead of treating your wallet as a dumb invoice scanner while all commerce happens in external web browsers, COP lets your wallet natively render interactive merchant checkouts, menus, shopping carts, currency calculators, subscriptions and one-tap refunds over a direct peer-to-peer connection.</p>
+<p>What a wallet implements to support COP:</p>
+<ol>
+<li><strong>Recognise <code>cop://</code> URIs and web addresses</strong> — In your wallet's QR scanner or send input, accept <code>cop://&lt;endpoint-id&gt;[?_relay=...][#&lt;params&gt;]</code> URIs as well as <code>https://</code> web addresses that publish <code>&lt;link rel="cassis-order" href="cop://..."&gt;</code> in their HTML <code>&lt;head&gt;</code>.</li>
+<li><strong>Open a <code>cassis-order</code> stream over Iroh</strong> — Dial the merchant's Iroh endpoint with the <code>cassis-order</code> ALPN (directly via <code>iroh</code> in Rust, or via <code>endpoint.openOrder(...)</code> in <code>cassis-wasm</code>) and send the opening <code>hello</code> line with the URI's fragment parameters plus a freshly generated 128-bit <code>session</code> string.</li>
+<li><strong>Render the <a rel="external" href="https://hypereffect.dev">hypereffect</a> order view</strong> — Map hypereffect's small set of UI primitives (<code>text</code>, <code>button</code>, <code>input</code>, <code>list</code>, <code>row</code>, <code>column</code>, <code>card</code>, <code>image</code>, <code>notice</code>) to your wallet's native GUI toolkit, evaluate reactive signal bindings locally, and send user interactions back as <code>action</code> messages.</li>
+<li><strong>Handle <code>invoice</code> and <code>invoicerequest</code> messages</strong> —
+<ul>
+<li>When the server sends an <code>invoice</code> message, present <strong>your wallet's own trusted payment confirmation sheet</strong> (taking amount, payee and expiry strictly from the invoice) and pay it through your <code>Node</code>.</li>
+<li>When the server sends an <code>invoicerequest</code> message (for a refund, cashback or withdrawal), prompt the user to accept, generate a Cassis invoice on one of the server's supported networks using your <code>HtlcReceiver</code>, and send it back in an <code>invoice</code> message.</li>
+</ul>
+</li>
+<li><strong>Persist sessions so users can reopen orders</strong> — Save each order's <code>session</code> string, endpoint ID, relay, parameters and paid invoices so the user can tap an order in their history to reconnect for a receipt, delivery status, refund or renewal.</li>
+</ol>
+<p>You can test your wallet's COP client locally at any time by running the built-in test merchant:</p>
+<pre class="giallo" style="color: #E1E4E8; background-color: #24292E;" ><code data-lang="plain"><span class="giallo-l"><span>$ cassis-wallet order-demo --name &quot;Test Coffee Shop&quot;</span></span></code></pre>
+<p>It prints a <code>cop://</code> URI you can scan or paste into your wallet to walk through building a cart, paying an invoice, and requesting a refund via <code>invoicerequest</code>.</p>
+<p>Read the <strong><a href="https://cassis.cash/docs/cop/">Cassis Order Protocol (COP)</a></strong> documentation for the full message flow, wire examples and security rules.</p>
+
+        </div>
+        
+        
+        
+        <div class="mt-14 grid grid-cols-2 gap-4">
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/layers/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">&larr; Previous</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Layers</span>
+          </a>
+          
+          
+          <a class="border-[3px] border-ink bg-card px-5 py-3.5 text-right no-underline shadow-s transition-[transform,box-shadow] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#2b2b2b]" href="https://cassis.cash/docs/cop/">
+            <span class="block font-fira text-[0.6rem] font-bold tracking-[0.14em] uppercase text-ink2">Next &rarr;</span>
+            <span class="mt-1 block font-space text-[0.85rem] font-extrabold uppercase text-ink">Cassis Order Protocol (COP)</span>
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+
+    <footer class="bg-dark pt-12 pb-8 text-white">
+      <div class="mx-auto max-w-[1400px] px-6 md:px-12">
+        <div class="flex flex-col justify-between gap-10 md:flex-row">
+          <div>
+            <span class="flex items-center gap-2 font-space text-[1.35rem] font-extrabold tracking-[0.1em] uppercase">
+              <img src="https://cassis.cash/logo_white.png" alt="" width="30" height="30" />
+              Cassis
+            </span>
+            <span class="mt-2.5 block text-sm text-white/65">Bitcoin payments across every layer</span>
+          </div>
+          <nav class="flex flex-wrap gap-14" aria-label="Footer">
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Protocol</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/how-it-works/">How it works</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/layers/">Supported layers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/offline-payments/">Offline payments</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/cop/">Order Protocol (COP)</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/privacy/">Privacy</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Docs</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/quickstart/">Quickstart</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/wallets/">For wallet developers</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.cash/docs/faq/">FAQ</a></li>
+            </ul>
+            <ul class="m-0 list-none p-0">
+              <li class="mb-3 font-space text-[0.68rem] font-extrabold tracking-[0.18em] uppercase text-[#e0e0e0]">Community</li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://cassis.zulipchat.com/" target="_blank" rel="noopener noreferrer">Zulip chat</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="mb-2 block text-sm text-white/60 no-underline hover:text-white" href="https://github.com/cassiscash/cassis/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
