@@ -26,15 +26,15 @@ Yes, on layers that support asynchronous HTLC creation (such as Cashu, Arkade, F
 
 ## Why not just use Lightning?
 
-Lightning currently serves the purpose of being the glue between some of the existing layers, and because of its prevalence it's expected to play an important role in Cassis too. But we need a system that is generic and doesn't *require* Lightning and can evolve without it, if that's necessary.
+Lightning currently serves the purpose of being the glue between some of the existing layers, and because of its prevalence it's expected to play an important role in Cassis too. However, in practice, the bridging role Lightning plays today relies heavily on centralized gateways and swap providers (such as Boltz), and most wallet integrations hardcode these central players directly. Abstracting away that single-provider dependency into an open routing market would be a big win on its own &mdash; and we need a generic system that doesn't *require* Lightning as an intermediary and can evolve without it if necessary.
 
 For networks like Bark and Spark, for example, the Lightning gateway is centralized and can't be opted out of. For Fedimint it is in theory open, but most federations end up using the same gateway. Arkade has had problems in the past with their Lightning gateway going out of business, and the barrier to entry for running a Cashu mint is much higher today because it requires every mint operator to run its own Lightning node. In all these cases, Cassis can be a simpler and better solution.
 
-## Does Cassis need a new invoice format?
+## How does Cassis compare to swap services like Boltz, Atomiq, or Kaleidoswap?
 
-Yes, in a way, but it can also be hacked into the BOLT11 Lightning invoice so both methods of payment are supported at first.
+Services like Boltz and Atomiq are centralized swap providers, and projects like Kaleidoswap focus on being applications or DEXs where users go to explicitly trade assets.
 
-At the same time we are working on a related invoicing and commerce method called the [Cassis Order Protocol (COP)](@/docs/cop.md) that allows much more flexible and rich payment flows &mdash; buying items, ordering from menus, subscribing, calculating fiat prices &mdash; directly inside a wallet without relying on web technologies.
+Cassis has a different goal: it is not a swap service or a standalone trading app, but an open, decentralized **payments protocol**. Rather than making users manually swap funds between layers, Cassis is meant to be integrated directly into wallets so that every cross-layer payment seamlessly becomes a routed swap under the hood. Neither the sender, the recipient, nor their wallets need to juggle multiple networks or care which layer the other party is using.
 
 ## Is Cassis safe to use yet?
 
