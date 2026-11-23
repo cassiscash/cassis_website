@@ -1,12 +1,12 @@
 +++
 title = "Path finding"
-description = "How routers announce themselves, and how payers and routers decide which nodes to trust."
+description = "How routers announce themselves, and how payers decide which nodes to use."
 weight = 3
 +++
 
-Nobody keeps a central directory of routers. Instead, every routing node announces itself publicly on **Nostr** and every participant builds its own local graph out of those announcements.
+There is no central directory of routers. Each routing node announces its routes on **Nostr**, and payers build a local graph from those announcements.
 
-A router publishes one **kind `35515`** event per direction it offers. The event is a signed Nostr note whose `pubkey` is the router's node key, with the hop parameters in its tags:
+A router publishes one **kind `35515`** event per direction it offers. The event is signed with the router's node key (`pubkey`) and carries the hop parameters in its tags:
 
 ```json
 {
@@ -22,35 +22,35 @@ A router publishes one **kind `35515`** event per direction it offers. The event
 }
 ```
 
-Each event announces a **single directed edge** `from -> to`, carried in the `d` tag as `<network_from>-><network_to>`. A router bridging both directions publishes two events, one per direction. Tags:
+Each event announces a single directed edge `from -> to` in the `d` tag. A router that bridges both directions publishes two events. Tags:
 
-- `d` &mdash; the directed route `<from>-><to>`, e.g. `liquid->arkade`. The `NetworkId` strings follow the scheme documented in [Layers](@/docs/layers.md).
-- `iroh` &mdash; the router's Iroh peer id (value 1) and optional relay URL (value 2), used to reach the router over Iroh.
-- `fee_base_msat` &mdash; flat fee in millisatoshis added to every payment the hop carries. It already includes what claiming on the incoming network costs.
-- `fee_ppm` &mdash; proportional fee, parts-per-million of the forwarded amount.
-- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between the expiries of its outgoing and incoming HTLCs: how long, after learning the preimage at the last moment, it needs to get its claim through on the incoming network, plus how late its outgoing HTLC's refund path can open on the outgoing network. It carries all the slack the hop wants: payers add nothing to it. The router's operator can set it; by default it is computed from the two networks. Absent means the incoming network's default margin (see [layers](@/docs/layers.md)).
-- `testmoney` &mdash; a valueless tag marking the hop as moving test money. Test routers announce on the test relays, separate from the default ones.
+- `d` &mdash; the directed route `<from>-><to>`, e.g. `liquid->arkade`. Network IDs follow the format in [Layers](@/docs/layers.md).
+- `iroh` &mdash; the router's Iroh peer ID (value 1) and optional relay URL (value 2).
+- `fee_base_msat` &mdash; flat fee in millisatoshis per payment, including the router's cost to claim on the incoming network.
+- `fee_ppm` &mdash; proportional fee in parts per million of the forwarded amount.
+- `incoming_delta_secs` &mdash; the gap in seconds this hop needs between its outgoing and incoming HTLC expiries: enough time to claim on the incoming network if it learns the preimage at the last moment, plus any clock lag on the outgoing network's refund path. It includes all the slack the hop needs; payers add nothing to it. By default it is computed from the two networks (or falls back to the incoming network's default margin if omitted; see [layers](@/docs/layers.md)), and operators can override it.
+- `testmoney` &mdash; marks the hop as moving test money. Test routers publish to separate test relays.
 
-Because the tags are self-describing, a payer can compute the total price and every HTLC's expiry of a route *before* contacting anyone (see [timeouts](@/docs/how-it-works.md#timeouts)).
+From these tags alone, a payer can calculate the total fee and every HTLC expiry across a route before contacting any node (see [timeouts](@/docs/how-it-works.md#timeouts)).
 
 ## Building the graph
 
-A participant collects kind `35515` events from the relays it talks to, parses each set of tags into a `RouteAnnouncement`, and keeps the freshest announcement per `(pubkey, d)` pair. Each surviving announcement becomes one directed edge in a local graph whose nodes are **networks** and whose edges are **routers**. Path finding is then a Dijkstra shortest-path search over that graph, with the cost of an edge being that router's `fee_base_msat` plus its `fee_ppm` share of the amount being sent. The payer then computes every leg's amount and expiry from the payee's delta and the hops' `incoming_delta_secs`, and nothing else; a router can still refuse the `PREPARE` if the HTLC would outlive its `max_htlc_secs`.
+A payer fetches kind `35515` events from its configured relays, parses each into a `RouteAnnouncement`, and keeps the latest announcement per `(pubkey, d)` pair. This forms a directed graph where nodes are **networks** and edges are **routers**.
 
-## Filtering out invalid nodes
+Finding a route is a Dijkstra shortest-path search over that graph, weighting each edge by `fee_base_msat` plus its `fee_ppm` share of the payment amount. The payer then works backwards from the payee's expiry delta, adding each hop's `incoming_delta_secs` to compute the amount and expiry for every leg. A router can still refuse at `PREPARE` if the resulting HTLC would exceed its `max_htlc_secs`.
 
-An announcement is a *claim*, not a guarantee. Announcements can be stale, malformed, or simply lies (a Sybil attacker can mint thousands of identities and flood the network with fake edges).
+## Filtering out bad nodes
 
-To mitigate that, we can use some strategies:
+An announcement is just a claim. Routes can go stale, nodes can go offline or misbehave (wasting time and HTLC creation fees), and an attacker could try to flood relays with fake identities.
 
-- **Freshness.** Routing nodes re-announce their routes every 3h, and payers looking at the graph discard announcements older than 24h.
-- **Proof of Bitcoin ownership.** If nodes can prove they control something on-chain that makes mass identity generation expensive.
-- **Attestations from trusted or known peers.** Participants that have a relationship with a node or have successfully routed payments through it before can publish attestations to their integrity, which would make them more accessible.
+Payers filter the graph in two basic ways:
 
-In the beginning, the Sybil resistance mechanism is not necessary, but once the network is large and valuable enough there will be peers trying to disrupt it, so the other measures can be layered on top.
+- **Freshness.** Routers re-announce every 3 hours, and payers ignore announcements older than 24 hours.
+- **Blocking bad nodes.** Payers can manually block routers that misbehave or fail to respond.
 
-## A rating system
+Manual blocking only works if identities are expensive to replace &mdash; which holds as long as payers read routes from Nostr relays that charge an upfront fee to publish. By default, Cassis reads real-money routes from [`nostr.wine`](https://nostr.wine/), a paid relay, while test-money routes use free public relays (`relay.primal.net`, `nos.lol`, `relay.ditto.pub` and `relay.damus.io`). Over time, other relays may become canonical places to publish routes, and some could even vet or run quality checks on routers before listing them.
 
-The attestations mentioned before are important not only for Sybil-resistance, they also serve the purpose of identifying bad or unreliable actors whose lack of responsiveness can cause others to waste time and lose some money on HTLC creation fees.
+Two further mechanisms can be layered on top as the network grows, though neither is built yet:
 
-This system isn't developed yet.
+- **Peer attestations.** Known peers could publish Nostr events attesting to a router's reliability (or warning against bad ones) to help others decide which nodes to block or prefer.
+- **Trustless identity costs.** If there is appetite for avoiding reliance on paid relays, identities can also be made expensive through cryptographic proof of Bitcoin ownership (such as JoinMarket-style fidelity bonds).
