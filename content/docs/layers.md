@@ -29,6 +29,12 @@ For each layer below:
   incoming delta it announces, so each hop's gap depends on both the network
   it receives on and the one it sends on (see
   [how it works](@/docs/how-it-works.md#timeouts)).
+- **Typical cost** is what the lock and the claim pay in network or operator
+  fees, in sats, for an ordinary payment. It leaves out the amount locked,
+  Cassis router fees, and one-off on-chain costs such as opening a
+  Lightning channel or boarding a Fedimint; fixed fees dominate small
+  payments and percentage fees scale with the amount (see
+  [cost assumptions](#cost-assumptions)).
 
 ## <span style="color:#eab308">●</span> Lightning
 
@@ -45,6 +51,8 @@ For each layer below:
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">≈1–2 sats to lock, paid as the Lightning routing fee on the hold invoice (Cassis allows up to max(1 sat, 1%)); nothing to claim offchain. A force-close is a separate on-chain cost.</dd>
 </dl>
 
 The hold invoice must be settled before its CLTV runs out, and that is
@@ -65,6 +73,8 @@ counted in bitcoin blocks, which can come early.
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">10 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">10 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">≈27 sats to lock at Cassis's 0.1 sat/vB (the relay floor), and ≈40 sats to claim. The sender pays the lock; the claim fee comes out of the HTLC.</dd>
 </dl>
 
 Liquid has regular one-minute blocks; the claim must confirm before the
@@ -85,7 +95,20 @@ refund path opens.
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">20 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">No on-chain fee. The mainnet operator charges 0.2% of each offchain input more than ~29 days from batch expiry (0 when it is nearer), and nothing on offchain outputs, so a lock and claim usually cost about 0.4% of the coins spent between them.</dd>
 </dl>
+
+**Fees.** The mainnet operator charges no transaction fee and nothing on
+offchain outputs. Its only per-transfer charge is 0.2% of the value of each
+offchain input whose batch expires more than 29 days away
+(`2,505,216` seconds); inputs closer to expiry cost nothing to spend. An
+HTLC therefore normally costs 0.2% to lock and 0.2% to claim, but nothing
+at all when its coins are near the end of their batch. The charge is on
+the input's value, not the payment: a small HTLC funded from a large VTXO
+pays 0.2% of the whole coin, so split coins before locking small amounts.
+An onchain exit output costs 200 sats. Every operator sets its own
+schedule, published at `/v1/info`; check the one you use.
 
 **Batch expiry.** Arkade VTXOs live in *batches*, and every VTXO expires
 with the batch it descends from (VTXOs created offchain inherit their
@@ -122,11 +145,14 @@ locked.
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">5 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">1 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">≈2 sats in total at 100 ppk, paid by the payer: about 1 sat for the lock swap and 1 sat more locked in to cover the claim. Mints with a 0 ppk input fee are free.</dd>
 </dl>
 
 Claims are a single request to the mint, timed by the mint's clock. Real
-mints may charge input fees (e.g. 100 ppk), so a payee on such a mint
-nets slightly less than the invoiced amount.
+mints may charge input fees (e.g. 100 ppk) per proof: the payer locks a
+little extra to cover the claim's fee, so the payee still nets the
+invoiced amount.
 
 ## <span style="color:#ef4444">●</span> Fedimint
 
@@ -143,11 +169,14 @@ nets slightly less than the invoiced amount.
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">40 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">A few sats per side. Consensus fees are 1 sat per input and output, so they grow with the number of e-cash notes touched, plus up to 0.1% per side if the federation sets the maximum relative fee.</dd>
 </dl>
 
 Contracts expire after a number of bitcoin blocks, which can come early
 or late: refunds may only go through a few blocks after the time the
-HTLC was planned to expire.
+HTLC was planned to expire. Consensus fees are per input and output, so a
+payment that touches several e-cash notes costs a few sats on each side.
 
 ## <span style="color:#22c55e">●</span> Rootstock
 
@@ -164,9 +193,29 @@ HTLC was planned to expire.
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">20 min</dd>
   <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Outgoing lag</dt>
   <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">60 min</dd>
+  <dt class="border-t-2 border-ink bg-alt px-4 py-2.5 font-space text-[0.72rem] font-extrabold tracking-[0.1em] uppercase">Typical cost</dt>
+  <dd class="m-0 border-t-2 border-ink px-4 py-2.5 text-[0.9rem]">≈80 sats to lock and ≈140 sats to claim at ~0.03 gwei (about 26k and 46k gas); roughly double at 0.065 gwei and triple at 0.1 gwei. Paid in RBTC gas by the sender and the claimer.</dd>
 </dl>
 
 Rootstock has ~30 s blocks with some variance, and its timelocks are
 block heights. Claiming is a contract call, so **the receiver needs a
 little RBTC for gas**, the payee included: without it the claim fails
-and the whole route stays locked until it expires.
+and the whole route stays locked until it expires. Both calls are paid in
+RBTC, which is pegged 1:1 to BTC, so the gas figures above convert
+directly to sats.
+
+## Cost assumptions
+
+The cost rows are network and operator fees only, in sats, checked on
+23 November 2026; they are not quotes. They use Cassis's own settings
+where it has them (0.1 sat/vB on Liquid, a max(1 sat, 1%) limit on
+Lightning) and each network's live schedule otherwise. Fixed fees dominate
+small payments; percentage fees scale with the amount, and mint and
+operator fees can change without notice. Each hop pays the fees of the
+network it locks on, so a route's total is the sum over its hops.
+
+The figures come from Blockstream Esplora (Liquid), the Arkade mainnet
+operator's published fee schedule, sampled Cashu mint keysets (0–100 ppk),
+Fedimint's LNv2 consensus fee schedule, Rootstock's public RPC and
+Blockscout gas statistics, and LND's routing defaults. Re-check them
+before pricing a route.
