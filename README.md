@@ -40,23 +40,33 @@ The workflow can also be run manually from the **Actions** tab (`workflow_dispat
 
 ### DNS configuration for `cassis.cash`
 
-The domain is an apex (no `www`), so point it at GitHub Pages with `A` (and optionally
-`AAAA`) records. Remove any conflicting/parking records first, and avoid wildcards.
+DNS is hosted on Cloudflare (`gabriel.ns.cloudflare.com`, `riya.ns.cloudflare.com`).
+The zone points at GitHub Pages with **DNS-only** records (grey cloud) — do not enable
+Cloudflare proxying on these, because GitHub has to terminate TLS and issue the
+certificate itself.
 
-| Type | Name | Value |
-| --- | --- | --- |
-| `A` | `@` | `185.199.108.153` |
-| `A` | `@` | `185.199.109.153` |
-| `A` | `@` | `185.199.110.153` |
-| `A` | `@` | `185.199.111.153` |
-| `AAAA` | `@` | `2606:50c0:8000::153` |
-| `AAAA` | `@` | `2606:50c0:8001::153` |
-| `AAAA` | `@` | `2606:50c0:8002::153` |
-| `AAAA` | `@` | `2606:50c0:8003::153` |
-| `CNAME` | `www` | `cassiscash.github.io` |
+| Type | Name | Value | Proxy |
+| --- | --- | --- | --- |
+| `A` | `@` | `185.199.108.153` | DNS only |
+| `A` | `@` | `185.199.109.153` | DNS only |
+| `A` | `@` | `185.199.110.153` | DNS only |
+| `A` | `@` | `185.199.111.153` | DNS only |
+| `AAAA` | `@` | `2606:50c0:8000::153` | DNS only |
+| `AAAA` | `@` | `2606:50c0:8001::153` | DNS only |
+| `AAAA` | `@` | `2606:50c0:8002::153` | DNS only |
+| `AAAA` | `@` | `2606:50c0:8003::153` | DNS only |
+| `CNAME` | `www` | `cassiscash.github.io` | DNS only |
 
-Alternatively, if the DNS provider supports `ALIAS`/`ANAME`, a single record
-`@ → cassiscash.github.io` works for the apex.
+Leave the Zoho mail records untouched (`MX mx.zoho.in/mx2/mx3`, SPF and DKIM TXT), as
+well as the `demo-stores` and `mint.mutinynet` A records.
+
+Inspect or edit the records with Cloudflare's `cf` CLI (installed at
+`~/npm_modules/bin`, not on `PATH` by default):
+
+```sh
+cf dns records list -z cassis.cash
+cf dns records batch -z cassis.cash --deletes @deletes.json --posts @posts.json
+```
 
 Verify propagation with:
 
