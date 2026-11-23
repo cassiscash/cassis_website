@@ -1,7 +1,7 @@
 +++
 title = "Privacy"
 description = "How peer-to-peer communication over Iroh affects network privacy, from default connections to relays, Tor and Nym."
-weight = 7
+weight = 8
 +++
 
 All peer-to-peer communication in Cassis &mdash; between payers, routing nodes and receivers &mdash; happens over [Iroh](https://iroh.computer). Because peers are addressed by their cryptographic public key rather than by an IP address or domain name, neither routers (in their Nostr announcements) nor receivers (in their invoices) ever have to advertise their IP addresses.

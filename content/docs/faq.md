@@ -1,7 +1,7 @@
 +++
 title = "FAQ"
 description = "Questions you might have about the Cassis protocol."
-weight = 8
+weight = 9
 +++
 
 ## What problem does Cassis solve?

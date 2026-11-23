@@ -1,7 +1,7 @@
 +++
 title = "Offline payments"
 description = "How payees can receive payments while offline using a gateway and a preimage server."
-weight = 5
+weight = 7
 +++
 
 In a standard Cassis payment, the payer connects directly to the receiver to lock the final hop and obtain the preimage. That requires the receiver's wallet to be online when the payment happens.

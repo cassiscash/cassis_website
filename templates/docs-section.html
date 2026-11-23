@@ -26,7 +26,8 @@
             {% elif loop.index0 == 4 %}{% set bg = "#e18d72" %}{% set fg = "#fff" %}
             {% elif loop.index0 == 5 %}{% set bg = "#a855f7" %}{% set fg = "#fff" %}
             {% elif loop.index0 == 6 %}{% set bg = "#add46c" %}{% set fg = "#2b2b2b" %}
-            {% else %}{% set bg = "#1d4ed8" %}{% set fg = "#fff" %}
+            {% elif loop.index0 == 7 %}{% set bg = "#1d4ed8" %}{% set fg = "#fff" %}
+            {% else %}{% set bg = "#0f766e" %}{% set fg = "#fff" %}
             {% endif %}
             <span class="inline-flex h-9 w-9 items-center justify-center border-2 border-ink font-fira text-[0.8rem] font-bold" style="background: {{ bg }}; color: {{ fg }};">{{ loop.index }}</span>
             <h2 class="mt-4 font-space text-base font-extrabold tracking-[0.04em] uppercase text-ink">{{ page.title }}</h2>
