@@ -13,7 +13,7 @@ To integrate basic Cassis payments, a wallet only needs to:
 
 Once those hooks are in place, the real value-added step (and slightly more work) is integrating the **[Cassis Order Protocol (COP)](@/docs/cop.md)** so users can interact with merchants, menus, carts and refunds natively inside your wallet.
 
-## 1. Start a `cassis-wallet` node
+## 1. Start a Cassis node
 
 In a Rust wallet, depend on `cassis-core` and `cassis-wallet` (plus the helper crate for your layer from `cassis-networks`, such as `cassis-arkade`, `cassis-cashu`, `cassis-fedimint`, `cassis-liquid` or `cassis-rootstock`).
 
@@ -47,13 +47,13 @@ node.set_receiver(network, htlcs);
 
 Because `Vec::new()` is passed to `Node::start`, `cassis-wallet` does not open a separate layer wallet of its own. Every satoshi locked into an outgoing HTLC comes straight from your wallet, and every claimed or refunded HTLC lands straight back in your wallet.
 
-## 2. Implement the `HtlcFunder` and `HtlcReceiver` hooks
+## 2. Implement the funder and receiver hooks
 
 The two hooks live in `cassis_core::network` and bridge Cassis's protocol state machine to your wallet's layer client. The per-layer crates in `cassis-networks` expose the HTLC script builders, proof checks and witness extractors so you don't have to re-implement each layer's HTLC construction by hand.
 
-### Funding outgoing payments (`set_funder` / `HtlcFunder`)
+### Funding outgoing payments
 
-When the user pays a Cassis invoice, the node finds a route, `PREPARE`s every hop over Iroh, and asks your **`HtlcFunder`** to lock the first hop's HTLC. The node journals the payment before calling `fund` and drives it to completion in its background settlement loop &mdash; even across app restarts.
+When the user pays a Cassis invoice, the node finds a route, `PREPARE`s every hop over Iroh, and asks your **`HtlcFunder`** (registered via `set_funder`) to lock the first hop's HTLC. The node journals the payment before calling `fund` and drives it to completion in its background settlement loop &mdash; even across app restarts.
 
 ```rust
 #[async_trait]
@@ -77,9 +77,9 @@ pub trait HtlcFunder: OutgoingHtlcs {
 }
 ```
 
-### Receiving incoming payments (`set_receiver` / `HtlcReceiver`)
+### Receiving incoming payments
 
-When your wallet issues an invoice or receives a payment, the node asks your **`HtlcReceiver`** where payers should lock funds, verifies the incoming HTLC when a payer sends `COMMIT`, and claims it with the preimage:
+When your wallet issues an invoice or receives a payment, the node asks your **`HtlcReceiver`** (registered via `set_receiver`) where payers should lock funds, verifies the incoming HTLC when a payer sends `COMMIT`, and claims it with the preimage:
 
 ```rust
 #[async_trait]
@@ -120,7 +120,7 @@ With `set_funder` and `set_receiver` registered, paying and receiving are single
 - **Pay an invoice:** `node.pay_retrying(&invoice, &network, &nostr_relays, DEFAULT_MAX_ROUTES).await` discovers routers on Nostr, computes local routes, `PREPARE`s every hop, calls your `HtlcFunder::fund`, drives `EXECUTE` and `COMMIT`, and returns a `PayReport` with the route taken and the preimage (Automatically retrying around any router that refuses at `PREPARE`).
 - **Issue an invoice:** `cassis_wallet::node::create_invoice(node.db(), node.keys(), iroh_relay, &[node.receiver(&network)?], amount_msat, expires_at, description, metadata).await` queries your `HtlcReceiver::incoming_target`, signs the invoice with the node's Iroh key, and records it so the running node automatically claims it when paid.
 
-## Browser and TypeScript wallets (`cassis-wasm`)
+## Browser and TypeScript wallets
 
 For browser and WebAssembly wallets that manage their layer in TypeScript/JavaScript, the **`cassis-wasm`** crate compiles the transport and wire types to WebAssembly:
 
