@@ -32,7 +32,3 @@ clean:
 # build and preview prod locally
 preview: tailwind
     zola build && zola serve
-
-# deploy to cloudflare pages
-deploy: build
-    wrangler pages deploy {{output}} --project-name cassis
