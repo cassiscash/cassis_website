@@ -7,10 +7,10 @@
   const ENDPOINT = "5f1c9d0a27e4b6c38d2f71a09e4b5c6d8a3f2e1b0c9d8e7f6a5b4c3d2e1f0a9b";
   const MENU = { margherita: ["Margherita", 850], pepperoni: ["Pepperoni", 1000], funghi: ["Funghi", 950] };
   const TOPPINGS = { olives: ["Olives", 100], chili: ["Chili", 75] };
-  const CODES = [
-    { label: "Flyer", uri: `cop://${ENDPOINT}#name=Luigi%27s%20Pizza` },
-    { label: "Till 2", uri: `cop://${ENDPOINT}#till=2` },
-  ];
+  const FLYER_URI = `cop://${ENDPOINT}#name=Luigi%27s%20Pizza`;
+  const REGISTER_URI = `cop://${ENDPOINT}#register=2`;
+  const SCENE_W = 640;
+  const SCENE_H = 460;
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const bytes = (n) => crypto.getRandomValues(new Uint8Array(n));
@@ -76,6 +76,78 @@
     return wrap;
   }
 
+  // A fake camera view over a table holding a menu flyer and a checkout
+  // terminal. Dragging moves the table; a QR code that sits fully inside the
+  // scan frame for half a second is read.
+  function scanner(onScan) {
+    const flyerQr = qr(FLYER_URI);
+    const registerQr = qr(REGISTER_URI);
+    const scene = h(
+      "div",
+      { class: "cop-scene" },
+      h(
+        "div",
+        { class: "cop-flyer" },
+        h("div", { class: "cop-flyer-name" }, "Luigi's Pizza"),
+        h("div", { class: "cop-flyer-sub" }, "Wood-fired · Via Roma 12"),
+        h("div", { class: "cop-flyer-pitch" }, "Order delivery straight from your wallet"),
+        flyerQr,
+        h("div", { class: "cop-flyer-cta" }, "Scan to order")
+      ),
+      h(
+        "div",
+        { class: "cop-terminal" },
+        h("div", { class: "cop-terminal-screen" }, h("div", {}, "REGISTER 2"), h("div", {}, "2 × pizza slice"), h("div", { class: "cop-terminal-total" }, "$7.00")),
+        h("div", { class: "cop-terminal-sticker" }, registerQr, "Scan to pay")
+      )
+    );
+    const frame = h("div", { class: "cop-frame" });
+    const hint = h("div", { class: "cop-scan-hint" }, "Drag to aim the camera at a code");
+    const view = h("div", { class: "cop-scanner", role: "img", "aria-label": "Camera view of a pizza flyer and a checkout terminal. Drag to aim at a QR code." }, scene, frame, hint);
+    const targets = [[flyerQr, FLYER_URI], [registerQr, REGISTER_URI]];
+
+    let x = 0, y = 0, drag = null, aimed = null, timer = 0, read = false;
+    const move = (nx, ny) => {
+      x = Math.min(0, Math.max(view.clientWidth - SCENE_W, nx));
+      y = Math.min(0, Math.max(view.clientHeight - SCENE_H, ny));
+      scene.style.transform = `translate(${x}px, ${y}px)`;
+      check();
+    };
+    function check() {
+      if (read) return;
+      const f = frame.getBoundingClientRect();
+      const inside = (r) => r.left >= f.left && r.right <= f.right && r.top >= f.top && r.bottom <= f.bottom;
+      const hit = targets.find(([q]) => inside(q.getBoundingClientRect()))?.[1] ?? null;
+      if (hit === aimed) return;
+      aimed = hit;
+      clearTimeout(timer);
+      frame.classList.toggle("is-locked", !!hit);
+      if (hit) {
+        timer = setTimeout(() => {
+          read = true;
+          frame.classList.add("is-read");
+          setTimeout(() => view.isConnected && onScan(hit), 250);
+        }, 500);
+      }
+    }
+
+    view.addEventListener("pointerdown", (e) => {
+      drag = { dx: e.clientX - x, dy: e.clientY - y };
+      view.setPointerCapture(e.pointerId);
+      view.classList.add("is-dragging");
+      hint.hidden = true;
+    });
+    view.addEventListener("pointermove", (e) => drag && move(e.clientX - drag.dx, e.clientY - drag.dy));
+    const end = () => {
+      drag = null;
+      view.classList.remove("is-dragging");
+    };
+    view.addEventListener("pointerup", end);
+    view.addEventListener("pointercancel", end);
+    requestAnimationFrame(() => move((view.clientWidth - SCENE_W) / 2, (view.clientHeight - SCENE_H) / 2));
+    return view;
+  }
+
   // The merchant's side: Luigi's Pizza. Keeps one order per session string.
   function makeServer() {
     const orders = new Map();
@@ -136,17 +208,15 @@
     return {
       hello({ params }) {
         let o = orders.get(params.session);
-        if (params.till) {
-          if (!o) orders.set(params.session, (o = { till: params.till, stage: "unpaid" }));
-          const meta = ["metadata", { name: "Luigi's Pizza", description: `Till ${params.till}` }];
+        if (params.register) {
+          if (!o) orders.set(params.session, (o = { register: params.register, stage: "unpaid" }));
           if (o.stage === "paid") {
             return [
-              meta,
-              el({ id: "title", type: "text", variant: "h1", text: `Paid at Till ${params.till}` }),
-              el({ id: "items", type: "text", text: "1 × flat white — 3,500 sats" }),
+              el({ id: "title", type: "text", variant: "h1", text: `Paid at Register ${params.register}` }),
+              el({ id: "items", type: "text", text: "2 × pizza slice — 7,000 sats" }),
             ];
           }
-          return [meta, bill(350, "1 × flat white")];
+          return [bill(700, "2 × pizza slice")];
         }
         if (!o) orders.set(params.session, (o = { stage: "menu" }));
         return [["metadata", { name: "Luigi's Pizza", description: "Wood-fired pizza, Via Roma 12" }], ...pages[o.stage](o)];
@@ -184,7 +254,7 @@
       // The server notices settlement on its own Cassis node, not on this stream.
       settled(conn) {
         const o = orders.get(conn.params.session);
-        if (o.till) {
+        if (o.register) {
           o.stage = "paid";
           return [];
         }
@@ -249,7 +319,7 @@
       conn = null;
       queue = Promise.resolve();
       log.replaceChildren();
-      note("Scan one of the codes on the wallet to start.");
+      note("Drag the wallet's camera over one of the QR codes to start.");
       home();
     }
 
@@ -261,10 +331,15 @@
           { class: "cop-home" },
           h("div", { class: "cop-wallet-head" }, h("div", { class: "cop-kicker" }, "Your wallet"), h("div", { class: "cop-balance" }, fmt(balance), h("span", {}, " sats"))),
           h("div", { class: "cop-section" }, "Scan a code"),
+          scanner((uri) => connect(uri)),
           h(
             "div",
-            { class: "cop-codes" },
-            CODES.map((c) => h("button", { type: "button", class: "cop-code", onclick: () => connect(c.uri) }, qr(c.uri), h("span", {}, c.label)))
+            { class: "cop-scan-alt" },
+            "Can't drag? Scan the ",
+            h("button", { type: "button", onclick: () => connect(FLYER_URI) }, "menu flyer"),
+            " or the ",
+            h("button", { type: "button", onclick: () => connect(REGISTER_URI) }, "checkout terminal"),
+            "."
           ),
           recents.length > 0 && [
             h("div", { class: "cop-section" }, "Recent orders"),
@@ -287,7 +362,7 @@
         recents.splice(recents.indexOf(rec), 1);
         note("Reopening a past order: same parameters, same session string.");
       } else {
-        rec = { uri, session: token(), name: "Luigi's Pizza", desc: "" };
+        rec = { uri, session: token(), name: "Unnamed merchant", desc: "endpoint " + short(ENDPOINT) };
         note(`Dialing ${short(ENDPOINT)} over Iroh (ALPN cassis-order) with a fresh session string.`);
       }
       recents.unshift(rec);
@@ -308,8 +383,8 @@
       signals = {};
       notedTyping = false;
       ui = {
-        name: h("div", { class: "cop-bar-name" }, "Connecting…"),
-        desc: h("div", { class: "cop-bar-desc" }, "endpoint " + short(ENDPOINT)),
+        name: h("div", { class: "cop-bar-name" }, conn.rec.name),
+        desc: h("div", { class: "cop-bar-desc" }, conn.rec.desc),
         empty: h("div", { class: "cop-empty" }, "Waiting for the server…"),
         sheet: h("div", {}),
       };

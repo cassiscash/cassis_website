@@ -15,7 +15,7 @@
   <div class="cop-uri-info" data-info="scheme"><strong>Scheme.</strong> Marks this as a COP order endpoint for the wallet to dial.</div>
   <div class="cop-uri-info" data-info="endpoint"><strong>Endpoint ID.</strong> The server's Iroh endpoint ID: its 64-character hex Ed25519 public key. This key is the merchant's whole address, with no domain or certificate, and Iroh authenticates the connection against it.</div>
   <div class="cop-uri-info" data-info="relay"><strong>Relay</strong> <em>(optional)</em>. A custom Iroh relay to reach the server through instead of the default relays, such as the merchant's own or a <code>.onion</code> Tor hidden service. Only the wallet's transport uses it. It is never sent to the server.</div>
-  <div class="cop-uri-info" data-info="params"><strong>Parameters</strong> <em>(optional)</em>. <code>&amp;</code>-separated <code>key=value</code> pairs handed to the server in <code>hello</code>, such as a table or till number.</div>
+  <div class="cop-uri-info" data-info="params"><strong>Parameters</strong> <em>(optional)</em>. <code>&amp;</code>-separated <code>key=value</code> pairs handed to the server in <code>hello</code>, such as a table or register number.</div>
   <div class="cop-uri-hello"><span>wallet sends &rarr;</span> hello {"params":{"table":"12","name":"Luigi's Pizza","session":"f1K9xQ2v8Tn4LmZp7Rb3wq"}}</div>
 </div>
 {% endcomponent cop_uri %}

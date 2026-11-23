@@ -7,7 +7,7 @@ weight = 6
 scripts = ["cop-demos.js"]
 +++
 
-> **Specification v1.0 (Draft).** The full specification is published at [cop.cassis.cash](https://cop.cassis.cash/). See [For wallet developers](@/docs/wallets.md) for how to integrate COP into a wallet.
+> **Specification v1.0 (Draft).** The full specification is published at [cop.cassis.cash](https://cop.cassis.cash/).
 
 The **Cassis Order Protocol (COP)** allows Bitcoin wallets to offer a rich, interactive experience for paying for anything in the real world without leaving the wallet interface.
 
@@ -37,7 +37,12 @@ There are two roles in every flow:
 
 The demo below runs a toy wallet against a toy restaurant server, entirely in your browser. On the left is what the payer sees. On the right is every line that crosses the `cassis-order` stream: a tag, a space, and a JSON object.
 
-Scan the **Flyer** code to order a pizza, or the **Till 2** code to pay a bill that is already waiting.
+The wallet's camera is pointed at a table holding two things you might scan in real life. Drag the view so a QR code sits inside the frame:
+
+- **The menu flyer** carries `cop://…#name=Luigi%27s%20Pizza`. It opens the restaurant's full ordering flow: pick a pizza and a topping, enter a delivery address, and pay.
+- **The checkout terminal** at Luigi's counter carries `cop://…#register=2`. The cashier has already rung up two pizza slices on register 2, so the server knows the bill and goes straight to payment.
+
+Both codes point at the same server. Only the parameter after `#` differs, and the server uses it to decide what to show.
 
 {{<cop_demo />}}
 
@@ -48,7 +53,7 @@ Things to notice as you click through:
 - **Local state.** Typing the address sends nothing. The field is bound to a local `signal`, and the pay button's enabled state is a CEL expression the wallet evaluates on its own. The signals ride along with the next `action`.
 - **Pay.** The server prices the order in sats and sends an `invoice`. The amount you confirm comes from the wallet's own payment screen, built from the invoice itself, not from anything the server drew on the page.
 - **Money back.** *Cancel order & refund* makes the server send an `invoicerequest`. If you accept, the wallet issues an invoice with its own keys, sends it back as an `invoice`, and the server pays it.
-- **No UI at all.** The till skips the page entirely and sends an `invoice` right after `metadata`.
+- **No UI at all.** The checkout terminal skips the page entirely and sends nothing but an `invoice`. Without `metadata`, the wallet has no merchant name to show, only the endpoint ID it dialed.
 - **Come back later.** Close an order and reopen it from *Recent orders*. The wallet reconnects with the same `session` string, and the server picks up where you left off or shows the receipt.
 
 ## Connection URIs and web addresses

@@ -304,37 +304,172 @@
     span { font-size: 0.9rem; font-weight: 700; }
   }
 
-  .cop-codes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.7rem;
+  /* camera view: drag the table under a fixed scan frame */
+  .cop-scanner {
+    position: relative;
+    flex: none;
+    height: 270px;
+    overflow: hidden;
+    border: 2px solid var(--color-ink);
+    background: #6f5236;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+
+    &.is-dragging { cursor: grabbing; }
   }
 
-  .cop-code {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.7rem;
-    border: 2px solid var(--color-ink);
-    background: #fff;
-    box-shadow: 3px 3px 0 var(--color-ink);
-    color: var(--color-ink);
-    font-family: var(--font-space);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: transform 0.15s, box-shadow 0.15s;
-
-    &:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
+  .cop-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px;
+    height: 460px;
+    background: repeating-linear-gradient(90deg, #8a6a4a 0 38px, #7d5e3f 38px 40px);
   }
 
   .cop-qr {
     display: block;
-    width: 100%;
+    width: 84px;
 
     svg { display: block; width: 100%; }
+  }
+
+  .cop-flyer {
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 180px;
+    padding: 14px;
+    border: 2px solid var(--color-ink);
+    background: #fffdf6;
+    box-shadow: 4px 6px 0 rgb(0 0 0 / 0.25);
+    text-align: center;
+    transform: rotate(-3deg);
+  }
+
+  .cop-flyer-name {
+    color: #b83a2b;
+    font-family: var(--font-outfit);
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .cop-flyer-sub { color: var(--color-ink2); font-size: 0.68rem; }
+  .cop-flyer-pitch { font-size: 0.74rem; font-weight: 600; line-height: 1.3; }
+
+  .cop-flyer-cta,
+  .cop-terminal-sticker {
+    font-family: var(--font-fira);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cop-terminal {
+    position: absolute;
+    top: 95px;
+    left: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 170px;
+    padding: 12px;
+    border: 2px solid var(--color-ink);
+    border-radius: 14px;
+    background: #2f2e3a;
+    box-shadow: 4px 6px 0 rgb(0 0 0 / 0.25);
+    transform: rotate(2deg);
+  }
+
+  .cop-terminal-screen {
+    padding: 8px;
+    border-radius: 4px;
+    background: #b9d8a6;
+    color: var(--color-dark);
+    font-family: var(--font-fira);
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .cop-terminal-total { font-size: 1.1rem; font-weight: 700; }
+
+  .cop-terminal-sticker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .cop-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 124px;
+    height: 124px;
+    margin: -62px 0 0 -62px;
+    border: 3px solid #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 0 999px rgb(0 0 0 / 0.38);
+    pointer-events: none;
+    transition: border-color 0.15s, background 0.15s;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 6px;
+      left: 6px;
+      height: 2px;
+      background: var(--color-lime);
+      animation: cop-scanline 1.6s ease-in-out infinite alternate;
+    }
+
+    &.is-locked { border-color: var(--color-amber); }
+    &.is-read { border-color: var(--color-lime); background: rgb(173 212 108 / 0.3); }
+  }
+
+  @keyframes cop-scanline {
+    from { top: 6px; }
+    to { top: calc(100% - 8px); }
+  }
+
+  .cop-scan-hint {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    left: 0;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
+    pointer-events: none;
+  }
+
+  .cop-scan-alt {
+    color: var(--color-ink2);
+    font-size: 0.72rem;
+
+    button {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--color-cassisdeep);
+      font: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+    }
   }
 
   .cop-recent {
